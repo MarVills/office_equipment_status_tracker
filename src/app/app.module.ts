@@ -26,7 +26,6 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 
 
@@ -50,7 +49,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppSidebarComponent,
     LoginComponent,
     AppBreadcrumbComponent,
-    DashboardComponent,
  
   ],
   imports: [

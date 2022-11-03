@@ -17,7 +17,7 @@ export const AppRoutes: Routes = [
             },
             {
                 path: 'starter',
-                loadChildren: () => import('./views/main/main.module').then(m => m.StarterModule)
+                loadChildren: () => import('./views/main.module').then(m => m.StarterModule)
             },
         ]
     },

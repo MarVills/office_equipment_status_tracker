@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 
-import { MainComponent } from './main.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const StarterRoutes: Routes = [
   {
     path: '',
-    component: MainComponent,
+    component: DashboardComponent,
 	data: {
       title: 'Starter Page',
       urls: [
