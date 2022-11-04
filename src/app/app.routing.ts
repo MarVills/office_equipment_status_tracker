@@ -3,6 +3,8 @@ import { Routes } from '@angular/router';
 import { FullComponent } from './layouts/full.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { AuthGuard } from './auth.guard';
+import { ErrorComponent } from './views/error/error.component';
+
 
 export const AppRoutes: Routes = [
     {
@@ -12,11 +14,11 @@ export const AppRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: '/login',
+                redirectTo: '/spa/dashboard',
                 pathMatch: 'full'
             },
             {
-                path: 'starter',
+                path: 'spa',
                 loadChildren: () => import('./views/main.module').then(m => m.StarterModule)
             },
         ]
@@ -24,5 +26,11 @@ export const AppRoutes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
+    },
+    {
+    
+        path: '**',
+        component: ErrorComponent,
+        
     }
 ];

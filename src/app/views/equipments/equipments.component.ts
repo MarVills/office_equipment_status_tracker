@@ -1,27 +1,28 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-starter',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  selector: 'app-equipments',
+  templateUrl: './equipments.component.html',
+  styleUrls: ['./equipments.component.scss']
 })
-export class MainComponent implements AfterViewInit {
+export class EquipmentsComponent implements OnInit {
+  
+  displayedColumns = [ 'name', 'status', 'symbol'];
+  dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
 
-  constructor(breakpointObserver: BreakpointObserver){
+  constructor(breakpointObserver: BreakpointObserver) { 
     breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
-          ['position', 'name', 'weight', 'symbol'] :
-          ['position', 'name', 'weight', 'symbol'];
+          [ 'name', 'status', 'symbol'] :
+          [ 'name', 'status', 'symbol'];
     });
   }
 
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
-  ngAfterViewInit() {}
+  ngOnInit(): void {
+  }
+
 }
 
 export interface Element {
@@ -53,4 +54,3 @@ const ELEMENT_DATA: Element[] = [
   { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
   { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
 ];
-

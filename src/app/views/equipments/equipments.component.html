@@ -3,15 +3,42 @@
 <!-- ============================================================== -->
 <div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center" fxLayout.xs="column">
     <!-- column -->
-    <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+    <div fxFlex.gt-xs="35" fxFlex="100">
         <mat-card>
             <mat-card-content>
                 <!-- Row -->
-                <div fxLayout="row" fxLayoutWrap="wrap">
+                <div fxLayout="column" fxLayoutWrap="wrap">
                     <!-- column -->
                     <div fxFlex.gt-sm="50" fxFlex.gt-xs="100">
-                        Add Item
+                        Add Equipment
                     </div>
+                    <form class="m-t-20">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input matInput placeholder="Favorite food">
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <input matInput placeholder="Favorite food">
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Price</mat-label>
+                            <input matInput placeholder="Favorite food">
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Category</mat-label>
+                            <input matInput placeholder="Favorite food">
+                        </mat-form-field>
+            
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput placeholder="Leave a comment"></textarea>
+                        </mat-form-field>
+
+                        <div class="center-item">
+                            <button class="add-button" mat-raised-button color="primary">Add</button>
+                        </div> 
+                    </form>
                 </div>
             </mat-card-content>
         </mat-card>
@@ -19,18 +46,18 @@
     <!-- column -->
     <mat-card fxFlex.gt-xs="100">
         <mat-card-content>
-            <mat-card-title>Basic use of `mat-table` (uses display flex)</mat-card-title>
+            <mat-card-title>Lists of office equipments</mat-card-title>
             <div class="responsive-table" >
                 <mat-table #table [dataSource]="dataSource">
 
                     <!-- Position Column -->
-                    <ng-container matColumnDef="position">
+                    <!-- <ng-container matColumnDef="position">
                         <mat-header-cell *matHeaderCellDef> Position. </mat-header-cell>
                         <mat-cell *matCellDef="let element">
                             <span class="header-label">Position:</span>
                             {{element.position}}
                         </mat-cell>
-                    </ng-container>
+                    </ng-container> -->
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
@@ -42,10 +69,10 @@
                     </ng-container>
 
                     <!-- Weight Column -->
-                    <ng-container matColumnDef="weight">
-                        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            <span class="header-label">Weight:</span>
+                            <span class="header-label">Status:</span>
                             {{element.weight}}
                         </mat-cell>
                     </ng-container>
@@ -65,6 +92,4 @@
             </div>
         </mat-card-content>
     </mat-card>
-    
-
 </div>
