@@ -11,6 +11,12 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { DashboardCheckListComponent } from './dashboard/dashboard-components/dashboard-check-list/dashboard-check-list.component';
 import { DashboardEquipmentsComponent } from './dashboard/dashboard-components/dashboard-equipments/dashboard-equipments.component';
 import { DashboardReportsComponent } from './dashboard/dashboard-components/dashboard-reports/dashboard-reports.component';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
+import { MatButtonModule } from '@angular/material/button';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   imports: [
@@ -18,8 +24,13 @@ import { DashboardReportsComponent } from './dashboard/dashboard-components/dash
     DemoMaterialModule,
     FlexLayoutModule,
     RouterModule.forChild(StarterRoutes),
-    NgApexchartsModule
-    
+    NgApexchartsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RxReactiveFormsModule,
+    MatButtonModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   declarations: [
     DashboardComponent, 

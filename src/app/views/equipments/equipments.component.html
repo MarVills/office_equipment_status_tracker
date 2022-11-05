@@ -12,32 +12,50 @@
                     <div fxFlex.gt-sm="50" fxFlex.gt-xs="100">
                         Add Equipment
                     </div>
-                    <form class="m-t-20">
+                    <form [formGroup]="_equipmentForm" (ngSubmit)="onAddEquipment(formDirective)" #formDirective="ngForm"  class="m-t-20">
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Name</mat-label>
-                            <input matInput placeholder="Favorite food">
+                            <input 
+                            matInput
+                            formControlName="name"
+                             >
                         </mat-form-field>
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Status</mat-label>
-                            <input matInput placeholder="Favorite food">
+                            <input 
+                            matInput
+                            formControlName="status"
+                             >
                         </mat-form-field>
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Price</mat-label>
-                            <input matInput placeholder="Favorite food">
+                            <input 
+                            matInput
+                            formControlName="price"
+                             >
                         </mat-form-field>
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Category</mat-label>
-                            <input matInput placeholder="Favorite food">
+                            <input 
+                            matInput
+                            formControlName="category"
+                             >
                         </mat-form-field>
             
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Description</mat-label>
-                            <textarea matInput placeholder="Leave a comment"></textarea>
+                            <textarea 
+                            matInput
+                            formControlName="description"
+                             ></textarea>
                         </mat-form-field>
 
                         <div class="center-item">
-                            <button class="add-button" mat-raised-button color="primary">Add</button>
+                            <button *ngIf="!isEdit" type="submit" class="button-margin button-width" mat-raised-button color="primary">Add</button>
+                            <button *ngIf="isEdit" type="button" (click)="onCancelEdit(formDirective)" class="button-margin button-width" mat-raised-button color="basic">Cancel</button>
+                            <button *ngIf="isEdit" type="button" (click)="onEditEquipment(formDirective)" class="button-margin button-width" mat-raised-button color="primary">Edit</button>
                         </div> 
+
                     </form>
                 </div>
             </mat-card-content>
@@ -73,16 +91,25 @@
                         <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                         <mat-cell *matCellDef="let element">
                             <span class="header-label">Status:</span>
-                            {{element.weight}}
+                            {{element.status}}
                         </mat-cell>
                     </ng-container>
 
                     <!-- Symbol Column -->
-                    <ng-container matColumnDef="symbol">
-                        <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+                    <ng-container matColumnDef="category">
+                        <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
                         <mat-cell *matCellDef="let element">
-                            <span class="header-label">Symbol:</span>
-                            {{element.symbol}}
+                            <span class="header-label">Category:</span>
+                            {{element.category}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <span class="header-label">Action:</span>
+                            <button class="action-button" (click)="onSelectEditEquipment(element)" mat-raised-button color="primary">Edit</button>
+                            <button class="action-button" (click)="onDeleteEquipment(element)"mat-raised-button color="warn">Delete</button>
                         </mat-cell>
                     </ng-container>
 
