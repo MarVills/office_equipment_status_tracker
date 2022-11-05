@@ -9,9 +9,6 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
 
-
-
-
 @Component({
   selector: 'app-equipments',
   templateUrl: './equipments.component.html',
@@ -119,7 +116,14 @@ export class EquipmentsComponent implements OnInit {
 
   onDeleteEquipment(data: EquipmentDTO){
     console.log(data);
-    this.fireStore.collection('equipments').doc(data.id).delete();
+    // this.fireStore.collection('equipments').doc(data.id).delete();
+    this.fireStore.collection('equipments').doc(data.id)
+    this.fireStore.collection('equipments', (ref)=>{
+      var returndata = ref.where('name', '==', 'tyu')
+      console.log("returndata",ref)
+      return returndata;
+    });
+    
     EQUIPMENT_DATA.splice(EQUIPMENT_DATA.indexOf(data), 1)
     this.refresh()
   }
