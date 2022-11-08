@@ -117,10 +117,14 @@ export class EquipmentsComponent implements OnInit {
   onDeleteEquipment(data: EquipmentDTO){
     console.log(data);
     // this.fireStore.collection('equipments').doc(data.id).delete();
-    this.fireStore.collection('equipments').doc(data.id)
+    // this.fireStore.collection('equipments').doc(data.id)
     this.fireStore.collection('equipments', (ref)=>{
       var returndata = ref.where('name', '==', 'tyu')
+
+      var ref2= ref.where('name', '==', 'tyu')
+      console.log("ref2: ", ref2)
       console.log("returndata",ref)
+      
       return returndata;
     });
     

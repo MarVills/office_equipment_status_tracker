@@ -29,7 +29,6 @@
   "Mail": "Mail",
   "Chat": "Chat",
   "Taskboard": "Taskboard",
-  "Notes": "Notes",
   "Employees": "Employees",
   "Courses": "Courses",
   "Contact": "Contact",
@@ -97,5 +96,12 @@
   "Menu Levels": "Menu Levels",
   "Second Level": "Second Level",
   "Third Level": "Third Level",
-  "aSecond Level": "aSecond Level"
+  "aSecond Level": "aSecond Level",
+
+  "Manage Account": "Manage Account",
+  "Requests": "Requests",
+  "Notes": "Notes",
+  "Activity Log": "Activity Log",
+  "Settings": "Settings",
+  "About App": "About App"
 }

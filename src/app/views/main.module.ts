@@ -17,6 +17,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
+import { ChecklistComponent } from './checklist/checklist.component';
+import { ReportsComponent } from './reports/reports.component';
+import { ManageAccountComponent } from './manage-account/manage-account.component';
+import { RequestComponent } from './request/request.component';
+import { ActivityLogComponent } from './activity-log/activity-log.component';
+import { SettingsComponent } from './settings/settings.component';
+import { AboutAppComponent } from './about-app/about-app.component';
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
   imports: [
@@ -39,6 +47,14 @@ import { environment } from 'src/environments/environment';
     DashboardCheckListComponent, 
     DashboardEquipmentsComponent,
     DashboardReportsComponent,
+    ChecklistComponent,
+    ReportsComponent,
+    ManageAccountComponent,
+    RequestComponent,
+    ActivityLogComponent,
+    SettingsComponent,
+    AboutAppComponent,
+    NotesComponent,
     ]
 })
 export class StarterModule {}

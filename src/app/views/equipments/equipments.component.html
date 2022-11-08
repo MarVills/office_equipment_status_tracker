@@ -50,7 +50,7 @@
                              ></textarea>
                         </mat-form-field>
 
-                        <div class="center-item">
+                        <div fxLayout="row" fxLayout.xs="column" class="center-item">
                             <button *ngIf="!isEdit" type="submit" class="button-margin button-width" mat-raised-button color="primary">Add</button>
                             <button *ngIf="isEdit" type="button" (click)="onCancelEdit(formDirective)" class="button-margin button-width" mat-raised-button color="basic">Cancel</button>
                             <button *ngIf="isEdit" type="button" (click)="onEditEquipment(formDirective)" class="button-margin button-width" mat-raised-button color="primary">Edit</button>
@@ -108,8 +108,10 @@
                         <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
                         <mat-cell *matCellDef="let element">
                             <span class="header-label">Action:</span>
-                            <button class="action-button" (click)="onSelectEditEquipment(element)" mat-raised-button color="primary">Edit</button>
+                            <div class="buttons">
+                                <button class="action-button" (click)="onSelectEditEquipment(element)" mat-raised-button color="primary">Edit</button>
                             <button class="action-button" (click)="onDeleteEquipment(element)"mat-raised-button color="warn">Delete</button>
+                            </div>
                         </mat-cell>
                     </ng-container>
 

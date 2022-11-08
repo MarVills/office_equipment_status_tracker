@@ -30,7 +30,6 @@
   "Mail": "Correo",
   "Chat": "Charla",
   "Taskboard": "Tablero de tareas",
-  "Notes": "Notas",
   "Employees": "Empleadas",
   "Courses": "Cursos",
   "Contact": "Contacto",
@@ -98,5 +97,12 @@
   "Menu Levels": "Niveles de menú",
   "Second Level": "Segundo nivel",
   "Third Level": "Tercer nivel",
-  "aSecond Level": "Segundo nivel"
+  "aSecond Level": "Segundo nivel",
+
+  "Manage Account": "Administrar cuenta",
+  "Requests": "Peticiones",
+  "Notes": "notas",
+  "Activity Log": "Registro de actividades",
+  "Settings": "Ajustes",
+  "About App": "Acerca de la aplicación"
 }
