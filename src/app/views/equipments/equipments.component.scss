@@ -28,3 +28,15 @@ display: flex;
     justify-content: center;
 
 }
+
+.add-button{
+    position:fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    transform: scale(1);
+    // background-color: #125699;
+    color: white;
+    z-index: 100;
+  }

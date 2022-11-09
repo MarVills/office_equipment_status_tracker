@@ -11,7 +11,9 @@ import { MenuItems } from '../../shared/menu-items/menu-items';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: []
+  styleUrls: [
+    
+  ]
 })
 export class AppSidebarComponent implements OnDestroy {
   public config: PerfectScrollbarConfigInterface = {};
@@ -45,12 +47,10 @@ export class AppSidebarComponent implements OnDestroy {
   ) {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    // tslint:disable-next-line: deprecation
-    this.mobileQuery.addListener(this._mobileQueryListener);
+    this.mobileQuery.addEventListener("event",this._mobileQueryListener);
   }
 
   ngOnDestroy(): void {
-    // tslint:disable-next-line: deprecation
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.mobileQuery.removeEventListener("event",this._mobileQueryListener);
   }
 }

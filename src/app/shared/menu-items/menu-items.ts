@@ -32,10 +32,16 @@ export interface Menu {
 
 const MENUITEMS = [
     {
-        state: 'manage-account',
-        name: 'Manage Account',
+        state: 'dashboard',
+        name: 'Dashboard',
         type: 'link',
-        icon: 'account_circle'
+        icon: 'av_timer'
+    },
+    {
+        state: 'checklist',
+        name: 'Checklist',
+        type: 'link',
+        icon: 'playlist_add_check'
     },
     {
         state: 'request',
@@ -44,29 +50,53 @@ const MENUITEMS = [
         icon: 'exit_to_app'
     },
     {
+        state: 'inventory',
+        name: 'Inventory',
+        type: 'sub',
+        icon: 'dvr',
+        badge: [{ type: 'purple', value: '3' }],
+        children: [
+            { state: 'equipments', name: 'Equipments', type: 'link', icon: "weekend"},
+            { state: 'release-equipment', name: 'Release Equipment', type: 'link', icon: "vertical_align_top"},
+            { state: 'recieve-equipment', name: 'Recieve Equipment', type: 'link', icon: "vertical_align_bottom" },
+        ]
+    },
+    // {
+    //     state: 'equipments',
+    //     name: 'Equipments',
+    //     type: 'link',
+    //     icon: 'weekend'
+    // },
+    {
+        state: 'reports',
+        name: 'Reports',
+        type: 'link',
+        icon: 'trending_up'
+    },
+    {
         state: 'activity-log',
         name: 'Activity Log',
         type: 'link',
         icon: 'format_list_bulleted'
     },
-    {
-        state: 'notes',
-        name: 'Notes',
-        type: 'link',
-        icon: 'event_note'
-    },
-    {
-        state: 'settings',
-        name: 'Settings',
-        type: 'link',
-        icon: 'settings'
-    },
-    {
-        state: 'about',
-        name: 'About App',
-        type: 'link',
-        icon: 'info'
-    },
+    // {
+    //     state: 'notes',
+    //     name: 'Notes',
+    //     type: 'link',
+    //     icon: 'event_note'
+    // },
+    // {
+    //     state: 'settings',
+    //     name: 'Settings',
+    //     type: 'link',
+    //     icon: 'settings'
+    // },
+    // {
+    //     state: 'about',
+    //     name: 'About App',
+    //     type: 'link',
+    //     icon: 'info'
+    // },
     // {
     //     state: 'material',
     //     name: 'Material Ui',

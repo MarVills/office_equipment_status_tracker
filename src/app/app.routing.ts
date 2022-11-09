@@ -14,11 +14,11 @@ export const AppRoutes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: '/spa/dashboard',
+                redirectTo: '/dashboard',
                 pathMatch: 'full'
             },
             {
-                path: 'spa',
+                path: '',
                 loadChildren: () => import('./views/main.module').then(m => m.StarterModule)
             },
         ]
@@ -27,10 +27,9 @@ export const AppRoutes: Routes = [
         path: 'login',
         component: LoginComponent,
     },
-    {
-    
-        path: '**',
-        component: ErrorComponent,
-        
-    }
+
+    // {
+    //     path: '**',
+    //     component: ErrorComponent,
+    // }
 ];

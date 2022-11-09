@@ -25,6 +25,9 @@ import { ActivityLogComponent } from './activity-log/activity-log.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AboutAppComponent } from './about-app/about-app.component';
 import { NotesComponent } from './notes/notes.component';
+import { DialogComponent } from './equipments/components/dialog/dialog.component';
+import { ReleaseEquipmentComponent } from './release-equipment/release-equipment.component';
+import { RecieveEquipmentComponent } from './recieve-equipment/recieve-equipment.component';
 
 @NgModule({
   imports: [
@@ -55,6 +58,9 @@ import { NotesComponent } from './notes/notes.component';
     SettingsComponent,
     AboutAppComponent,
     NotesComponent,
+    DialogComponent,
+    ReleaseEquipmentComponent,
+    RecieveEquipmentComponent,
     ]
 })
 export class StarterModule {}

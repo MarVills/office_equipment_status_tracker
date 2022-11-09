@@ -1,17 +1,14 @@
-<!-- ============================================================== -->
-<!-- Simple four boxes Row -->
-<!-- ============================================================== -->
+
 <div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center" fxLayout.xs="column">
-    <!-- column -->
-    <div fxFlex.gt-xs="35" fxFlex="100">
+ 
+    <!-- <div fxFlex.gt-xs="35" fxFlex="100">
         <mat-card>
             <mat-card-content>
-                <!-- Row -->
+             
                 <div fxLayout="column" fxLayoutWrap="wrap">
-                    <!-- column -->
-                    <div fxFlex.gt-sm="50" fxFlex.gt-xs="100">
-                        Add Equipment
-                    </div>
+            
+                    <div fxFlex.gt-sm="50" fxFlex.gt-xs="100"> Add Equipment </div>
+
                     <form [formGroup]="_equipmentForm" (ngSubmit)="onAddEquipment(formDirective)" #formDirective="ngForm"  class="m-t-20">
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Name</mat-label>
@@ -27,18 +24,22 @@
                             formControlName="status"
                              >
                         </mat-form-field>
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Price</mat-label>
-                            <input 
-                            matInput
-                            formControlName="price"
-                             >
-                        </mat-form-field>
+                    
                         <mat-form-field class="example-full-width" appearance="outline">
                             <mat-label>Category</mat-label>
                             <input 
                             matInput
                             formControlName="category"
+                             >
+                        </mat-form-field>
+
+                        <div> Equipment Details</div><br/>
+
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-label>Price</mat-label>
+                            <input 
+                            matInput
+                            formControlName="price"
                              >
                         </mat-form-field>
             
@@ -60,7 +61,7 @@
                 </div>
             </mat-card-content>
         </mat-card>
-    </div>
+    </div> -->
     <!-- column -->
     <mat-card fxFlex.gt-xs="100">
         <mat-card-content>
@@ -109,8 +110,8 @@
                         <mat-cell *matCellDef="let element">
                             <span class="header-label">Action:</span>
                             <div class="buttons">
-                                <button class="action-button" (click)="onSelectEditEquipment(element)" mat-raised-button color="primary">Edit</button>
-                            <button class="action-button" (click)="onDeleteEquipment(element)"mat-raised-button color="warn">Delete</button>
+                                <button class="action-button" (click)="openEditDialog(element)" mat-raised-button color="primary">Edit</button>
+                                <button class="action-button" (click)="onDeleteEquipment(element)"mat-raised-button color="warn">Delete</button>
                             </div>
                         </mat-cell>
                     </ng-container>
@@ -121,4 +122,7 @@
             </div>
         </mat-card-content>
     </mat-card>
+    <button type="button" (click)="openAddDialog()" mat-fab color="primary" class="add-button">
+        <mat-icon>add</mat-icon>
+    </button>
 </div>

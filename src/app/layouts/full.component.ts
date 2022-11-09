@@ -52,12 +52,12 @@ export class FullComponent implements OnDestroy {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     // tslint:disable-next-line: deprecation
-    this.mobileQuery.addListener(this._mobileQueryListener);
+    this.mobileQuery.addEventListener("event",this._mobileQueryListener);
   }
 
   ngOnDestroy(): void {
     // tslint:disable-next-line: deprecation
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.mobileQuery.removeEventListener("event",this._mobileQueryListener);
   }
 
 
