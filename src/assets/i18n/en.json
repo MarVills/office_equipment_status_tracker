@@ -103,5 +103,11 @@
   "Notes": "Notes",
   "Activity Log": "Activity Log",
   "Settings": "Settings",
-  "About App": "About App"
+  "About App": "About App",
+  "Dashboard": "Dashboard",
+  "Release Equipments": "Release Equipments",
+  "Recieve Equipments": "Recieve Equipments",
+  "Reports": "Reports",
+  "Inventory": "Inventory",
+  "Equipments":"Equipments"
 }

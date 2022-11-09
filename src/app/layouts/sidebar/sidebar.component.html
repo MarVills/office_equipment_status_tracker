@@ -66,7 +66,8 @@
                 
                 <a [routerLink]="['/', menuitem.state, childitem.state ]" *ngIf="childitem.type === 'link'"
                     class="relative" routerLinkActive="selected" (click)="itemSelect[i]=j">
-                    <mat-icon class="dd-icon center-items">{{childitem.icon}}</mat-icon> {{ childitem.name | translate}}
+                    <!-- <mat-icon class="dd-icon center-items">{{childitem.icon}}</mat-icon>  -->
+                    {{ childitem.name | translate}}
                 </a>
             </mat-list-item>
             <mat-list-item *ngFor="let childitem of menuitem.children; let j=index; let i=childitem">

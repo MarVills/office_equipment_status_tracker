@@ -111,5 +111,11 @@
   "Notes": "Anmerkungen",
   "Activity Log": "Aktivitätsprotokoll",
   "Settings": "Einstellungen",
-  "About App": "Über App"
+  "About App": "Über App",
+  "Dashboard": "Armaturenbrett",
+  "Release Equipments": "Release-Ausrüstungen",
+  "Recieve Equipments": "Ausrüstung erhalten",
+  "Reports": "Berichte",
+  "Inventory": "Inventar",
+  "Equipments":"Ausrüstungen"
 }

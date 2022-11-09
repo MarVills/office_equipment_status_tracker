@@ -38,7 +38,7 @@ export const StarterRoutes: Routes = [
     path: 'inventory/release-equipment',
     component:  ReleaseEquipmentComponent,
     data: {
-      title: 'Equipments',
+      title: 'E',
       urls: [
         { title: 'Equipments', url: '/equipments' },
         { title: 'Equipments' }

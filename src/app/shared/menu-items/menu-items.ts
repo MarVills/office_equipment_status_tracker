@@ -57,8 +57,8 @@ const MENUITEMS = [
         badge: [{ type: 'purple', value: '3' }],
         children: [
             { state: 'equipments', name: 'Equipments', type: 'link', icon: "weekend"},
-            { state: 'release-equipment', name: 'Release Equipment', type: 'link', icon: "vertical_align_top"},
-            { state: 'recieve-equipment', name: 'Recieve Equipment', type: 'link', icon: "vertical_align_bottom" },
+            { state: 'release-equipment', name: 'Release Equipments', type: 'link', icon: "vertical_align_top"},
+            { state: 'recieve-equipment', name: 'Recieve Equipments', type: 'link', icon: "vertical_align_bottom" },
         ]
     },
     // {

@@ -104,5 +104,11 @@
   "Notes": "notas",
   "Activity Log": "Registro de actividades",
   "Settings": "Ajustes",
-  "About App": "Acerca de la aplicación"
+  "About App": "Acerca de la aplicación",
+  "Dashboard": "Tablero",
+  "Release Equipments": "Equipos de liberación",
+  "Recieve Equipments": "Recibir Equipos",
+  "Reports": "Informes",
+  "Inventory": "Inventario",
+  "Equipments":"Equipos"
 }
