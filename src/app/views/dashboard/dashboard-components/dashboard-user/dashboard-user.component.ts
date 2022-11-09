@@ -1,3 +1,4 @@
+
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import {
@@ -18,11 +19,11 @@ import {
 } from 'ng-apexcharts';
 
 @Component({
-  selector: 'app-dashboard-check-list',
-  templateUrl: './dashboard-check-list.component.html',
-  styleUrls: ['./dashboard-check-list.component.scss']
+  selector: 'app-dashboard-user',
+  templateUrl: './dashboard-user.component.html',
+  styleUrls: ['./dashboard-user.component.scss']
 })
-export class DashboardCheckListComponent implements OnInit {
+export class DashboardUserComponent implements OnInit {
 
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   public inexpuchartOptions: Partial<inexpuchartOptions>;
@@ -110,4 +111,6 @@ export interface inexpuchartOptions {
   legend: ApexLegend;
   grid: ApexGrid;
 }
+
+
 

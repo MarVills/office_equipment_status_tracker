@@ -8,9 +8,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EquipmentsComponent } from './equipments/equipments.component';
 import { ErrorComponent } from './error/error.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { DashboardCheckListComponent } from './dashboard/dashboard-components/dashboard-check-list/dashboard-check-list.component';
-import { DashboardEquipmentsComponent } from './dashboard/dashboard-components/dashboard-equipments/dashboard-equipments.component';
-import { DashboardReportsComponent } from './dashboard/dashboard-components/dashboard-reports/dashboard-reports.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
 import { MatButtonModule } from '@angular/material/button';
@@ -28,6 +25,11 @@ import { NotesComponent } from './notes/notes.component';
 import { DialogComponent } from './equipments/components/dialog/dialog.component';
 import { ReleaseEquipmentComponent } from './release-equipment/release-equipment.component';
 import { RecieveEquipmentComponent } from './recieve-equipment/recieve-equipment.component';
+import { EquipmentCategoriesComponent } from './dashboard/dashboard-components/equipment-categories/equipment-categories.component';
+import { DashboardEquipmentComponent } from './dashboard/dashboard-components/dashboard-equipment/dashboard-equipment.component';
+import { DashboardUserComponent } from './dashboard/dashboard-components/dashboard-user/dashboard-user.component';
+import { DashboardRequestComponent } from './dashboard/dashboard-components/dashboard-request/dashboard-request.component';
+import { DashboardNotesComponent } from './dashboard/dashboard-components/dashboard-notes/dashboard-notes.component';
 
 @NgModule({
   imports: [
@@ -47,9 +49,6 @@ import { RecieveEquipmentComponent } from './recieve-equipment/recieve-equipment
     DashboardComponent, 
     EquipmentsComponent, 
     ErrorComponent, 
-    DashboardCheckListComponent, 
-    DashboardEquipmentsComponent,
-    DashboardReportsComponent,
     ChecklistComponent,
     ReportsComponent,
     ManageAccountComponent,
@@ -61,6 +60,11 @@ import { RecieveEquipmentComponent } from './recieve-equipment/recieve-equipment
     DialogComponent,
     ReleaseEquipmentComponent,
     RecieveEquipmentComponent,
+    EquipmentCategoriesComponent,
+    DashboardEquipmentComponent,
+    DashboardUserComponent,
+    DashboardRequestComponent,
+    DashboardNotesComponent,
     ]
 })
 export class StarterModule {}

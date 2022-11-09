@@ -1,5 +1,6 @@
 
-import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -18,11 +19,11 @@ import {
 } from 'ng-apexcharts';
 
 @Component({
-  selector: 'app-dashboard-reports',
-  templateUrl: './dashboard-reports.component.html',
-  styleUrls: ['./dashboard-reports.component.scss']
+  selector: 'app-dashboard-equipment',
+  templateUrl: './dashboard-equipment.component.html',
+  styleUrls: ['./dashboard-equipment.component.scss']
 })
-export class DashboardReportsComponent implements OnInit {
+export class DashboardEquipmentComponent implements OnInit {
 
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   public inexpuchartOptions: Partial<inexpuchartOptions>;
@@ -93,10 +94,8 @@ export class DashboardReportsComponent implements OnInit {
         }
       }
     };
-
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void{}
 }
 
 export interface inexpuchartOptions {
@@ -112,4 +111,5 @@ export interface inexpuchartOptions {
   legend: ApexLegend;
   grid: ApexGrid;
 }
+
 

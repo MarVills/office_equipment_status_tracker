@@ -11,7 +11,7 @@
 <!-- ============================================================== -->
 <!-- Profile - style you can find in header.scss -->
 <!-- ============================================================== -->
-<button [matMenuTriggerFor]="message" mat-icon-button class="m-r-10">
+<!-- <button [matMenuTriggerFor]="message" mat-icon-button class="m-r-10">
     <mat-icon>email</mat-icon>
     <div class="notify">
         <span class="heartbit"></span>
@@ -27,7 +27,7 @@
             <li>
                 <div class="message-center">
                     <perfect-scrollbar [config]="config">
-                        <!-- Message -->
+                        
                         <a href="#" *ngFor="let mymessage of mymessages">
                             <div class="user-img">
                                 <img src="{{mymessage.useravatar}}" alt="user" class="img-circle" width="40">
@@ -39,13 +39,13 @@
                                 <span class="time">{{mymessage.time}}</span>
                             </div>
                         </a>
-                        <!-- Message -->
+                      
                     </perfect-scrollbar>
                 </div>
             </li>
         </ul>
     </div>
-</mat-menu>
+</mat-menu> -->
 
 <!-- ============================================================== -->
 <!-- Notification - style you can find in header.scss -->
@@ -58,8 +58,6 @@
         <span class="point"></span>
     </div>
 </button>
-
-
 
 <mat-menu #notification="matMenu" class="mymegamenu">
     <div class="mailbox">

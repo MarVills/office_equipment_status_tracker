@@ -1,4 +1,5 @@
 
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   ApexAxisChartSeries,
@@ -33,11 +34,11 @@ export interface VisitorChartOptions {
 }
 
 @Component({
-  selector: 'app-dashboard-equipments',
-   templateUrl: './dashboard-equipments.component.html',
-  styleUrls: ['./dashboard-equipments.component.scss']
+  selector: 'app-equipment-categories',
+   templateUrl: './equipment-categories.component.html',
+  styleUrls: ['./equipment-categories.component.scss']
 })
-export class DashboardEquipmentsComponent implements OnInit {
+export class EquipmentCategoriesComponent implements OnInit {
 
   @ViewChild('visitor-chart') chart2: ChartComponent = Object.create(null);
   public VisitorChartOptions: Partial<VisitorChartOptions>;
@@ -69,7 +70,7 @@ export class DashboardEquipmentsComponent implements OnInit {
       legend: {
         show: false,
       },
-      labels: ['Mobile', 'Tablet', 'Desktop', 'Other'],
+      labels: ['Mobile', 'Tablet', 'Desktop', 'Others'],
       colors: ['#1e88e5', '#26c6da', '#745af2', '#eceff1'],
       responsive: [
         {
@@ -88,4 +89,5 @@ export class DashboardEquipmentsComponent implements OnInit {
   }
 
 }
+
 
