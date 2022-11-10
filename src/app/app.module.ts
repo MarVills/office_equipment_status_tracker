@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
-import { LoginComponent } from './authentication/login/login.component';
+// import { LoginComponent } from './authentication/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -50,7 +50,7 @@ import { DashboardEquipmentComponent } from './views/dashboard/dashboard-compone
 import { DashboardUserComponent } from './views/dashboard/dashboard-components/dashboard-user/dashboard-user.component';
 import { DashboardRequestComponent } from './views/dashboard/dashboard-components/dashboard-request/dashboard-request.component';
 import { DashboardNotesComponent } from './views/dashboard/dashboard-components/dashboard-notes/dashboard-notes.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -71,7 +71,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
-    LoginComponent,
+    // LoginComponent,
     AppBreadcrumbComponent,
     DashboardComponent, 
     EquipmentsComponent, 
@@ -103,20 +103,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     HttpClientModule,
     SharedModule,
-
+    DragDropModule,
 
     CommonModule,
     DemoMaterialModule,
     FlexLayoutModule,
- 
+
     NgApexchartsModule,
-    FormsModule,
     ReactiveFormsModule,
     RxReactiveFormsModule,
     MatButtonModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-   
     RouterModule.forRoot(AppRoutes),
     HttpClientModule,
     TranslateModule.forRoot({

@@ -13,6 +13,7 @@ import { ReportsComponent } from './views/reports/reports.component';
 import { ManageAccountComponent } from './views/manage-account/manage-account.component';
 import { RequestComponent } from './views/request/request.component';
 import { ActivityLogComponent } from './views/activity-log/activity-log.component';
+import { AboutAppComponent } from './views/about-app/about-app.component';
 
 
 export const AppRoutes: Routes = [
@@ -56,10 +57,10 @@ export const AppRoutes: Routes = [
                 path: 'inventory/release-equipment',
                 component:  ReleaseEquipmentComponent,
                 data: {
-                  title: 'E',
+                  title: 'Release Equipments',
                   urls: [
-                    { title: 'Equipments', url: '/equipments' },
-                    { title: 'Equipments' }
+                    { title: 'Release Equipments', url: '/equipments' },
+                    { title: 'Release Equipments' }
                   ]
                 }
               },
@@ -67,10 +68,10 @@ export const AppRoutes: Routes = [
                 path: 'inventory/recieve-equipment',
                 component: RecieveEquipmentComponent,
                 data: {
-                  title: 'Equipments',
+                  title: 'Recieve Equipments',
                   urls: [
-                    { title: 'Equipments', url: '/equipments' },
-                    { title: 'Equipments' }
+                    { title: 'Recieve Equipments', url: '/equipments' },
+                    { title: 'Recieve Equipments' }
                   ]
                 }
               },
@@ -129,11 +130,38 @@ export const AppRoutes: Routes = [
                   ]
                 }
               },
+              {
+                path: 'about-app',
+                component: AboutAppComponent,
+                data: {
+                  title: 'About App',
+                  urls: [
+                    { title: 'About App', url: '/about-app' },
+                    { title: 'About App' }
+                  ]
+                }
+              },
+              {
+                path: 'manage-account',
+                component: ManageAccountComponent,
+                data: {
+                  title: 'Manage Account',
+                  urls: [
+                    { title: 'Manage Account', url: '/manage-account' },
+                    { title: 'Manage Account' }
+                  ]
+                }
+              },
         ]
     },
+    // {
+    //     path: 'login',
+    //     component: LoginComponent,
+    // },
     {
-        path: 'login',
-        component: LoginComponent,
+      path: 'authentication',
+      loadChildren:
+          () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
     },
 
     {

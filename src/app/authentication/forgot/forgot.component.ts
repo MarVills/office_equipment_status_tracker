@@ -23,6 +23,10 @@ export class ForgotComponent implements OnInit {
       email: [
         null,
         Validators.compose([Validators.required, CustomValidators.email])
+      ],
+      requestMessage: [
+        null,
+        Validators.compose([Validators.required])
       ]
     });
   }

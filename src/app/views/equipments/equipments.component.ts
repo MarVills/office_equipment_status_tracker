@@ -67,25 +67,32 @@ export class EquipmentsComponent implements OnInit {
 
   onFetchEquipments(){
     this.equipments$.subscribe((responseDTO) => {
-      console.log(responseDTO);
+      // console.log(responseDTO);
       EQUIPMENT_DATA.splice(0)
       for (var response of responseDTO) {
-        console.log(response);
+        // console.log(response);
         EQUIPMENT_DATA.push(response);
-        console.log("equipment data", EQUIPMENT_DATA);
+        // console.log("equipment data", EQUIPMENT_DATA);
       }
     })
     this.refresh();
   }
 
-  onAddEquipment(formDirective: FormGroupDirective){
-    var data = this._equipmentForm.value;
-    EQUIPMENT_DATA.push(data)
-    this.fireStore.collection('equipments').add(data);
-    this.refresh();
-    this.clearForm();
-    formDirective.resetForm();
-  }
+  // onAddEquipment(formDirective: FormGroupDirective){
+  //   var data = this._equipmentForm.value;
+  //   EQUIPMENT_DATA.push(data)
+
+  //   this.fireStore.collection('equipments').add(data).then(res => {
+  //     console.log(res);
+  //   })
+  //   .catch(e => {
+  //       console.log(e);
+  //   });
+    
+  //   this.refresh();
+  //   this.clearForm();
+  //   formDirective.resetForm();
+  // }
 
   // onSelectEditEquipment(data: EquipmentDTO){
   //   this.isEdit = true;
@@ -119,7 +126,7 @@ export class EquipmentsComponent implements OnInit {
   // }
 
   onDeleteEquipment(data: EquipmentDTO){
-    console.log(data);
+    // console.log(data);
     this.fireStore.collection('equipments').doc(data.id).delete();
     // this.fireStore.collection('equipments').doc(data.id)
     // this.fireStore.collection('equipments', (ref)=>{
@@ -139,6 +146,7 @@ export class EquipmentsComponent implements OnInit {
   refresh(){
     setTimeout(() => {
       this.dataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
+      // console.log("text ===")
     }, 1000);
   }
 
@@ -147,7 +155,7 @@ export class EquipmentsComponent implements OnInit {
   }
 
   openAddDialog(): void {
-    console.log("clicked")
+    // console.log("clicked")
     const addDialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
       data: {},
@@ -158,7 +166,7 @@ export class EquipmentsComponent implements OnInit {
   }
 
   openEditDialog(data: any): void {
-    console.log("clicked")
+    // console.log("clicked")
     const editDialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
       data: {

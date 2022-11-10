@@ -24,6 +24,7 @@ import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
+import {EquipmentsService} from '../../../../store/services/equipments.service'
 
 @Component({
   selector: 'app-equipments',
@@ -43,6 +44,7 @@ export class DialogComponent implements OnInit {
   constructor(
     breakpointObserver: BreakpointObserver,
     private formBuilder: FormBuilder,
+    private equipmentsService: EquipmentsService,
     private fireStore: AngularFirestore) { 
     breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
@@ -79,12 +81,12 @@ export class DialogComponent implements OnInit {
 
   onFetchEquipments(){
     this.equipments$.subscribe((responseDTO) => {
-      console.log(responseDTO);
+      // console.log(responseDTO);
       EQUIPMENT_DATA.splice(0)
       for (var response of responseDTO) {
-        console.log(response);
+        // console.log(response);
         EQUIPMENT_DATA.push(response);
-        console.log("equipment data", EQUIPMENT_DATA);
+        // console.log("equipment data", EQUIPMENT_DATA);
       }
     })
     this.refresh();
@@ -93,8 +95,11 @@ export class DialogComponent implements OnInit {
   onAddEquipment(formDirective: FormGroupDirective){
     var data = this._equipmentForm.value;
     EQUIPMENT_DATA.push(data)
-    this.fireStore.collection('equipments').add(data);
-    this.refresh();
+    this.equipmentsService.onAddEquipment(data).then(res => {
+      console.log(res);
+    })
+    
+    // this.refresh();
     this.clearForm();
     formDirective.resetForm();
   }
@@ -107,7 +112,7 @@ export class DialogComponent implements OnInit {
 
   onEditEquipment(formDirective: FormGroupDirective){
     var value = this.toEditData
-    console.log(value);
+    // console.log(value);
     this.isEdit = false;
     this.fireStore.collection('equipments').doc(value.id).update(this._equipmentForm.value);
    
@@ -131,15 +136,15 @@ export class DialogComponent implements OnInit {
   }
 
   onDeleteEquipment(data: EquipmentDTO){
-    console.log(data);
+    // console.log(data);
     // this.fireStore.collection('equipments').doc(data.id).delete();
     // this.fireStore.collection('equipments').doc(data.id)
     this.fireStore.collection('equipments', (ref)=>{
       var returndata = ref.where('name', '==', 'tyu')
 
       var ref2= ref.where('name', '==', 'tyu')
-      console.log("ref2: ", ref2)
-      console.log("returndata",ref)
+      // console.log("ref2: ", ref2)
+      // console.log("returndata",ref)
       
       return returndata;
     });

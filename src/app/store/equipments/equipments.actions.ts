@@ -3,55 +3,55 @@ import { Equipment, EquipmentDTO } from '../state/equipments.state';
 
 
 
-export const requestFetchProductsACTION = createAction(
+export const requestFetchEquipmentsACTION = createAction(
   '[Products] Request Fetch Equipments',
   props<{ page: number }>()
 );
-export const successFetchProductsACTION = createAction(
+export const successFetchEquipmentsACTION = createAction(
  '[Products] Success Fetch Equipments',
   props<{payload: EquipmentDTO[] }>(),
 
 );
 
-export const requestFetchProductACTION = createAction(
+export const requestFetchEquipmentACTION = createAction(
   '[ Products ] Request Fetch Equipment',
   props<{payload: number }>()
 );
-export const successFetchProductACTION = createAction(
+export const successFetchEquipmentACTION = createAction(
   '[ Products ] Success Fetch Equipment',
   props<{payload: EquipmentDTO }>()
 );
 
-export const requestAddProductACTION = createAction(
+export const requestAddEquipmentACTION = createAction(
   '[ Products ] Request Add Equipment',
   props<{payload: Equipment}>()
 );
 
-export const successAddProductACTION = createAction(
+export const successAddEquipmentACTION = createAction(
   '[ Products ] Success Add Equipment',
   props<{payload: EquipmentDTO}>()
 );
 
-export const requestDeleteProductACTION = createAction(
+export const requestDeleteEquipmentACTION = createAction(
   '[ Products ] Request Delete Equipment',
   props<{payload: number}>()
 );
 
-export const successDeleteProductACTION = createAction(
+export const successDeleteEquipmentACTION = createAction(
   '[ Products ] Success Delete Equipment',
 );
 
-export const requestUpdateProductACTION = createAction(
+export const requestUpdateEquipmentACTION = createAction(
   '[Products] Request Update Equipment',
   props<{ id: any, payload: any }>()
 );
 
-export const successUpdateProductACTION = createAction(
+export const successUpdateEquipmentACTION = createAction(
   '[ Products ] Success Update Equipment',
   props<{payload: EquipmentDTO}>()
 );
 
-export const onProductFailure = createAction(
+export const onEquipmentFailure = createAction(
   '[ Products ] Products Failure',
   props<{ error: any }>()
 );
