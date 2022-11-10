@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-content>
-        <mat-card-title class="equipment-title" routerLink="/spa/equipments">Equipments</mat-card-title>
+        <mat-card-title class="equipment-title" routerLink="/spa/equipments">{{texts.equipments | translate}}</mat-card-title>
         <mat-card-subtitle>Different categories in items recorded</mat-card-subtitle>
         <div id="visitor-chart" class="m-t-40 p-t-30 p-b-20 d-flex flex-column">
             <apx-chart [series]="VisitorChartOptions.series" [chart]="VisitorChartOptions.chart"

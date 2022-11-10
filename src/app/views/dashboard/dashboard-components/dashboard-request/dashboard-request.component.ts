@@ -1,21 +1,6 @@
-// import { Component, OnInit } from '@angular/core';
-
-// @Component({
-//   selector: 'app-dashboard-request',
-//   templateUrl: './dashboard-request.component.html',
-//   styleUrls: ['./dashboard-request.component.scss']
-// })
-// export class DashboardRequestComponent implements OnInit {
-
-//   constructor() { }
-
-//   ngOnInit(): void {
-//   }
-
-// }
 
 import { Component, OnInit } from '@angular/core';
-
+import { TEXTS } from '../../dashboardTexts';
 @Component({
   selector: 'app-dashboard-request',
   templateUrl: './dashboard-request.component.html',
@@ -23,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardRequestComponent implements OnInit {
 
-  // This is for the comments
+  texts = TEXTS;
   mycomments = [
     {
       name: 'James Anderson',

@@ -1,6 +1,7 @@
 
 
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { TEXTS } from '../../dashboardTexts';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -42,6 +43,8 @@ export class EquipmentCategoriesComponent implements OnInit {
 
   @ViewChild('visitor-chart') chart2: ChartComponent = Object.create(null);
   public VisitorChartOptions: Partial<VisitorChartOptions>;
+
+  texts= TEXTS;
 
   constructor() {
     this.VisitorChartOptions = {

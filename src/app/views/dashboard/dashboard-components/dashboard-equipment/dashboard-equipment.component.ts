@@ -1,6 +1,7 @@
 
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { TEXTS } from '../../dashboardTexts';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -27,6 +28,8 @@ export class DashboardEquipmentComponent implements OnInit {
 
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   public inexpuchartOptions: Partial<inexpuchartOptions>;
+
+  texts = TEXTS;
 
   constructor(){
     
@@ -111,5 +114,8 @@ export interface inexpuchartOptions {
   legend: ApexLegend;
   grid: ApexGrid;
 }
+
+
+
 
 
