@@ -1,15 +1,13 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { EQUIPMENT_DATA } from '../../store/state/equipments.state';
 import { Equipment, EquipmentDTO } from 'src/app/Models/equipment.model';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs/internal/Observable';
-import { BehaviorSubject } from 'rxjs';
+import { FormGroup, FormGroupDirective, } from '@angular/forms';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog} from '@angular/material/dialog';
+import { EquipmentsService } from 'src/app/store/services/equipments.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'app-equipments',
@@ -20,18 +18,15 @@ export class EquipmentsComponent implements OnInit {
   
   displayedColumns = [ 'name', 'status', 'category', 'action'];
   dataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
-  equipments$ = this.getObservable(this.fireStore.collection('equipments')) as Observable<Equipment[]>;
   _equipmentForm!: FormGroup;
-  
   toEditData!:EquipmentDTO;
   
- 
-
   constructor(
     breakpointObserver: BreakpointObserver,
-    private formBuilder: FormBuilder,
-    private fireStore: AngularFirestore,
-    public dialog: MatDialog,) { 
+    public dialog: MatDialog,
+    private equipmentService: EquipmentsService,
+    private sharedService: SharedService
+    ) { 
     breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
           [ 'name', 'status', 'category', 'action'] :
@@ -40,138 +35,50 @@ export class EquipmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.equipmentForm();
-    this.onFetchEquipments();
+    this.equipmentService.onFetchEquipments();
+    this.refresh()
   }
   
-  equipmentForm(editData?: Equipment){
-    this._equipmentForm = this.formBuilder.group({
-      name: new FormControl(editData?editData.name:"", Validators.required),
-      status: new FormControl(editData?editData.status:"", Validators.required),
-      price: new FormControl(editData?editData.price:"", [
-        Validators.required,
-        RxwebValidators.numeric({allowDecimal:true,isFormat:true})  
-      ]),
-      category: new FormControl(editData?editData.category:"", Validators.required),
-      description: new FormControl(editData?editData.description:"", Validators.required),
-     });
-  }
-
-  getObservable(collection: AngularFirestoreCollection<Equipment>){
-    const subject = new BehaviorSubject<Equipment[]>([]);
-    collection.valueChanges({ idField: 'id' }).subscribe((val: Equipment[]) => {
-      subject.next(val);
-    });
-    return subject;
-  };
-
-  onFetchEquipments(){
-    this.equipments$.subscribe((responseDTO) => {
-      // console.log(responseDTO);
-      EQUIPMENT_DATA.splice(0)
-      for (var response of responseDTO) {
-        // console.log(response);
-        EQUIPMENT_DATA.push(response);
-        // console.log("equipment data", EQUIPMENT_DATA);
-      }
+   onDelete(data: EquipmentDTO){
+    this.equipmentService.onDeleteEquipment(data).then((res)=>{
+      this.sharedService.openSnackBar("Deleted successfully", "Undo")
     })
     this.refresh();
-  }
-
-  // onAddEquipment(formDirective: FormGroupDirective){
-  //   var data = this._equipmentForm.value;
-  //   EQUIPMENT_DATA.push(data)
-
-  //   this.fireStore.collection('equipments').add(data).then(res => {
-  //     console.log(res);
-  //   })
-  //   .catch(e => {
-  //       console.log(e);
-  //   });
-    
-  //   this.refresh();
-  //   this.clearForm();
-  //   formDirective.resetForm();
-  // }
-
-  // onSelectEditEquipment(data: EquipmentDTO){
-  //   this.isEdit = true;
-  //   this.toEditData = data;
-  //   this.equipmentForm(data)
-  // }
-
-  // onEditEquipment(formDirective: FormGroupDirective){
-  //   var value = this.toEditData
-  //   console.log(value);
-  //   this.isEdit = false;
-  //   this.fireStore.collection('equipments').doc(value.id).update(this._equipmentForm.value);
-   
-  //     EQUIPMENT_DATA[EQUIPMENT_DATA.indexOf({
-  //       name: value.name,
-  //       status: value.status,
-  //       price: value.price, 
-  //       category: value.category,
-  //       description: value.description
-  //     })] = this._equipmentForm.value;
-        
-    
-    
-  //   formDirective.resetForm();
-  //   this.refresh();
-  // }
-
-  // onCancelEdit(formDirective: FormGroupDirective){
-  //   this.isEdit = false
-  //   formDirective.resetForm();
-  // }
-
-  onDeleteEquipment(data: EquipmentDTO){
-    // console.log(data);
-    this.fireStore.collection('equipments').doc(data.id).delete();
-    // this.fireStore.collection('equipments').doc(data.id)
-    // this.fireStore.collection('equipments', (ref)=>{
-    //   var returndata = ref.where('name', '==', 'tyu')
-
-    //   var ref2= ref.where('name', '==', 'tyu')
-    //   console.log("ref2: ", ref2)
-    //   console.log("returndata",ref)
-      
-    //   return returndata;
-    // });
-    
-    EQUIPMENT_DATA.splice(EQUIPMENT_DATA.indexOf(data), 1)
-    this.refresh()
   }
 
   refresh(){
     setTimeout(() => {
       this.dataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
-      // console.log("text ===")
     }, 1000);
   }
 
-  clearForm(){
-    this._equipmentForm.reset()
+  clearForm(formDirective: FormGroupDirective){
+    this._equipmentForm.reset();
+    formDirective.resetForm();
   }
 
   openAddDialog(): void {
-    // console.log("clicked")
+    this.equipmentService.isEdit = false;
     const addDialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
       data: {},
     });
-    addDialogRef.afterClosed().subscribe(result => {
+    addDialogRef.afterClosed().subscribe(() => {
       this.refresh()
     });
   }
 
   openEditDialog(data: any): void {
-    // console.log("clicked")
+    this.equipmentService.isEdit = true;
+    this.equipmentService.toEditData = data;
     const editDialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
-      data: {
-        isEdit: true,
-        data: data
+      data: { 
+        name: data.name, 
+        status: data.status, 
+        category: data.category, 
+        price: data.price, 
+        description: data.description 
       },
     });
     editDialogRef.afterClosed().subscribe(result => {

@@ -1,72 +1,18 @@
 
-<div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center" fxLayout.xs="column">
- 
-    <!-- <div fxFlex.gt-xs="35" fxFlex="100">
-        <mat-card>
-            <mat-card-content>
-             
-                <div fxLayout="column" fxLayoutWrap="wrap">
-            
-                    <div fxFlex.gt-sm="50" fxFlex.gt-xs="100"> Add Equipment </div>
 
-                    <form [formGroup]="_equipmentForm" (ngSubmit)="onAddEquipment(formDirective)" #formDirective="ngForm"  class="m-t-20">
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Name</mat-label>
-                            <input 
-                            matInput
-                            formControlName="name"
-                             >
-                        </mat-form-field>
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Status</mat-label>
-                            <input 
-                            matInput
-                            formControlName="status"
-                             >
-                        </mat-form-field>
-                    
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Category</mat-label>
-                            <input 
-                            matInput
-                            formControlName="category"
-                             >
-                        </mat-form-field>
-
-                        <div> Equipment Details</div><br/>
-
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Price</mat-label>
-                            <input 
-                            matInput
-                            formControlName="price"
-                             >
-                        </mat-form-field>
-            
-                        <mat-form-field class="example-full-width" appearance="outline">
-                            <mat-label>Description</mat-label>
-                            <textarea 
-                            matInput
-                            formControlName="description"
-                             ></textarea>
-                        </mat-form-field>
-
-                        <div fxLayout="row" fxLayout.xs="column" class="center-item">
-                            <button *ngIf="!isEdit" type="submit" class="button-margin button-width" mat-raised-button color="primary">Add</button>
-                            <button *ngIf="isEdit" type="button" (click)="onCancelEdit(formDirective)" class="button-margin button-width" mat-raised-button color="basic">Cancel</button>
-                            <button *ngIf="isEdit" type="button" (click)="onEditEquipment(formDirective)" class="button-margin button-width" mat-raised-button color="primary">Edit</button>
-                        </div> 
-
-                    </form>
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </div> -->
-    <!-- column -->
+<div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center" fxLayout.xs="column" class="z-index-50">
     <mat-card fxFlex.gt-xs="100">
+        
         <mat-card-content>
-            <mat-card-title>Lists of office equipments</mat-card-title>
+           <div fxLayout="row" class="display-flex">
+                <mat-card-title  >Lists of office equipments</mat-card-title>
+                <button mat-raised-button type="button" (click)="openAddDialog()" color="primary" >
+                    <mat-icon class="md-36">add</mat-icon>
+                </button>
+           </div>
+            
             <div class="responsive-table" >
+                
                 <mat-table #table [dataSource]="dataSource">
 
                     <!-- Position Column -->
@@ -111,7 +57,7 @@
                             <span class="header-label">Action:</span>
                             <div class="buttons">
                                 <button class="action-button" (click)="openEditDialog(element)" mat-raised-button color="primary">Edit</button>
-                                <button class="action-button" (click)="onDeleteEquipment(element)"mat-raised-button color="warn">Delete</button>
+                                <button class="action-button" (click)="onDelete(element)"mat-raised-button color="warn">Delete</button>
                             </div>
                         </mat-cell>
                     </ng-container>
@@ -122,7 +68,7 @@
             </div>
         </mat-card-content>
     </mat-card>
-    <button type="button" (click)="openAddDialog()" mat-fab color="primary" class="add-button">
+    <!-- <button type="button" (click)="openAddDialog()" mat-fab color="primary" class="add-button">
         <mat-icon>add</mat-icon>
-    </button>
+    </button> -->
 </div>

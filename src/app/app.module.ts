@@ -15,7 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
-// import { LoginComponent } from './authentication/login/login.component';
 import { AuthGuard } from './auth.guard';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -51,6 +50,8 @@ import { DashboardUserComponent } from './views/dashboard/dashboard-components/d
 import { DashboardRequestComponent } from './views/dashboard/dashboard-components/dashboard-request/dashboard-request.component';
 import { DashboardNotesComponent } from './views/dashboard/dashboard-components/dashboard-notes/dashboard-notes.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarComponent } from './shared/components/snackbar/snackbar.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -92,6 +93,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DashboardUserComponent,
     DashboardRequestComponent,
     DashboardNotesComponent,
+    SnackbarComponent,
+
  
   ],
   imports: [
@@ -104,19 +107,18 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     SharedModule,
     DragDropModule,
-
     CommonModule,
     DemoMaterialModule,
     FlexLayoutModule,
-
     NgApexchartsModule,
     ReactiveFormsModule,
     RxReactiveFormsModule,
     MatButtonModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    MatSnackBarModule,
     AngularFirestoreModule,
-    RouterModule.forRoot(AppRoutes),
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    RouterModule.forRoot(AppRoutes),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -125,7 +127,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       }
     }),
     StoreModule.forRoot({}, {}),
-
   ],
   providers: [
     AuthGuard,

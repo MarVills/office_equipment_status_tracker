@@ -1,6 +1,7 @@
 import { DecimalPipe } from "@angular/common";
 
 export interface Equipment {
+    id?: string;
     name: string;
     status: string;
     price: number;

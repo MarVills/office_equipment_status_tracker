@@ -1,10 +1,15 @@
-<div fxFlex.gt-xs="60" fxFlex.gt-md="7100" fxFlex="100">
+<div fxFlex.gt-xs="100" fxFlex.gt-md="7100" fxFlex="100">
     <!-- <mat-card>
         <mat-card-content> -->
             <mat-icon [mat-dialog-close]="" class="close-icon align-right" color="warn">close</mat-icon>
             <div fxLayout="column" fxLayoutWrap="wrap">
                 <!-- column -->
-                <div fxFlex.gt-sm="50" fxFlex="100"> Add Equipment </div>
+                <div *ngIf="!this.equipmentsService.isEdit" fxFlex.gt-sm="50" fxFlex="100">
+                    <strong> Add Equipment </strong>
+                </div>
+                <div *ngIf="this.equipmentsService.isEdit" fxFlex.gt-sm="50" fxFlex="100"> 
+                    <strong> Edit Equipment </strong>
+                </div>
 
                 <form [formGroup]="_equipmentForm" (ngSubmit)="onAddEquipment(formDirective)" #formDirective="ngForm"  class="m-t-20">
                     <mat-form-field class="example-full-width" appearance="outline">
@@ -54,9 +59,9 @@
                     </mat-form-field>
 
                     <div fxLayout="row" fxLayout.xs="column" class="center-item">
-                        <button *ngIf="!isEdit" type="submit" class="button-margin button-width" mat-raised-button [mat-dialog-close]=""  color="primary">Add</button>
-                        <button *ngIf="isEdit" type="button" (click)="onCancelEdit(formDirective)" [mat-dialog-close]=""  class="button-margin button-width" mat-raised-button color="basic">Cancel</button>
-                        <button *ngIf="isEdit" type="button" (click)="onEditEquipment(formDirective)" [mat-dialog-close]=""  class="button-margin button-width" mat-raised-button color="primary">Edit</button>
+                        <button *ngIf="!this.equipmentsService.isEdit" type="submit" class="button-margin button-width" mat-raised-button [mat-dialog-close]=""  color="primary">Add</button>
+                        <button *ngIf="this.equipmentsService.isEdit" type="button" (click)="onCancelEdit(formDirective)" [mat-dialog-close]=""  class="button-margin button-width" mat-raised-button color="basic">Cancel</button>
+                        <button *ngIf="this.equipmentsService.isEdit" type="button" (click)="onEditEquipment(formDirective)" [mat-dialog-close]=""  class="button-margin button-width button-purple" mat-raised-button >Edit</button>
                     </div> 
 
                 </form>
