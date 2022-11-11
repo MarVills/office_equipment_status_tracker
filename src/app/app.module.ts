@@ -36,7 +36,7 @@ import { environment } from 'src/environments/environment';
 import { ChecklistComponent } from './views/checklist/checklist.component';
 import { ReportsComponent } from './views/reports/reports.component';
 import { ManageAccountComponent } from './views/manage-account/manage-account.component';
-import { RequestComponent } from './views/request/request.component';
+import { RequestComponent, EmployeeDialogContent } from './views/request/request.component';
 import { ActivityLogComponent } from './views/activity-log/activity-log.component';
 import { SettingsComponent } from './views/settings/settings.component';
 import { AboutAppComponent } from './views/about-app/about-app.component';
@@ -52,6 +52,8 @@ import { DashboardNotesComponent } from './views/dashboard/dashboard-components/
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './shared/components/snackbar/snackbar.component';
+import { AddRequestComponent } from './views/request/components/add-request/add-request.component';
+import { DatePipe } from '@angular/common';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -94,6 +96,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DashboardRequestComponent,
     DashboardNotesComponent,
     SnackbarComponent,
+    AddRequestComponent,
+    EmployeeDialogContent,
 
  
   ],
@@ -129,6 +133,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     StoreModule.forRoot({}, {}),
   ],
   providers: [
+    DatePipe,
     AuthGuard,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
