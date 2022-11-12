@@ -55,6 +55,7 @@ import { SnackbarComponent } from './shared/components/snackbar/snackbar.compone
 import { AddRequestComponent } from './views/request/components/add-request/add-request.component';
 import { DatePipe } from '@angular/common';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -123,6 +124,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AngularFirestoreModule,
     HttpClientModule,
     NgxDatatableModule,
+    Ng2SearchPipeModule,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(AppRoutes),
     TranslateModule.forRoot({
