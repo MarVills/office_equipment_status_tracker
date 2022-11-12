@@ -35,19 +35,22 @@ const MENUITEMS = [
         state: 'dashboard',
         name: 'Dashboard',
         type: 'link',
-        icon: 'av_timer'
+        icon: 'av_timer',
+        toolTip: 'Go back to Dashboard'
     },
     {
         state: 'checklist',
         name: 'Checklist',
         type: 'link',
-        icon: 'playlist_add_check'
+        icon: 'playlist_add_check',
+        toolTip: 'Go to equipments checklist page'
     },
     {
         state: 'request',
         name: 'Requests',
         type: 'link',
-        icon: 'exit_to_app'
+        icon: 'exit_to_app',
+        toolTip: 'Go to requests page'
     },
     {
         state: 'inventory',
@@ -55,10 +58,11 @@ const MENUITEMS = [
         type: 'sub',
         icon: 'dvr',
         badge: [{ type: 'purple', value: '3' }],
+        toolTip: 'Equipment\'s inventory ',
         children: [
-            { state: 'equipments', name: 'Equipments', type: 'link', icon: "weekend"},
-            { state: 'release-equipment', name: 'Release Equipments', type: 'link', icon: "vertical_align_top"},
-            { state: 'recieve-equipment', name: 'Recieve Equipments', type: 'link', icon: "vertical_align_bottom" },
+            { state: 'equipments', name: 'Equipments', type: 'link', toolTip: 'Go to list of equipments', icon: "weekend"},
+            { state: 'release-equipment', name: 'Release Equipments', type: 'link', toolTip: 'See list of released equipments', icon: "vertical_align_top"},
+            { state: 'recieve-equipment', name: 'Recieve Equipments', type: 'link', toolTip: 'See list of recieved equipments', icon: "vertical_align_bottom" },
         ]
     },
     // {
@@ -71,13 +75,15 @@ const MENUITEMS = [
         state: 'reports',
         name: 'Reports',
         type: 'link',
-        icon: 'trending_up'
+        icon: 'trending_up',
+        toolTip: 'Go to reports page'
     },
     {
         state: 'activity-log',
         name: 'Activity Log',
         type: 'link',
-        icon: 'format_list_bulleted'
+        icon: 'format_list_bulleted',
+        toolTip: 'Go to activity page'
     },
     // {
     //     state: 'notes',

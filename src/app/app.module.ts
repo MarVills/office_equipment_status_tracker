@@ -54,12 +54,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './shared/components/snackbar/snackbar.component';
 import { AddRequestComponent } from './views/request/components/add-request/add-request.component';
 import { DatePipe } from '@angular/common';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
-
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -121,6 +122,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSnackBarModule,
     AngularFirestoreModule,
     HttpClientModule,
+    NgxDatatableModule,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(AppRoutes),
     TranslateModule.forRoot({

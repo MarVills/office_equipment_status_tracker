@@ -32,7 +32,7 @@ interface todos {
 })
 export class ChecklistComponent implements  OnInit{
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    
   }
     
       good= [
