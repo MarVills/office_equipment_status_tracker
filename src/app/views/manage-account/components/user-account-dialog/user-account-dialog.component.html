@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Add New User</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="_accountDialogForm" (ngSubmit)="createAccount()" #formDirective="ngForm">
+  <form [formGroup]="_accountDialogForm" (ngSubmit)="createAccount(formDirective)" #formDirective="ngForm">
 
     <mat-form-field>
       <input 
@@ -79,7 +79,7 @@
       <button mat-button mat-dialog-close>Cancel</button>
       <button 
         mat-button 
-        [mat-dialog-close]=""
+        [mat-dialog-close]="_accountDialogForm.valid"
         [disabled]="!_accountDialogForm.valid"
         type="submit">
         AddAccount
