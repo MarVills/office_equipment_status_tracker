@@ -2,12 +2,24 @@
 <mat-dialog-content class="mat-typography">
   <form #userForm="ngForm">
     <mat-form-field>
-      <input type="text" matInput required id="contactname" name="name" [(ngModel)]="local_data.txtContactname"
-        placeholder="name here">
+      <input 
+      type="text" 
+      matInput 
+      required 
+      id="contactname"
+      name="name" 
+      [(ngModel)]="local_data.txtContactname"
+      placeholder="User name">
     </mat-form-field>
     <mat-form-field>
-      <input type="text" matInput required id="contactpost" name="post" [(ngModel)]="local_data.txtContactPost"
-        placeholder="post here">
+      <input 
+      type="text" 
+      matInput 
+      required 
+      id="contactpost" 
+      name="post" 
+      [(ngModel)]="local_data.txtContactPost"
+      placeholder="post here">
     </mat-form-field>
     <mat-form-field>
       <input type="text" matInput required id="contactadd" name="address" [(ngModel)]="local_data.txtContactadd"

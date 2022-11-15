@@ -39,17 +39,21 @@ export class EquipmentsEffects {
     return subject;
   };
   
-  // fetchEquipmentsEFFECT$: Observable<Action> = createEffect(() => this.actions$.pipe(
-  //   ofType(equipmentActions.requestFetchEquipmentsACTION),
-  //   switchMap((_)=>{
-  //     return this.fireStore.collection('equipments').valueChanges({idField: 'id'}).pipe(
-  //       switchMap((data: any)=>{
-  //         return equipmentActions.successFetchEquipmentsACTION({ payload: data })
-  //       }),
-  //       catchError((error: Error) => of(equipmentActions.onEquipmentFailure({ error: error })))
-  //     )
-  //   })
-  // ));
+  fetchEquipmentsEFFECT$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    ofType(equipmentActions.requestFetchEquipmentsACTION),
+    // switchMap((_)=>{
+    //   const subject = new BehaviorSubject<Equipment[]>([]);
+    //   return this.fireStore.collection('equipments').valueChanges({ idField: 'id' }).subscribe((val: any) => {
+    //     subject.next(val);
+    //   });
+    //   // .pipe(
+    //   //   switchMap((data: any)=>{
+    //   //     return equipmentActions.successFetchEquipmentsACTION({ payload: data })
+    //   //   }),
+    //   //   catchError((error: Error) => of(equipmentActions.onEquipmentFailure({ error: error })))
+    //   // )
+    // })
+  ));
 // ===========================================================================
     // mergeMap(() =>{
     //   return this.http.get<any>(`/api/products?page=${res.page.toString()}`, this.config).pipe(
