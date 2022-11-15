@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, of, } from 'rxjs';
 // import { HandleTokenService } from 'src/app/shared/handle-token.service';
 import { Equipment, EquipmentDTO } from '../state/equipments.state';
 import * as equipmentActions from './equipments.actions';
-import { EquipmentsService } from '../services/equipments.service';
+import { EquipmentsService } from '../services/inventory/equipments.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { catchError, mergeMap, switchMap } from 'rxjs/operators';
 // import { TokenInterceptor } from 'src/app/shared/token.interceptor';
