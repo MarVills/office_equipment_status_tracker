@@ -53,11 +53,14 @@ export class AdminAccountService implements OnDestroy{
     // })
 
     this.accDetailObservable$.subscribe((responseDTO) => {
+      console.log("resss",responseDTO)
       ACCOUNT_DETAILS_DATA.splice(0)
       for (var response of responseDTO) {
         // ACCOUNT_DETAILS_DATA.push(response);
-        if(response.uid == localStorage.getItem('uid')){
        
+        
+        if(response.uid == localStorage.getItem('uid')){
+          localStorage.setItem("userDocID", response.id!)
           accData = {
             firstName: response.firstName ,
             lastName: response.lastName,
@@ -85,16 +88,16 @@ export class AdminAccountService implements OnDestroy{
     })
   }
 
-  // onEditAccountDetails(currentData: EquipmentDTO, newData: Equipment){
-  //   EQUIPMENT_DATA[EQUIPMENT_DATA.indexOf({
-  //     name: currentData.name,
-  //     status: currentData.status,
-  //     price: currentData.price, 
-  //     category: currentData.category,
-  //     description: currentData.description
-  //   })] = newData;
-  //   return this.fireStore.collection('equipments').doc(currentData.id).update(newData);
-  // }
+  onEditAccountDetails(newData:any){
+    // EQUIPMENT_DATA[EQUIPMENT_DATA.indexOf({
+    //   name: currentData.name,
+    //   status: currentData.status,
+    //   price: currentData.price, 
+    //   category: currentData.category,
+    //   description: currentData.description
+    // })] = newData;
+    return this.fireStore.collection('users').doc(localStorage.getItem('userDocID')!).update(newData);
+  }
 }
 
 export let accData: AccountDetails = {

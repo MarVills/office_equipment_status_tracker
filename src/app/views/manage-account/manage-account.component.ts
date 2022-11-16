@@ -7,6 +7,7 @@ import { ACCOUNT_DETAILS_DATA } from 'src/app/store/state/accounts/manage-accoun
 import { AccountDetails } from 'src/app/store/state/accounts/manage-account.state';
 import { AdminAccountService } from 'src/app/store/services/accounts/admin-account.service';
 import { accData } from 'src/app/store/services/accounts/admin-account.service';
+import { SharedService } from 'src/app/shared/shared.service';
 import { 
   AngularFireStorage,  
   AngularFireStorageReference, 
@@ -30,12 +31,15 @@ export class ManageAccountComponent implements OnInit {
   accDetails!: AccountDetails;
   hide = true;
   _accountDetailsForm!: FormGroup;
+  accountData = accData;
   
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private manageAccount: AdminAccountService,
-    private afStorage: AngularFireStorage) {
+    private afStorage: AngularFireStorage,
+    private sharedService: SharedService,
+    private storage: AngularFireStorage) {
       this.accountDetailsForm();
     }
 
@@ -54,36 +58,21 @@ export class ManageAccountComponent implements OnInit {
         profileImage: new FormControl(""),
         description: new FormControl(accData.description, Validators.required),
       });
-      console.log(accData)
+      this.accountData = accData;
     }, 1000);
   
   }
 
   accountDetailsForm(){
-    
-      // console.log("acccdata",this.manageAccount.accDetailsData)
-      
-      this._accountDetailsForm = this.formBuilder.group({
-        firstName: new FormControl("", Validators.required),
-        lastName: new FormControl("", Validators.required),
-        middleName: new FormControl("", Validators.required),
-        emailAddress: new FormControl("", [Validators.required, Validators.email]),
-        contactNumber: new FormControl("", Validators.required),
-        profileImage: new FormControl(""),
-        description: new FormControl("", Validators.required),
-      });
-
-      // this._accountDetailsForm = this.formBuilder.group({
-      //   firstName: new FormControl(value.firstName, Validators.required),
-      //   lastName: new FormControl(value.lastName, Validators.required),
-      //   middleName: new FormControl(value.middleName, Validators.required),
-      //   emailAddress: new FormControl(value.emailAddress, [Validators.required, Validators.email]),
-      //   contactNumber: new FormControl(value.contactNumber, Validators.required),
-      //   profileImage: new FormControl(""),
-      //   description: new FormControl(value.description, Validators.required),
-      // });
-   
-    
+    this._accountDetailsForm = this.formBuilder.group({
+      firstName: new FormControl("", Validators.required),
+      lastName: new FormControl("", Validators.required),
+      middleName: new FormControl("", Validators.required),
+      emailAddress: new FormControl("", [Validators.required, Validators.email]),
+      contactNumber: new FormControl("", Validators.required),
+      profileImage: new FormControl(""),
+      description: new FormControl("", Validators.required),
+    }); 
   }
 
   uploadImage(): string{
@@ -93,7 +82,9 @@ export class ManageAccountComponent implements OnInit {
   }
 
   imageTest(data: any){
-    console.log(data)
+    // const filePath = `${this.basePath}/${fileUpload.file.name}`;
+    const storageRef = this.storage.ref(data);
+    const uploadTask = this.storage.upload("/storage", data);
   }
 
   openDialog(action: string, obj: any) {
@@ -107,14 +98,15 @@ export class ManageAccountComponent implements OnInit {
       // if (result.event === 'Add') {
       //     this.addContact(result.data);
       // }
-
   });
   }
 
   updateAccount(){
-    // this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value).then(()=>{
-    //   this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
-    // })
+    this.manageAccount.onEditAccountDetails(this._accountDetailsForm.value).then(()=>{
+      this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
+      this.accountData = accData;
+    })
+    
   }
 
   

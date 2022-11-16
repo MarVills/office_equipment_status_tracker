@@ -7,12 +7,19 @@
                 <div class="pro-img">
                     <img src="assets/images/users/3.jpg" width="100" alt="user">
                 </div>
-                <h3 class="m-b-0">Angela Dominic</h3>
+                <h3 class="m-b-0">{{this.accountData.firstName}} {{this.accountData.lastName}}</h3>
+                <br/>
                 <h6 class="m-t-0 ">Admin</h6>
                 <mat-card-actions>
-                    <button mat-raised-button color="warn">Follow</button>
+                    <button mat-raised-button color="warn">Disable</button>
                 </mat-card-actions>
-                <div fxLayout="row" fxLayoutWrap="wrap" class="m-t-30">
+                <br/>
+                <div fxLayout="row" fxLayoutWrap="wrap" class="text-center">
+                  <div fxFlex="100">
+                    <small class="m-0 font-light">{{this.accountData.description}}</small>
+                </div>
+                </div>
+                <!-- <div fxLayout="row" fxLayoutWrap="wrap" class="m-t-30">
                     <div fxFlex.gt-sm="33.33%" fxFlex.gt-xs="33.33%" fxFlex="100">
                         <h3 class="m-0 font-light">1099</h3>
                         <small>Articles</small>
@@ -25,7 +32,7 @@
                         <h3 class="m-0 font-light">6035</h3>
                         <small>Likes</small>
                     </div>
-                </div>
+                </div> -->
             </mat-card-content>
         </mat-card>
     </div>
@@ -38,12 +45,12 @@
             <div fxLayout="row wrap">
               
                 <div fxFlex.gt-sm="33.33" fxFlex="100" class="">
-                    <mat-form-field>
-                      <input 
-                      matInput 
-                      formControlName="firstName"
-                      placeholder="First name">
-                    </mat-form-field>
+                  <mat-form-field>
+                    <input 
+                    matInput 
+                    formControlName="firstName"
+                    placeholder="First name">
+                  </mat-form-field>
                 </div>
                 
                 <div fxFlex.gt-sm="33.33" fxFlex="100" class="">

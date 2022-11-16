@@ -2,8 +2,6 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RxwebValidators } from '@rxweb/reactive-form-validators';
-// import { ContactData } from '../../manage-account.component';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { SharedService } from 'src/app/shared/shared.service';
 import { RegisterService } from 'src/app/store/services/authentication/register.service';
@@ -36,7 +34,6 @@ export class UserAccountDialogComponent implements OnInit{
   }
 
   accountDialogForm(){
-    // var isEdit = this.equipmentsService.isEdit;
     this._accountDialogForm = this.formBuilder.group({
       firstName: new FormControl("", Validators.required),
       lastName: new FormControl("", Validators.required),
@@ -63,7 +60,5 @@ export class UserAccountDialogComponent implements OnInit{
   closeDialog() {
       this.dialogRef.close({ event: 'Cancel' });
   }
-
-
 }
 

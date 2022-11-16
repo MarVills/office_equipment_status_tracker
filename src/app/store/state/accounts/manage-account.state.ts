@@ -1,4 +1,5 @@
 export interface AccountDetails {
+    id?: string,
     firstName: string;
     lastName: string;
     middleName: string;

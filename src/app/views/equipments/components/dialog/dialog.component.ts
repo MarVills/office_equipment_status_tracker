@@ -59,15 +59,15 @@ export class DialogComponent implements OnInit {
   }
 
 
-  onAddEquipment(formDirective: FormGroupDirective){
-    var data = this._equipmentForm.value;
-    EQUIPMENT_DATA.push(data)
-    this.equipmentsService.onAddEquipment(data).then(res => {
-      this.sharedService.openSnackBar("Equipment Added Successfully", "Ok")
-    })
-    this.clearForm(formDirective);
+  // onAddEquipment(formDirective: FormGroupDirective){
+  //   var data = this._equipmentForm.value;
+  //   EQUIPMENT_DATA.push(data)
+  //   this.equipmentsService.onAddEquipment(data).then(res => {
+  //     this.sharedService.openSnackBar("Equipment Added Successfully", "Ok")
+  //   })
+  //   this.clearForm(formDirective);
     
-  }
+  // }
 
   // onSelectEditEquipment(data: EquipmentDTO){
   //   this.equipmentsService.isEdit = true;
@@ -75,12 +75,12 @@ export class DialogComponent implements OnInit {
   //   this.equipmentForm()
   // }
 
-  onEditEquipment(formDirective: FormGroupDirective){
-    this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value).then(()=>{
-      this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
-    })
-    this.clearForm(formDirective)
-  }
+  // onEditEquipment(formDirective: FormGroupDirective){
+  //   this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value).then(()=>{
+  //     this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
+  //   })
+  //   this.clearForm(formDirective)
+  // }
 
   onCancelEdit(formDirective: FormGroupDirective){
     this.equipmentsService.isEdit = false
