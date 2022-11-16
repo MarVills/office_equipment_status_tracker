@@ -44,7 +44,7 @@ export class RegisterService {
         "emailAddress": allData.emailAddress,
         "contactNumber": allData.contactNumber,
         "description": allData.description,
-        "uid": response.user.uid
+        "uid": response.user!.uid
       })
     })
     .catch(response => {

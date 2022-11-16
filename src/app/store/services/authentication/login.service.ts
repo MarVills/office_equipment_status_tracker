@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 
-  userData: Observable<firebase.User>;
+  userData: Observable<any>;
 
   constructor(private angularFireAuth: AngularFireAuth) { 
     this.userData = angularFireAuth.authState;
@@ -15,16 +15,23 @@ export class LoginService {
 
  async signIn(email: string, password: string) {
     var isSignedIn = false; 
-    console.log("userdata",this.userData);
     await this.angularFireAuth
       .signInWithEmailAndPassword(email, password)
       .then(res => {
         console.log('Successfully signed in!', res);
         isSignedIn = true;
+        localStorage.setItem("uid", (res.user!.uid).toString());
       })
       .catch(err => {
         console.log('Something is wrong:',err.message);
       });
     return isSignedIn;
+  }
+
+  signOut(){
+    this.angularFireAuth
+    .signOut();
+    localStorage.removeItem("uid");
+    location.reload();
   }
 }

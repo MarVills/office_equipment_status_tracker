@@ -57,7 +57,7 @@ import { DatePipe } from '@angular/common';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { UserAccountDialogComponent } from './views/manage-account/components/user-account-dialog/user-account-dialog.component';
-
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -127,6 +127,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     HttpClientModule,
     NgxDatatableModule,
     Ng2SearchPipeModule,
+    AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(AppRoutes),
     TranslateModule.forRoot({

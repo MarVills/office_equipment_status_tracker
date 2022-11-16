@@ -3,10 +3,11 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
-import { ContactData } from '../../manage-account.component';
+// import { ContactData } from '../../manage-account.component';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { SharedService } from 'src/app/shared/shared.service';
 import { RegisterService } from 'src/app/store/services/authentication/register.service';
+import { AccountDetails } from 'src/app/store/state/accounts/manage-account.state';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class UserAccountDialogComponent implements OnInit{
 
   constructor(
       public dialogRef: MatDialogRef<UserAccountDialogComponent>,
-      @Optional() @Inject(MAT_DIALOG_DATA) public data: ContactData,
+      @Optional() @Inject(MAT_DIALOG_DATA) public data: AccountDetails,
       private formBuilder: FormBuilder,
       private angularFireAuth: AngularFireAuth,
       private sharedService: SharedService,
@@ -58,18 +59,6 @@ export class UserAccountDialogComponent implements OnInit{
     this._accountDialogForm.reset();
     formDirective.resetForm();
   }
-
-  // signUp(email: string, password: string) {
-
-  //     this.angularFireAuth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then(response => {
-  //       this.sharedService.openSnackBar("Registered Successfully");
-  //     })
-  //     .catch(response => {
-  //       this.sharedService.openSnackBar(response.message)
-  //     });    
-  // }
 
   closeDialog() {
       this.dialogRef.close({ event: 'Cancel' });

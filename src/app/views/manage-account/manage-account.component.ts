@@ -3,6 +3,16 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { Contact } from 'src/app/store/state/accounts/manage-account.state';
 import { UserAccountDialogComponent } from './components/user-account-dialog/user-account-dialog.component';
+import { ACCOUNT_DETAILS_DATA } from 'src/app/store/state/accounts/manage-account.state';
+import { AccountDetails } from 'src/app/store/state/accounts/manage-account.state';
+import { AdminAccountService } from 'src/app/store/services/accounts/admin-account.service';
+import { accData } from 'src/app/store/services/accounts/admin-account.service';
+import { 
+  AngularFireStorage,  
+  AngularFireStorageReference, 
+  AngularFireUploadTask } from '@angular/fire/storage';
+// import { getStorage, ref } from "firebase/storage";
+
 
 @Component({
   selector: 'app-manage-account',
@@ -11,31 +21,80 @@ import { UserAccountDialogComponent } from './components/user-account-dialog/use
 })
 export class ManageAccountComponent implements OnInit {
 
-  closeResult = '';
-  contacts: Contact[] = [];
-  searchText: any;
-  txtContactname = '';
-  txtContactPost = '';
-  txtContactadd = '';
-  txtContactno = '';
-  txtContactinstagram = '';
-  txtContactlinkedin = '';
-  txtContactfacebook = '';
-  
-  hide = true;
-  options: FormGroup;
-  email = new FormControl('', [Validators.required, Validators.email]);
-  
+  ref!: AngularFireStorageReference;
+  task!: AngularFireUploadTask;
 
+  closeResult = '';
+  accounts: AccountDetails[] = [];
+  searchText: any;
+  accDetails!: AccountDetails;
+  hide = true;
+  _accountDetailsForm!: FormGroup;
+  
   constructor(
-    fb: FormBuilder,
-    public dialog: MatDialog
-    ) {
-    this.options = fb.group({
-      hideRequired: false,
-      floatLabel: 'auto'
-    });
-   }
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private manageAccount: AdminAccountService,
+    private afStorage: AngularFireStorage) {
+      this.accountDetailsForm();
+    }
+
+  ngOnInit(): void {
+    this.manageAccount.onFetchAccDetails();
+    this.manageAccount.fetchAccounts();
+    this.accounts = ACCOUNT_DETAILS_DATA;
+    
+    setTimeout(() => {
+      this._accountDetailsForm = this.formBuilder.group({
+        firstName: new FormControl(accData.firstName, Validators.required),
+        lastName: new FormControl(accData.lastName, Validators.required),
+        middleName: new FormControl(accData.middleName, Validators.required),
+        emailAddress: new FormControl(accData.emailAddress, [Validators.required, Validators.email]),
+        contactNumber: new FormControl(accData.contactNumber, Validators.required),
+        profileImage: new FormControl(""),
+        description: new FormControl(accData.description, Validators.required),
+      });
+      console.log(accData)
+    }, 1000);
+  
+  }
+
+  accountDetailsForm(){
+    
+      // console.log("acccdata",this.manageAccount.accDetailsData)
+      
+      this._accountDetailsForm = this.formBuilder.group({
+        firstName: new FormControl("", Validators.required),
+        lastName: new FormControl("", Validators.required),
+        middleName: new FormControl("", Validators.required),
+        emailAddress: new FormControl("", [Validators.required, Validators.email]),
+        contactNumber: new FormControl("", Validators.required),
+        profileImage: new FormControl(""),
+        description: new FormControl("", Validators.required),
+      });
+
+      // this._accountDetailsForm = this.formBuilder.group({
+      //   firstName: new FormControl(value.firstName, Validators.required),
+      //   lastName: new FormControl(value.lastName, Validators.required),
+      //   middleName: new FormControl(value.middleName, Validators.required),
+      //   emailAddress: new FormControl(value.emailAddress, [Validators.required, Validators.email]),
+      //   contactNumber: new FormControl(value.contactNumber, Validators.required),
+      //   profileImage: new FormControl(""),
+      //   description: new FormControl(value.description, Validators.required),
+      // });
+   
+    
+  }
+
+  uploadImage(): string{
+    // const storage = getStorage(); 
+    // const storageRef = ref(storage, 'some-child');
+    return "";
+  }
+
+  imageTest(data: any){
+    console.log(data)
+  }
 
   openDialog(action: string, obj: any) {
   obj.action = action;
@@ -52,102 +111,14 @@ export class ManageAccountComponent implements OnInit {
   });
   }
 
-  addContact(row_obj: ContactData) {
-    this.contacts.push({
-        contactimg: 'assets/images/users/default.png',
-        contactname: row_obj.txtContactname,
-        contactpost: row_obj.txtContactPost,
-        contactadd: row_obj.txtContactadd,
-        contactno: row_obj.txtContactno,
-        contactinstagram: row_obj.txtContactinstagram,
-        contactlinkedin: row_obj.txtContactlinkedin,
-        contactfacebook: row_obj.txtContactfacebook
-    });
+  updateAccount(){
+    // this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value).then(()=>{
+    //   this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
+    // })
   }
- 
-  getErrorMessage() {
-    return this.email.hasError('required')
-      ? 'You must enter a value'
-      : this.email.hasError('email')
-        ? 'Not a valid email'
-        : '';
-  }
-  ngOnInit(): void {
-    this.contacts = [
-      {
-          contactimg: 'assets/images/users/2.jpg',
-          contactname: 'Johnathan Doe',
-          contactpost: 'Web Designer',
-          contactadd: '795 Folsom Ave, Suite 600 San Francisco, CADGE 94107',
-          contactno: '(123) 456-7890',
-          contactinstagram: '254',
-          contactlinkedin: '54',
-          contactfacebook: '154'
-      },
-      {
-          contactimg: 'assets/images/users/8.jpg',
-          contactname: 'Oliver Smith',
-          contactpost: 'Theme Designer',
-          contactadd: '55 E 11th St #1OTH, Suite 600 New York, NY, 10003 ',
-          contactno: '(212) 228-8403',
-          contactinstagram: '150',
-          contactlinkedin: '14',
-          contactfacebook: '165'
-      },
-      {
-          contactimg: 'assets/images/users/4.jpg',
-          contactname: 'George Johnson',
-          contactpost: 'Front End Developer',
-          contactadd: '36 W 138th St, San Francisco New York, NY, 10037',
-          contactno: '(212) 234-0783',
-          contactinstagram: '300',
-          contactlinkedin: '65',
-          contactfacebook: '130'
-      },
-      {
-          contactimg: 'assets/images/users/5.jpg',
-          contactname: 'Harry Potter',
-          contactpost: 'Hacker',
-          contactadd: '2289 5th Ave, Suite 600 San Francisco New York, NY, 10037',
-          contactno: '(212) 456-8403',
-          contactinstagram: '220',
-          contactlinkedin: '38',
-          contactfacebook: '178'
-      },
-      {
-          contactimg: 'assets/images/users/6.jpg',
-          contactname: 'Jack Williams',
-          contactpost: 'Back End Developer',
-          contactadd: '425 5th Ave, San Francisco New York, NY, 10016',
-          contactno: '(154) 456-8745',
-          contactinstagram: '650',
-          contactlinkedin: '150',
-          contactfacebook: '195'
-      },
-      {
-          contactimg: 'assets/images/users/7.jpg',
-          contactname: 'Jacob Jones',
-          contactpost: 'Graphics Designer',
-          contactadd: '17 Stuyvesant Walk, Suite 600 New York, NY, 10009',
-          contactno: '(150) 784-7890',
-          contactinstagram: '151',
-          contactlinkedin: '29',
-          contactfacebook: '160'
-      }
-  ];
-  }
+
+  
 
 }
 
-export interface ContactData {
-  closeResult: string;
-  contacts: Contact[];
-  searchText: any;
-  txtContactname: string;
-  txtContactPost: string;
-  txtContactadd: string;
-  txtContactno: string;
-  txtContactinstagram: string;
-  txtContactlinkedin: string;
-  txtContactfacebook: string;
-}
+

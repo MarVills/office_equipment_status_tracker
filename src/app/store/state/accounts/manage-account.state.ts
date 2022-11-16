@@ -6,6 +6,7 @@ export interface AccountDetails {
     emailAddress: string;
     contactNumber: string;
     description: string;
+    profileimage?: string;
     uid: string;
   }
 
@@ -27,6 +28,24 @@ export interface AllData{
     emailAddress: string;
     contactNumber: string;
     description: string;
+    profileimage?: string;
     password: string;
 }
+
+export const ACCOUNT_DETAILS_DATA: AccountDetails[] = [
+ 
+];
+
+export interface Contact {
+  contactimg: string;
+  contactname: string;
+  contactpost: string;
+  contactadd: string;
+  contactno: string;
+  contactinstagram: string;
+  contactlinkedin: string;
+  contactfacebook: string;
+}
+
+
   

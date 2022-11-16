@@ -82,6 +82,7 @@ export class EquipmentsComponent implements OnInit {
       },
     });
     editDialogRef.afterClosed().subscribe(result => {
+      this.equipmentService.isEdit = false;
       this.refresh()
     });
   }

@@ -11,7 +11,7 @@
                     <strong> Edit Equipment </strong>
                 </div>
 
-                <form [formGroup]="_equipmentForm" (ngSubmit)="onAddEquipment(formDirective)" #formDirective="ngForm"  class="m-t-20">
+                <form [formGroup]="_equipmentForm" (ngSubmit)="onSubmit(formDirective)" #formDirective="ngForm"  class="m-t-20">
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Name</mat-label>
                         <input 
@@ -59,9 +59,9 @@
                     </mat-form-field>
 
                     <div fxLayout="row" fxLayout.xs="column" class="center-item">
-                        <button *ngIf="!this.equipmentsService.isEdit" type="submit" class="button-margin button-width" mat-raised-button [mat-dialog-close]=""  color="primary">Add</button>
-                        <button *ngIf="this.equipmentsService.isEdit" type="button" (click)="onCancelEdit(formDirective)" [mat-dialog-close]=""  class="button-margin button-width" mat-raised-button color="basic">Cancel</button>
-                        <button *ngIf="this.equipmentsService.isEdit" type="button" (click)="onEditEquipment(formDirective)" [mat-dialog-close]=""  class="button-margin button-width button-purple" mat-raised-button >Edit</button>
+                        <!-- <button *ngIf="!this.equipmentsService.isEdit" type="submit" class="button-margin button-width" mat-raised-button [mat-dialog-close]=""  color="primary">{{Add}}</button> -->
+                        <button  type="button" [mat-dialog-close]=""  class="button-margin button-width" mat-raised-button color="basic">Cancel</button>
+                        <button  type="submit"  [mat-dialog-close]="" class="button-margin button-width " color="primary" mat-raised-button >{{actionButton}}</button>
                     </div> 
 
                 </form>

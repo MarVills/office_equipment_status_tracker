@@ -1,29 +1,38 @@
-import { Injectable } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Equipment, EquipmentDTO, EQUIPMENT_DATA } from '../../state/equipments.state';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EquipmentsService {
+export class EquipmentsService implements OnDestroy{
 
-  equipments$ = this.getObservable(this.fireStore.collection('equipments')) as Observable<Equipment[]>;
+  equipmentObservable$ = this.getObservable(this.fireStore.collection('equipments')) as Observable<Equipment[]>;
+  equipments$!: Subscription;
+  fetchEquipments$!: Subscription;
   isEdit:boolean = false;
   toEditData!:EquipmentDTO;
+  
 
   constructor(private fireStore: AngularFirestore) { }
 
+  ngOnDestroy(): void {
+    this.equipments$.unsubscribe();
+    this.fetchEquipments$.unsubscribe();
+  }
+
   getObservable(collection: AngularFirestoreCollection<Equipment>){
     const subject = new BehaviorSubject<Equipment[]>([]);
-    collection.valueChanges({ idField: 'id' }).subscribe((val: Equipment[]) => {
+    this.equipments$ = collection.valueChanges({ idField: 'id' }).subscribe((val: Equipment[]) => {
       subject.next(val);
     });
     return subject;
   };
 
   onFetchEquipments(){
-    this.equipments$.subscribe((responseDTO) => {
+    this.fetchEquipments$ = this.equipmentObservable$.subscribe((responseDTO) => {
       EQUIPMENT_DATA.splice(0)
       for (var response of responseDTO) {
         EQUIPMENT_DATA.push(response);

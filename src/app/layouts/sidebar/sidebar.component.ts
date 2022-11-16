@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { MediaMatcher } from '@angular/cdk/layout';
-
+import { LoginService } from 'src/app/store/services/authentication/login.service';
 
 import { MenuItems } from '../../shared/menu-items/menu-items';
 import { FormControl } from '@angular/forms';
@@ -44,8 +44,8 @@ export class AppSidebarComponent implements OnDestroy {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    public menuItems: MenuItems
-  ) {
+    public menuItems: MenuItems,
+    private loginService: LoginService) {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener("event",this._mobileQueryListener);
@@ -54,4 +54,6 @@ export class AppSidebarComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.mobileQuery.removeEventListener("event",this._mobileQueryListener);
   }
+
+  signOut = () => this.loginService.signOut()
 }

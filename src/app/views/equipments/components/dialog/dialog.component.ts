@@ -20,6 +20,7 @@ export class DialogComponent implements OnInit {
   
   displayedColumns = [ 'name', 'status', 'category', 'action'];
   dataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
+  actionButton: string = "Add";
   
   _equipmentForm!: FormGroup;
   
@@ -40,6 +41,7 @@ export class DialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.equipmentForm();
+    this.equipmentsService.isEdit? this.actionButton = "Edit": "Add"; 
   }
   
   equipmentForm(){
@@ -64,7 +66,7 @@ export class DialogComponent implements OnInit {
       this.sharedService.openSnackBar("Equipment Added Successfully", "Ok")
     })
     this.clearForm(formDirective);
-    formDirective.resetForm();
+    
   }
 
   // onSelectEditEquipment(data: EquipmentDTO){
@@ -74,7 +76,6 @@ export class DialogComponent implements OnInit {
   // }
 
   onEditEquipment(formDirective: FormGroupDirective){
-    this.equipmentsService.isEdit = false;
     this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value).then(()=>{
       this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
     })
@@ -88,6 +89,22 @@ export class DialogComponent implements OnInit {
 
   clearForm(formDirective: FormGroupDirective){
     this._equipmentForm.reset()
+    formDirective.resetForm();
+  }
+
+  onSubmit(formDirective: FormGroupDirective){
+    if(this.equipmentData){
+      this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value).then(()=>{
+        this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
+      })
+    }else{
+      var data = this._equipmentForm.value;
+      EQUIPMENT_DATA.push(data)
+      this.equipmentsService.onAddEquipment(data).then(res => {
+        this.sharedService.openSnackBar("Equipment Added Successfully", "Ok")
+      })
+      this.clearForm(formDirective);
+    }
     formDirective.resetForm();
   }
 
