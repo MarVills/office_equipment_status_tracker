@@ -9,6 +9,7 @@ export interface AccountDetails {
     description: string;
     profileimage?: string;
     uid: string;
+    profileImageID: string
   }
 
 export interface AccountCredentials{

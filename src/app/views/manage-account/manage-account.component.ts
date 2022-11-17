@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Contact } from 'src/app/store/state/accounts/manage-account.state';
@@ -8,10 +8,14 @@ import { AccountDetails } from 'src/app/store/state/accounts/manage-account.stat
 import { AdminAccountService } from 'src/app/store/services/accounts/admin-account.service';
 import { accData } from 'src/app/store/services/accounts/admin-account.service';
 import { SharedService } from 'src/app/shared/shared.service';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { 
   AngularFireStorage,  
   AngularFireStorageReference, 
   AngularFireUploadTask } from '@angular/fire/storage';
+import { Observable, ReplaySubject } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 // import { getStorage, ref } from "firebase/storage";
 
 
@@ -24,7 +28,7 @@ export class ManageAccountComponent implements OnInit {
 
   ref!: AngularFireStorageReference;
   task!: AngularFireUploadTask;
-
+  // private basePath = '/uploads';
   closeResult = '';
   accounts: AccountDetails[] = [];
   searchText: any;
@@ -32,6 +36,14 @@ export class ManageAccountComponent implements OnInit {
   hide = true;
   _accountDetailsForm!: FormGroup;
   accountData = accData;
+  base64Output!: string;
+  selectedFiles?: FileList;
+  currentFileUpload?: FileUpload;
+  percentage = 0;
+  imagePath:any;
+  file!: FileUpload;
+  downloadUrl: string = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+ 
   
   constructor(
     public dialog: MatDialog,
@@ -39,8 +51,11 @@ export class ManageAccountComponent implements OnInit {
     private manageAccount: AdminAccountService,
     private afStorage: AngularFireStorage,
     private sharedService: SharedService,
-    private storage: AngularFireStorage) {
-      this.accountDetailsForm();
+    private storage: AngularFireStorage,
+    private db: AngularFireDatabase,
+    private _sanitizer: DomSanitizer,
+    private el: ElementRef) {
+      this.accountDetailsForm(); 
     }
 
   ngOnInit(): void {
@@ -59,8 +74,9 @@ export class ManageAccountComponent implements OnInit {
         description: new FormControl(accData.description, Validators.required),
       });
       this.accountData = accData;
+      this.downloadUrl = accData.profileImageID? accData.profileImageID: this.downloadUrl
+      
     }, 1000);
-  
   }
 
   accountDetailsForm(){
@@ -75,16 +91,25 @@ export class ManageAccountComponent implements OnInit {
     }); 
   }
 
-  uploadImage(): string{
-    // const storage = getStorage(); 
-    // const storageRef = ref(storage, 'some-child');
-    return "";
-  }
+  imageTest=(event: any)=>{
+    // assets/images/background/profile-bg.jpg
+    let file = event.target.files[0];
+    console.log("file",file)
+    let fileName = this.sharedService.randomString(10);
 
-  imageTest(data: any){
-    // const filePath = `${this.basePath}/${fileUpload.file.name}`;
-    const storageRef = this.storage.ref(data);
-    const uploadTask = this.storage.upload("/storage", data);
+    const filePath = `profiles/${fileName}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, file)
+
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe(downloadURL => {
+          this.downloadUrl = downloadURL
+          // file.name = file.name;
+          // this.saveFileData(fileUpload);
+        })
+      })
+    ).subscribe();
   }
 
   openDialog(action: string, obj: any) {
@@ -102,15 +127,35 @@ export class ManageAccountComponent implements OnInit {
   }
 
   updateAccount(){
-    this.manageAccount.onEditAccountDetails(this._accountDetailsForm.value).then(()=>{
+    var value = this._accountDetailsForm.value;
+    value.profileImageID = this.downloadUrl;
+    this.manageAccount.onEditAccountDetails({
+      firstName: value.firstName,
+      lastName: value.lastName,
+      middleName: value.middleName,
+      emailAddress: value.emailAddress,
+      contactNumber: value.contactNumber,
+      profileImageID: this.downloadUrl,
+      description: value.description
+    }).then(()=>{
       this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
       this.accountData = accData;
     })
     
   }
-
-  
-
 }
+
+export class FileUpload {
+  key!: string;
+  name!: string;
+  url!: string;
+  file: File;
+  constructor(file: File) {
+    this.file = file;
+  }
+}
+
+
+
 
 

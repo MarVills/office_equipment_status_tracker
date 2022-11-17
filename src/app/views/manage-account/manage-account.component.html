@@ -4,8 +4,8 @@
             <img mat-card-image src="assets/images/background/profile-bg.jpg" class="profile-bg-height"
                 alt="Photo of a Shiba Inu">
             <mat-card-content>
-                <div class="pro-img">
-                    <img src="assets/images/users/3.jpg" width="100" alt="user">
+                <div class="pro-img" >
+                    <img src="{{this.downloadUrl}}" width="100" alt="user" matBadge="check">
                 </div>
                 <h3 class="m-b-0">{{this.accountData.firstName}} {{this.accountData.lastName}}</h3>
                 <br/>
@@ -15,7 +15,7 @@
                 </mat-card-actions>
                 <br/>
                 <div fxLayout="row" fxLayoutWrap="wrap" class="text-center">
-                  <div fxFlex="100">
+                  <div fxFlex="100" >
                     <small class="m-0 font-light">{{this.accountData.description}}</small>
                 </div>
                 </div>
@@ -117,9 +117,10 @@
                   placeholder="Select Profile image" 
                   type="file"
                   accept="image/*"
-                  (change)="imageTest(_accountDetailsForm.value.profileImage)">
+                  (change)="imageTest($event)">
                 </div>
                 <!-- <img [src]="localUrl" class="imgPlaceholder"> -->
+                <!-- <img  [src]="this.downloadUrl"> -->
                 
                 <div fxFlex.gt-sm="100" fxFlex="100">
                   <button mat-raised-button color="primary" [disabled]="!_accountDetailsForm.valid">Update Account</button>
@@ -153,7 +154,7 @@
       *ngFor="let account of accounts | filter:searchText">
       <mat-card>
         <mat-card-content class="text-center">
-          <img src="assets/images/users/default.png" class="img-circle border p-5" width="100">
+          <img src="assets/images/users/default.png" class="img-circle border p-5" width="100" >
           <h4 class="card-title m-t-15 m-b-0">{{ account.firstName }} {{ account.lastName }}</h4>
           <small class="text-muted">{{ account.userRole }}</small>
           <div class="m-t-20">

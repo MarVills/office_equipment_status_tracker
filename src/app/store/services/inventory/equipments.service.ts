@@ -53,6 +53,7 @@ export class EquipmentsService implements OnDestroy{
       description: currentData.description
     })] = newData;
     return this.fireStore.collection('equipments').doc(currentData.id).update(newData);
+   
   }
 
   onDeleteEquipment(data: EquipmentDTO){

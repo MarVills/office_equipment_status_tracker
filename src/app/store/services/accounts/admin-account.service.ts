@@ -13,15 +13,6 @@ export class AdminAccountService implements OnDestroy{
   accountDetails$!: Subscription;
   accDetail$!: Subscription;
   accDetailObservable$ = this.getObservable(this.fireStore.collection('users')) as Observable<AccountDetails[]>;
-  firstName!: string;
-  lastName!: string;
-  middleName!:string;
-  userRole!: string;
-  emailAddress!: string;
-  password!: string;
-  description!: string;
-
-
 
   constructor(private fireStore: AngularFirestore) { }
 
@@ -39,26 +30,11 @@ export class AdminAccountService implements OnDestroy{
   }; 
   
  onFetchAccDetails(){
-    // this.fireStore.collection('users').valueChanges({ idField: 'id' }).forEach(value=>{
-    //   console.log(value)
-    // })
-    
-    // this.accDetailObservable$.subscribe((responseDTO) => {
-    //   // this.fireStore.firestore.collection('users').where(localStorage.getItem('uid')!, "==",  )
-    //   console.log(responseDTO)
-    //   ACCOUNT_DETAILS_DATA.splice(0)
-    //   for (var response of responseDTO) {
-    //     ACCOUNT_DETAILS_DATA.push(response);
-    //   }
-    // })
 
     this.accDetailObservable$.subscribe((responseDTO) => {
-      console.log("resss",responseDTO)
       ACCOUNT_DETAILS_DATA.splice(0)
       for (var response of responseDTO) {
-        // ACCOUNT_DETAILS_DATA.push(response);
-       
-        
+
         if(response.uid == localStorage.getItem('uid')){
           localStorage.setItem("userDocID", response.id!)
           accData = {
@@ -68,22 +44,21 @@ export class AdminAccountService implements OnDestroy{
             userRole: response.userRole,
             emailAddress: response.emailAddress,
             description: response.description,
+            profileImageID: response.profileImageID,
             contactNumber: response.contactNumber,
             uid: localStorage.getItem('uid')!
           }
-         
-          
         }
       }
-      
     })
   } 
 
   fetchAccounts(){
-    this.accDetailObservable$.subscribe((responseDTO) => {
+    this.accDetailObservable$.subscribe((response) => {
+      console.log(response)
       ACCOUNT_DETAILS_DATA.splice(0)
-      for (var response of responseDTO) {
-        ACCOUNT_DETAILS_DATA.push(response);
+      for (var res of response) {
+        ACCOUNT_DETAILS_DATA.push(res);
       }
     })
   }
@@ -102,6 +77,7 @@ export class AdminAccountService implements OnDestroy{
 
 export let accData: AccountDetails = {
   firstName: '' ,
+  profileImageID:'',
   lastName: '',
   middleName: '',
   userRole: '',
