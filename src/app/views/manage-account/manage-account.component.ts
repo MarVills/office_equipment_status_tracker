@@ -1,22 +1,16 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Contact } from 'src/app/store/state/accounts/manage-account.state';
 import { UserAccountDialogComponent } from './components/user-account-dialog/user-account-dialog.component';
-import { ACCOUNT_DETAILS_DATA } from 'src/app/store/state/accounts/manage-account.state';
-import { AccountDetails } from 'src/app/store/state/accounts/manage-account.state';
+import { AccountDetails, ACCOUNT_DETAILS_DATA } from 'src/app/Models/manage-account.model';
 import { AdminAccountService } from 'src/app/store/services/accounts/admin-account.service';
 import { accData } from 'src/app/store/services/accounts/admin-account.service';
 import { SharedService } from 'src/app/shared/shared.service';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { finalize } from 'rxjs/operators';
 import { 
   AngularFireStorage,  
   AngularFireStorageReference, 
   AngularFireUploadTask } from '@angular/fire/storage';
-import { Observable, ReplaySubject } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
-// import { getStorage, ref } from "firebase/storage";
 
 
 @Component({
@@ -28,7 +22,6 @@ export class ManageAccountComponent implements OnInit {
 
   ref!: AngularFireStorageReference;
   task!: AngularFireUploadTask;
-  // private basePath = '/uploads';
   closeResult = '';
   accounts: AccountDetails[] = [];
   searchText: any;
@@ -44,19 +37,14 @@ export class ManageAccountComponent implements OnInit {
   file!: FileUpload;
   downloadUrl: string = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
  
-  
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private manageAccount: AdminAccountService,
-    private afStorage: AngularFireStorage,
     private sharedService: SharedService,
-    private storage: AngularFireStorage,
-    private db: AngularFireDatabase,
-    private _sanitizer: DomSanitizer,
-    private el: ElementRef) {
+    private storage: AngularFireStorage,) {
       this.accountDetailsForm(); 
-    }
+  }
 
   ngOnInit(): void {
     this.manageAccount.onFetchAccDetails();
@@ -92,21 +80,16 @@ export class ManageAccountComponent implements OnInit {
   }
 
   imageTest=(event: any)=>{
-    // assets/images/background/profile-bg.jpg
     let file = event.target.files[0];
     console.log("file",file)
     let fileName = this.sharedService.randomString(10);
-
     const filePath = `profiles/${fileName}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, file)
-
     uploadTask.snapshotChanges().pipe(
       finalize(() => {
         storageRef.getDownloadURL().subscribe(downloadURL => {
           this.downloadUrl = downloadURL
-          // file.name = file.name;
-          // this.saveFileData(fileUpload);
         })
       })
     ).subscribe();
@@ -120,16 +103,13 @@ export class ManageAccountComponent implements OnInit {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-      // if (result.event === 'Add') {
-      //     this.addContact(result.data);
-      // }
   });
   }
 
   updateAccount(){
     var value = this._accountDetailsForm.value;
     value.profileImageID = this.downloadUrl;
-    this.manageAccount.onEditAccountDetails({
+    this.manageAccount.onEditAccountDetails(this.manageAccount.toEditAccount, {
       firstName: value.firstName,
       lastName: value.lastName,
       middleName: value.middleName,

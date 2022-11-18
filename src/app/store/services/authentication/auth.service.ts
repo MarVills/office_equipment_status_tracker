@@ -1,34 +1,25 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 import { SharedService } from 'src/app/shared/shared.service';
-import { AllData, } from '../../state/accounts/manage-account.state';
-import { AccountDetails } from '../../state/accounts/manage-account.state';
-
+import { AllData } from '../../state/accounts/manage-account.state';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterService {
+export class AuthService {
 
-  // acountDetails$ = this.getObservable(this.fireStore.collection('users')) as Observable<AccountDetails[]>;
+  userData: Observable<any>;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
     private sharedService: SharedService,
-    private fireStore: AngularFirestore
-    ) { }
+    private fireStore: AngularFirestore) {
+    this.userData = angularFireAuth.authState;
+   }
 
-  // getObservable(collection: AngularFirestoreCollection<AccountDetails>){
-  //   const subject = new BehaviorSubject<any[]>([]);
-  //   collection.valueChanges({ idField: 'id' }).subscribe((val: any[]) => {
-  //     subject.next(val);
-  //   });
-  //   return subject;
-  // };
-  
-  signUp(allData: AllData) {
+   signUp(allData: AllData) {
     console.log(allData)
     
     var returnValue = "";
@@ -52,4 +43,26 @@ export class RegisterService {
       this.sharedService.openSnackBar(response.message)
     });    
  }
+
+  async signIn(email: string, password: string) {
+    var isSignedIn = false; 
+    await this.angularFireAuth
+      .signInWithEmailAndPassword(email, password)
+      .then(res => {
+        console.log('Successfully signed in!', res);
+        isSignedIn = true;
+        localStorage.setItem("uid", (res.user!.uid).toString());
+      })
+      .catch(err => {
+        console.log('Something is wrong:',err.message);
+      });
+    return isSignedIn;
+  }
+
+  signOut(){
+    this.angularFireAuth
+    .signOut();
+    localStorage.removeItem("uid");
+    location.reload();
+  }
 }

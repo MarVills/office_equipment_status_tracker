@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
-
-import { LoginService } from 'src/app/store/services/authentication/login.service';
-
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/store/services/authentication/auth.service';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   FormControl
 } from '@angular/forms';
+
 
 @Component({
   selector: 'app-login',
@@ -22,10 +21,10 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private routes: Router,
-    private loginService: LoginService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,) {
       this.loginForm();
-     }
+    }
 
   ngOnInit() {}
 
@@ -41,7 +40,7 @@ export class LoginComponent implements OnInit {
     var value = this._loginForm.value;
     if((value.email != "") 
     && (value.password != "") 
-    && (await this.loginService.signIn(value.email, value.password))
+    && (await this.authService.signIn(value.email, value.password))
     ){
       console.log("logedin")
       this.routes.navigate(['/dashboard']);

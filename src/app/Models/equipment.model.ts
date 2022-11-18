@@ -1,5 +1,6 @@
 export interface Equipment {
-    name: string;
+    id?: string;
+    equipment: string;
     status: string;
     price: number;
     category: string;
@@ -8,7 +9,7 @@ export interface Equipment {
 
   export interface EquipmentDTO {
     id: string;
-    name: string;
+    equipment: string;
     status: string;
     price: number;
     category: string;

@@ -1,13 +1,14 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { EQUIPMENT_DATA } from '../../store/state/equipments.state';
+import { EQUIPMENT_DATA } from 'src/app/Models/equipment.model';
 import { Equipment, EquipmentDTO } from 'src/app/Models/equipment.model';
 import { FormGroup, FormGroupDirective, } from '@angular/forms';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { MatDialog} from '@angular/material/dialog';
 import { EquipmentsService } from 'src/app/store/services/inventory/equipments.service';
 import { SharedService } from 'src/app/shared/shared.service';
+
 
 @Component({
   selector: 'app-equipments',
@@ -16,7 +17,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 })
 export class EquipmentsComponent implements OnInit {
   
-  displayedColumns = [ 'name', 'status', 'category', 'action'];
+  displayedColumns = [ 'equipment', 'status', 'category', 'action'];
   dataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
   _equipmentForm!: FormGroup;
   toEditData!:EquipmentDTO;
@@ -29,8 +30,8 @@ export class EquipmentsComponent implements OnInit {
     ) { 
     breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
-          [ 'name', 'status', 'category', 'action'] :
-          [ 'name', 'status', 'category', 'action'];
+          [ 'equipment', 'status', 'category', 'action'] :
+          [ 'equipment', 'status', 'category', 'action'];
     });
   }
 
@@ -74,7 +75,7 @@ export class EquipmentsComponent implements OnInit {
     const editDialogRef = this.dialog.open(DialogComponent, {
       width: '500px',
       data: { 
-        name: data.name, 
+        equipment: data.equipment, 
         status: data.status, 
         category: data.category, 
         price: data.price, 
