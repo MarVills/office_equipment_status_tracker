@@ -4,11 +4,10 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AccountDetails, ACCOUNT_DETAILS_DATA } from 'src/app/Models/manage-account.model';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class AdminAccountService implements OnDestroy{
+export class ManageAccountService implements OnDestroy{
 
   accountDetails$!: Subscription;
   toEditAccount!:AccountDetails;

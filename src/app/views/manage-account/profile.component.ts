@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { UserAccountDialogComponent } from './components/user-account-dialog/user-account-dialog.component';
-import { AccountDetails, ACCOUNT_DETAILS_DATA } from 'src/app/Models/manage-account.model';
-import { AdminAccountService } from 'src/app/store/services/accounts/admin-account.service';
-import { accData } from 'src/app/store/services/accounts/admin-account.service';
+import { AccountDetails } from 'src/app/Models/manage-account.model';
+import { ManageAccountService, accData } from 'src/app/store/services/manage-account.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { finalize } from 'rxjs/operators';
+import { AuthService } from 'src/app/store/services/authentication/auth.service';
 import { 
   AngularFireStorage,  
   AngularFireStorageReference, 
@@ -14,11 +13,11 @@ import {
 
 
 @Component({
-  selector: 'app-manage-account',
-  templateUrl: './manage-account.component.html',
-  styleUrls: ['./manage-account.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class ManageAccountComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   ref!: AngularFireStorageReference;
   task!: AngularFireUploadTask;
@@ -40,16 +39,15 @@ export class ManageAccountComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private manageAccount: AdminAccountService,
+    private manageAccount: ManageAccountService,
     private sharedService: SharedService,
-    private storage: AngularFireStorage,) {
+    private storage: AngularFireStorage,
+    private authService: AuthService) {
       this.accountDetailsForm(); 
   }
 
   ngOnInit(): void {
     this.manageAccount.onFetchAccDetails();
-    this.manageAccount.fetchAccounts();
-    this.accounts = ACCOUNT_DETAILS_DATA;
     
     setTimeout(() => {
       this._accountDetailsForm = this.formBuilder.group({
@@ -63,7 +61,6 @@ export class ManageAccountComponent implements OnInit {
       });
       this.accountData = accData;
       this.downloadUrl = accData.profileImageID? accData.profileImageID: this.downloadUrl
-      
     }, 1000);
   }
 
@@ -95,17 +92,6 @@ export class ManageAccountComponent implements OnInit {
     ).subscribe();
   }
 
-  openDialog(action: string, obj: any) {
-  obj.action = action;
-  const dialogRef = this.dialog.open(UserAccountDialogComponent, {
-      width: '500px',
-      data: obj
-  });
-
-  dialogRef.afterClosed().subscribe(result => {
-  });
-  }
-
   updateAccount(){
     var value = this._accountDetailsForm.value;
     value.profileImageID = this.downloadUrl;
@@ -118,10 +104,13 @@ export class ManageAccountComponent implements OnInit {
       profileImageID: this.downloadUrl,
       description: value.description
     }).then(()=>{
-      this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
+      this.sharedService.openSnackBar("Account details updated successfuly", "Ok");
       this.accountData = accData;
     })
-    
+  }
+
+  editAccStatus(){
+  
   }
 }
 

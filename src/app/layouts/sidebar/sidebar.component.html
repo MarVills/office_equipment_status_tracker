@@ -1,25 +1,15 @@
 
-<div class="user-profile" style="background: url(assets/images/background/user-info.jpg) no-repeat;">
+<!-- <div class="user-profile" style="background: url(assets/images/background/user-info.jpg) no-repeat;">
     <div class="profile-img">
         <img src="assets/images/users/profile.png" alt="user"> </div>
     <div class="profile-text">
-        <a [matMenuTriggerFor]="sdprofile" class=""> Markarn Doe
-            <i class="ti-angle-down font-12 m-l-5"></i>
+        
+        <a class=""> Markarn Doe
         </a>
     </div>
-    <mat-menu #sdprofile="matMenu" class="mymegamenu">
-        <button routerLink="/manage-account" mat-menu-item>
-            <mat-icon>account_box</mat-icon> Accounts
-        </button>
-        <button routerLink="/about-app" mat-menu-item>
-            <mat-icon>info</mat-icon> About App
-        </button>
-        <button type="button" (click)="signOut()" mat-menu-item>
-            <mat-icon>exit_to_app</mat-icon> Sign Out
-        </button>
-    </mat-menu>
-</div>
-
+    
+</div> -->
+<br/>
 <mat-nav-list appAccordion>
     <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected"
         group="{{menuitem.state}}" (click)="scrollToTop()">
@@ -80,8 +70,6 @@
                     </mat-list-item>
                 </mat-nav-list>
             </mat-list-item>
-
         </mat-nav-list>
-
     </mat-list-item> 
 </mat-nav-list>

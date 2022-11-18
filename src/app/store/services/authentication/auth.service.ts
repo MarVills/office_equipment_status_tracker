@@ -3,7 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { SharedService } from 'src/app/shared/shared.service';
-import { AllData } from '../../state/accounts/manage-account.state';
+import { AllData } from 'src/app/Models/manage-account.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -55,8 +56,13 @@ export class AuthService {
       })
       .catch(err => {
         console.log('Something is wrong:',err.message);
+        this.sharedService.openSnackBar(err.message)
       });
     return isSignedIn;
+  }
+
+  getAuth(){
+    return this.angularFireAuth;
   }
 
   signOut(){

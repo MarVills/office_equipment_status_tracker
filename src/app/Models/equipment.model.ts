@@ -16,6 +16,14 @@ export interface Equipment {
     description: string;
   }
   
-  export const EQUIPMENT_DATA: Equipment[] = [
+  export interface Category {
+    id?: string;
+    category: string;
+    edit: boolean;
+  }
+  
+  export const EQUIPMENT_DATA: Equipment[] = [];
+
+  export const CATEGORY_DATA: Category[] = [];
+
  
-  ];
