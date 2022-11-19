@@ -46,3 +46,27 @@
   background-color: $primary;
   color: white;
 }
+
+.category-field{
+  height: 50px;
+  padding: 0px;
+  margin-bottom: 40px;
+}
+
+.category-icon{
+  background-color: $themecolor;
+  color: white; 
+  padding:10px; 
+  margin-right: 0px;
+  border-radius: 0px 5px 5px 0px;
+}
+
+.category-icon:hover{
+  padding:10px; 
+  margin-right: 0px;
+  cursor: pointer;
+}
+
+.mat-form-field {
+  border-radius: 0px !important;
+}

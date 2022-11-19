@@ -72,7 +72,6 @@ export class EquipmentsService implements OnDestroy{
     this.fetchCategory$ = this.observable2$.subscribe((response) => {
       CATEGORY_DATA.splice(0)
       for (var res of response) {
-        console.log("ressss", res)
         CATEGORY_DATA.push(res);
       }
     })
@@ -82,15 +81,9 @@ export class EquipmentsService implements OnDestroy{
     return this.fireStore.collection('categories').add(category)
   }
 
-  // onEditEquipment(currentData: EquipmentDTO, newData: Equipment){
-  //   console.log('data',currentData)
-  //   EQUIPMENT_DATA[EQUIPMENT_DATA.indexOf({
-  //     equipment: currentData.equipment,
-  //     status: currentData.status,
-  //     price: currentData.price, 
-  //     category: currentData.category,
-  //     description: currentData.description
-  //   })] = newData;
-  //   return this.fireStore.collection('equipments').doc(currentData.id).update(newData);
-  // }
+  onDeleteCategory(data: Category){
+    console.log("daataaa===",data)
+    CATEGORY_DATA.splice(CATEGORY_DATA.indexOf(data), 1)
+    return this.fireStore.collection('categories').doc(data.id).delete();
+  }
 }

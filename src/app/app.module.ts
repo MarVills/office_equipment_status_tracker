@@ -41,7 +41,7 @@ import { ActivityLogComponent } from './views/activity-log/activity-log.componen
 import { SettingsComponent } from './views/settings/settings.component';
 import { AboutAppComponent } from './views/about-app/about-app.component';
 import { NotesComponent } from './views/notes/notes.component';
-import { DialogComponent } from './views/equipments/components/dialog/dialog.component';
+import { ModifyEquipmentDialogComponent } from './views/equipments/components/modify-equipment-dialog/modify-equipment-dialog.component';
 import { ReleaseEquipmentComponent } from './views/release-equipment/release-equipment.component';
 import { RecieveEquipmentComponent } from './views/recieve-equipment/recieve-equipment.component';
 import { EquipmentCategoriesComponent } from './views/dashboard/dashboard-components/equipment-categories/equipment-categories.component';
@@ -56,11 +56,10 @@ import { AddRequestComponent } from './views/request/components/add-request/add-
 import { DatePipe } from '@angular/common';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { UserAccountDialogComponent } from './views/manage-account/components/user-account-dialog/user-account-dialog.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ManageUsersComponent } from './views/manage-users/manage-users.component';
 import { AccountDialogComponent } from './views/manage-users/components/account-dialog/account-dialog.component';
-import { AddCategoryDialogComponent } from './views/equipments/components/add-category-dialog/add-category-dialog.component';
+import { ModifyCategoriesDialogComponent } from './views/equipments/components/modify-categories-dialog/modify-categories-dialog.component';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -93,7 +92,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SettingsComponent,
     AboutAppComponent,
     NotesComponent,
-    DialogComponent,
+    ModifyEquipmentDialogComponent,
     ReleaseEquipmentComponent,
     RecieveEquipmentComponent,
     EquipmentCategoriesComponent,
@@ -104,10 +103,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SnackbarComponent,
     AddRequestComponent,
     EmployeeDialogContent,
-    UserAccountDialogComponent,
     ManageUsersComponent,
     AccountDialogComponent,
-    AddCategoryDialogComponent,
+    ModifyCategoriesDialogComponent,
 
  
   ],

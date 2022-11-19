@@ -5,22 +5,27 @@ import {
   AccordionLinkDirective,
   AccordionDirective
 } from './accordion';
-// import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   imports: [
-   
+    MatDialogModule,
+    MatButtonModule
   ],
   declarations: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
     AccordionDirective,
-    // SnackbarComponent
+    AlertDialogComponent,
   ],
   exports: [
     AccordionAnchorDirective,
     AccordionLinkDirective,
-    AccordionDirective
+    AccordionDirective,
+    
   ],
   providers: [MenuItems]
 })
