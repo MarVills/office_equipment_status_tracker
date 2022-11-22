@@ -1,14 +1,11 @@
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, Effect, EffectSources, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { BehaviorSubject, Observable, of, } from 'rxjs';
-// import { HandleTokenService } from 'src/app/shared/handle-token.service';
-import { Equipment } from '../../Models/equipment.model';
+import { Observable, of, } from 'rxjs';
 import { SharedService } from 'src/app/shared/shared.service';
 import * as equipmentActions from './equipments.actions';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { catchError, switchMap } from 'rxjs/operators';
 
 

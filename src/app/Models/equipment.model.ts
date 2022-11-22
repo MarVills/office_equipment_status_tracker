@@ -19,7 +19,13 @@ export interface Equipment {
   export interface Category {
     id?: string;
     category: string;
-    edit: boolean;
+    edit?: boolean;
+  }
+
+  export interface CategoryDTO {
+    id?: string;
+    category: string;
+    edit?: boolean;
   }
   
   export const EQUIPMENT_DATA: Equipment[] = [];

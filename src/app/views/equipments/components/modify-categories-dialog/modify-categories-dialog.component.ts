@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Category, CATEGORY_DATA } from 'src/app/Models/equipment.model';
 import { EquipmentsService } from 'src/app/store/services/inventory/equipments.service';
 import { SharedService } from 'src/app/shared/shared.service';
@@ -16,7 +16,7 @@ export class ModifyCategoriesDialogComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private equipmentsService: EquipmentsService,
+    private equipmentService: EquipmentsService,
     private sharedService: SharedService) { }
 
   ngOnInit(): void {
@@ -26,12 +26,12 @@ export class ModifyCategoriesDialogComponent implements OnInit {
 
   categoryForm(){
     this._categoryForm = this.formBuilder.group({
-      category: new FormControl(""),
+      category: new FormControl("", Validators.required),
      });
   }
 
   addCategory(formDirective: FormGroupDirective){
-    this.equipmentsService.onAddCategory(this._categoryForm.value)
+    this.equipmentService.onAddCategory(this._categoryForm.value)
     formDirective.resetForm();
   }
 
@@ -52,12 +52,23 @@ export class ModifyCategoriesDialogComponent implements OnInit {
   }
 
   deleteCategory(category: any) {
-    this.sharedService.openAlertDialog("Delete Category", "Are you sure you want to delete this category?", "Delete")
-    this.categories.splice(this.categories.indexOf(category), 1);
-    this.categories = CATEGORY_DATA;
-    this.equipmentsService.onDeleteCategory(category).then((res)=>{
-      this.sharedService.openSnackBar(`You deleted ${category.category} category`, "Undo")
+    let isDelete = this.sharedService.openAlertDialog("Delete Category", "Are you sure you want to delete this category?", "Delete")
+    isDelete.subscribe((response)=>{
+      switch (response){
+        case "confirm":
+          this.equipmentService.onDeleteCategory(category).then(()=>{
+            this.sharedService.openSnackBar(`You deleted ${category.category} category`, "Undo")
+            this.categories = CATEGORY_DATA;
+          })
+          break;
+        case "cancel": 
+          this.sharedService.openSnackBar("Deleting category canceld !");
+          break;
+        default: break;
+      }
     })
+    
+    
   }
 
  

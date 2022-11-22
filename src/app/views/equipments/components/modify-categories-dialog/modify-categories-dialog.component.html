@@ -2,7 +2,7 @@
 <div class="bg-white">
     <div fxLayout="row" class="category-header">
         <div fxFlex.gt-sm="50" fxFlex="100">
-            <strong> Search or Add Category</strong>
+            <strong> Modify Category</strong>
         </div>
         <mat-icon [mat-dialog-close]="" class="close-icon align-right" color="warn">close</mat-icon>
     </div>
@@ -14,7 +14,7 @@
     (ngSubmit)="addCategory(formDirective)" #formDirective="ngForm">
         <mat-form-field class="p-r-15 m-r-15">
             <mat-placeholder>
-                <mat-icon>search</mat-icon> Search category
+                <mat-icon>add</mat-icon> Category
             </mat-placeholder>
             <input 
             matInput 
@@ -31,8 +31,8 @@
     </form>
 </div>
 <br/>
-<div *ngFor="let category of categories | filter: _categoryForm.value.category let i=index" class="todo-item py-3 pl-3 border-bottom padding-side-40">
-    <div class="todo-item-left d-md-flex w-100" fxLayout="row" >
+<div *ngFor="let category of categories let i=index" class="todo-item py-3 pl-3 border-bottom padding-side-40">
+    <div class="todo-item-left d-md-flex w-100" fxLayout="row" [align]="center">
         <div *ngIf="!category.edit">
             <p style="white-space: nowrap ;">{{category.category}}</p> 
         </div>
@@ -50,7 +50,7 @@
                     </a>
                 </div>
             </div>
-            <div class="d-flex align-items-start edit-view" *ngIf="category.edit">
+            <div class="d-flex align-items-start edit-view" *ngIf="category.edit" [align]="center">
 
                 <mat-form-field>
                     <mat-label></mat-label>

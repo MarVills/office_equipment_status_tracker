@@ -61,10 +61,9 @@ export class EquipmentsComponent implements OnInit {
     this.equipmentDataSource.filter = filterValue;
   }
 
-  async onDelete(data: EquipmentDTO){
-    let isDelete = await this.sharedService.openAlertDialog("Delete Equipment", "Are you sure you want to delete this equipment?", "Delete")
+  onDelete(data: EquipmentDTO){
+    let isDelete = this.sharedService.openAlertDialog("Delete Equipment", "Are you sure you want to delete this equipment?", "Delete")
     isDelete.subscribe((response)=>{
-      console.log("response", response)
       switch (response){
         case "confirm":
           this.equipmentService.onDeleteEquipment(data)
@@ -118,6 +117,8 @@ export class EquipmentsComponent implements OnInit {
   }
 
 }
+
+
 
 
 

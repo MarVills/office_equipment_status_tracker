@@ -62,8 +62,10 @@ import { AccountDialogComponent } from './views/manage-users/components/account-
 import { ModifyCategoriesDialogComponent } from './views/equipments/components/modify-categories-dialog/modify-categories-dialog.component';
 
 import * as equipment from './store/equipments/equipments.reducer'
+import * as category from './store/categories/categories.reducer'
 import { EffectsModule } from '@ngrx/effects';
 import { EquipmentsEffects } from './store/equipments/equipments.effects';
+import { CategoriesEffects } from './store/categories/categories.effects';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -136,8 +138,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(AppRoutes),
-    StoreModule.forRoot({ equipments: equipment.equipmentReducer }),
-    EffectsModule.forRoot([EquipmentsEffects]),
+    StoreModule.forRoot({ 
+                equipments: equipment.equipmentReducer, 
+                categories: category.categoryReducer}),
+    EffectsModule.forRoot([EquipmentsEffects, CategoriesEffects]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -13,7 +13,6 @@
         (ngSubmit)="onModifyEquipment(formDirective)"
         #formDirective="ngForm"  
         class="m-t-20">
-            <!-- <mat-error *ngIf="!_equipmentForm.valid">Something went wrong</mat-error> -->
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Equipment Name</mat-label>
                 <input 
@@ -23,8 +22,8 @@
             </mat-form-field>
 
             <mat-form-field class="m-b-20" appearance="outline" >
+                <mat-label>Equipment Status</mat-label>
                 <mat-select 
-                placeholder="Status" 
                 formControlName="status" 
                 required>
                     <mat-option>--</mat-option>
@@ -35,32 +34,35 @@
                 <mat-error *ngIf="_equipmentForm.value.status">Equipment status is required</mat-error>
             </mat-form-field>
             
-            <div class="category-field" fxLayout="row" layout-align="center center" >
-                <mat-form-field class="m-b-20" appearance="outline" >
+            <div class="category-field" fxLayout="row" >
+                <mat-form-field appearance="outline" >
+                    <mat-label>Category</mat-label>
                     <mat-select 
-                    placeholder="Category" 
-                    formControlName="category" 
+                    formControlName="category"
+                    panelClass="example-panel-blue" 
                     required>
-                        <mat-option>--</mat-option>
-                        <mat-option *ngFor="let category of this.categories" [value]="category.category">
+                       <div>
+                        <mat-form-field class="p-l-20 p-r-20 p-t-20">
+                            <mat-placeholder>
+                                <mat-icon>search</mat-icon> Search category
+                            </mat-placeholder>
+                            <input matInput formControlName="category" (input)="searchCategory($event.target.value);">
+                        </mat-form-field>
+                       </div>
+                        <mat-option >--</mat-option>
+                        <mat-option 
+                        *ngFor="let category of this.categories" 
+                        [value]="category.category" >
                             {{category.category}}
                         </mat-option>
-                    </mat-select>            
-                    <mat-error *ngIf="_equipmentForm.value.category">Equipment category is required</mat-error>
+                    </mat-select> 
+                        
+                    <!-- <mat-error *ngIf="_equipmentForm.value.category">Equipment category is required</mat-error> -->
                 </mat-form-field>
-                <div matSuffix class="category-icon">
-                    <mat-icon (click)="openCategoryDialog($event)">settings</mat-icon>
-                </div>
+            <div matSuffix class="category-icon">
+                <mat-icon (click)="openCategoryDialog($event)">settings</mat-icon>
+            </div>   
             </div>
-            <div> Equipment Details</div><br/>
-
-            <mat-form-field class="example-full-width" appearance="outline">
-                <mat-label>Price</mat-label>
-                <input 
-                matInput
-                required
-                formControlName="price">
-            </mat-form-field>
 
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Description</mat-label>

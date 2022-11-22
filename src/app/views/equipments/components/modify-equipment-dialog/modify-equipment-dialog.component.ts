@@ -1,6 +1,6 @@
 
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { EQUIPMENT_DATA, CATEGORY_DATA, Category } from 'src/app/Models/equipment.model';
 import { Equipment } from 'src/app/Models/equipment.model';
@@ -15,7 +15,8 @@ import { ModifyCategoriesDialogComponent } from '../modify-categories-dialog/mod
 @Component({
   selector: 'app-equipments',
   templateUrl: './modify-equipment-dialog.component.html',
-  styleUrls: ['./modify-equipment-dialog.component.scss']
+  styleUrls: ['./modify-equipment-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModifyEquipmentDialogComponent implements OnInit {
   
@@ -25,6 +26,7 @@ export class ModifyEquipmentDialogComponent implements OnInit {
   actionButton: string = "Add";
   categories!: Category[];
   _equipmentForm!: FormGroup;
+  _searchCategoryForm!: FormGroup;
 
   constructor(
     breakpointObserver: BreakpointObserver,
@@ -42,8 +44,16 @@ export class ModifyEquipmentDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.equipmentForm();
+    this.categoryForm();
     this.equipmentsService.isEdit? this.actionButton = "Edit": "Add"; 
     this.categories = CATEGORY_DATA;
+  }
+
+  
+  categoryForm(){
+    this._searchCategoryForm = this.formBuilder.group({
+      category: new FormControl(""),
+     });
   }
   
   equipmentForm(){
@@ -58,6 +68,16 @@ export class ModifyEquipmentDialogComponent implements OnInit {
       category: new FormControl(isEdit?this.equipmentData.category:"", Validators.required),
       description: new FormControl(isEdit?this.equipmentData.description:"", Validators.required),
      });
+  }
+
+  searchCategory(filterValue: string) {
+    console.log("=======", filterValue)
+    filterValue = filterValue.toLowerCase(); 
+    this.categories = CATEGORY_DATA.filter((value)=>{
+    return value.category.toString().toLowerCase().indexOf(filterValue) > -1
+    }).map((val)=>{
+      return val
+    });
   }
 
   onCancelEdit(formDirective: FormGroupDirective){
@@ -87,7 +107,7 @@ export class ModifyEquipmentDialogComponent implements OnInit {
 
   openCategoryDialog(data: any): void {
     const addDialogRef = this.dialog.open( ModifyCategoriesDialogComponent, {
-      width: '1500px',
+      width: '500px',
       data: {},
     });
     addDialogRef.afterClosed().subscribe(() => {
