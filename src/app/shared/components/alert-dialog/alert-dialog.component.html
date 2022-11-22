@@ -4,7 +4,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button 
-  *ngIf="this.alertData.action ! == 'Ok'" 
+  *ngIf="this.alertData.action !== 'Ok'" 
   mat-button 
   matDialogClose="cancel" 
   color="primary">Cancel</button>

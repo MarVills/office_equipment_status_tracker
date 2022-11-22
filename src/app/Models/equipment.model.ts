@@ -8,7 +8,7 @@ export interface Equipment {
   }
 
   export interface EquipmentDTO {
-    id: string;
+    id?: string;
     equipment: string;
     status: string;
     price: number;

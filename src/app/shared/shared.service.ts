@@ -36,17 +36,15 @@ export class SharedService {
     };
   }
 
-  openAlertDialog( title:string, message: string,  action: string ="Ok") {
-    // this.dialogAction = action
-    let dialogRef = this.dialog.open(AlertDialogComponent,{
+ async openAlertDialog( title:string, message: string,  action: string ="Ok") {
+    const dialogRef = this.dialog.open(AlertDialogComponent,{
       data: {
         action: action,
         title: title,
         message: message
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
-    })
+    return dialogRef.afterClosed()
   }
   
 }

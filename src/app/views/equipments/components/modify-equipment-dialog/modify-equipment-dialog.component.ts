@@ -73,28 +73,20 @@ export class ModifyEquipmentDialogComponent implements OnInit {
   onModifyEquipment(formDirective: FormGroupDirective){
     if(this.equipmentsService.isEdit && this._equipmentForm.valid){
       if(!this._equipmentForm.valid){
-        console.log("asdjhglasdguha;fdshg;a")
         this.sharedService.openSnackBar("Updating Equipment Failed", "Ok")
       }else{
-        this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value).then(()=>{
-          this.sharedService.openSnackBar("Equipment Edited Successfuly", "Ok");
-        })
+        this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value)
       }
-      
     }else if( this._equipmentForm.valid){
       var data = this._equipmentForm.value;
       EQUIPMENT_DATA.push(data)
-      !this._equipmentForm.valid? this.sharedService.openSnackBar("Adding Equipment Failed", "Ok"):
-      this.equipmentsService.onAddEquipment(data).then(res => {
-        this.sharedService.openSnackBar("Equipment Added Successfully", "Ok")
-      })
+      this.equipmentsService.onAddEquipment(data)
       this.clearForm(formDirective);
     }
   }
 
   openCategoryDialog(data: any): void {
     const addDialogRef = this.dialog.open( ModifyCategoriesDialogComponent, {
-      // width: '500px',
       width: '1500px',
       data: {},
     });

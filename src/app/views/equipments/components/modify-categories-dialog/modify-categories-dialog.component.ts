@@ -53,11 +53,11 @@ export class ModifyCategoriesDialogComponent implements OnInit {
 
   deleteCategory(category: any) {
     this.sharedService.openAlertDialog("Delete Category", "Are you sure you want to delete this category?", "Delete")
-    // this.categories.splice(this.categories.indexOf(category), 1);
-    // this.categories = CATEGORY_DATA;
-    // this.equipmentsService.onDeleteCategory(category).then((res)=>{
-    //   this.sharedService.openSnackBar(`You deleted ${category.category} category`, "Undo")
-    // })
+    this.categories.splice(this.categories.indexOf(category), 1);
+    this.categories = CATEGORY_DATA;
+    this.equipmentsService.onDeleteCategory(category).then((res)=>{
+      this.sharedService.openSnackBar(`You deleted ${category.category} category`, "Undo")
+    })
   }
 
  

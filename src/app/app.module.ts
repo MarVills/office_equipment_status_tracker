@@ -61,6 +61,9 @@ import { ManageUsersComponent } from './views/manage-users/manage-users.componen
 import { AccountDialogComponent } from './views/manage-users/components/account-dialog/account-dialog.component';
 import { ModifyCategoriesDialogComponent } from './views/equipments/components/modify-categories-dialog/modify-categories-dialog.component';
 
+import * as equipment from './store/equipments/equipments.reducer'
+import { EffectsModule } from '@ngrx/effects';
+import { EquipmentsEffects } from './store/equipments/equipments.effects';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -79,7 +82,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
-    // LoginComponent,
     AppBreadcrumbComponent,
     DashboardComponent, 
     EquipmentsComponent, 
@@ -134,6 +136,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(AppRoutes),
+    StoreModule.forRoot({ equipments: equipment.equipmentReducer }),
+    EffectsModule.forRoot([EquipmentsEffects]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -141,7 +145,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         deps: [HttpClient]
       }
     }),
-    StoreModule.forRoot({}, {}),
   ],
   providers: [
     DatePipe,
