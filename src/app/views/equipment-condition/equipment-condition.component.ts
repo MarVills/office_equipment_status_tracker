@@ -15,7 +15,6 @@ import { CATEGORY_DATA } from 'src/app/Models/category.model';
 })
 export class EquipmentConditionComponent implements  OnInit {
 
-
   panelOpenState = false;
   step = 0;
   equipmentConditions = Object.values(EQUIPMENT_CONDITIONS);

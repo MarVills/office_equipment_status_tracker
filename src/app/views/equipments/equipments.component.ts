@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, } from '@angular/forms';
 import { ModifyEquipmentDialogComponent } from './components/modify-equipment-dialog/modify-equipment-dialog.component';
@@ -20,14 +20,16 @@ import { CATEGORY_DATA } from 'src/app/Models/category.model';
 })
 export class EquipmentsComponent implements OnInit {
   
+  @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent!: ElementRef<any> ;
   displayedColumns = [ 'serial-number', 'equipment', 'status', 'action'];
   equipmentDataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
   equipmentsByCategory: Map<string, Equipment[]> = new Map<string, Equipment[]>();
   _categoryForm!: FormGroup;
   toEditData!:EquipmentDTO;
   panelOpenState = false;
+  sidePanelOpened = true;
+  searchText = '';
   equipments!: Equipment[];
-  totalEquipments: number = 0;
   categories: Category[] = CATEGORY_DATA;
   backgroundColors: string[] = [];
 
@@ -37,7 +39,7 @@ export class EquipmentsComponent implements OnInit {
     private equipmentService: EquipmentsService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
     ) { 
     breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
@@ -77,7 +79,9 @@ export class EquipmentsComponent implements OnInit {
     this.equipmentDataSource.filter = filterValue;
   }
 
-  filterByCategory(){
+  filterByCategory(category:string){
+    this.equipmentDataSource.filter = category.trim().toLowerCase();
+    return this.equipmentDataSource.filteredData.length;
   }
 
   setEquipmentsByCategory(){
@@ -87,12 +91,24 @@ export class EquipmentsComponent implements OnInit {
     }) 
   }
 
-  getTotalEquipments(category:string){
+  getTotalEquipmentsPerCategory(category:string){
     try{
       return this.equipmentsByCategory.get(category)!.length
     }catch(e){
       return "0"
     }
+  }
+
+  totalEquipments():string{
+    try{
+      return this.equipments.length.toString()
+    }catch(e){
+      return "0"
+    }
+  }
+
+  isOver(): boolean {
+    return window.matchMedia(`(max-width: 960px)`).matches;
   }
 
   openAddEquipmentDialog(): void {
@@ -142,17 +158,24 @@ export class EquipmentsComponent implements OnInit {
     })
   }
 
-  refresh(){
-    setTimeout(() => {
-      this.equipmentDataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
-      this.equipments = EQUIPMENT_DATA;
-      this.categories = CATEGORY_DATA;
-      this.getBackgroundColors();
-      this.setEquipmentsByCategory();
-    }, 1000);
+  allEquipments(){
+    this.equipmentDataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
   }
 
+  refresh(){
+    setTimeout(() => {
+      this.equipments = EQUIPMENT_DATA;
+      this.categories = CATEGORY_DATA;
+      this.setEquipmentsByCategory();
+      this.getBackgroundColors();
+      this.allEquipments();
+    }, 1000);
+  }
 }
+
+
+
+
 
 
 

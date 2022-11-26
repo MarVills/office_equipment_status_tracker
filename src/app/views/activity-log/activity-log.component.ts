@@ -1,5 +1,9 @@
 
-import { Component, ViewChild } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 declare var require: any;
 const data: any = require('src/assets/company.json');
@@ -8,43 +12,54 @@ const data: any = require('src/assets/company.json');
   templateUrl: './activity-log.component.html',
   styleUrls: ['./activity-log.component.scss']
 })
-export class ActivityLogComponent {
-  editing: any[] = [];
-  rows: any[] = [];
-  temp = [...data];
+export class ActivityLogComponent implements AfterViewInit{
 
-  loadingIndicator = true;
-  reorderable = true;
+  displayedColumns = ['activity', 'user-name', 'user-role', 'date'];
+  dataSource: MatTableDataSource<UserData>;
 
-  columns = [{ prop: 'name' }, { name: 'Gender' }, { name: 'Company' }];
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
+  @ViewChild(MatSort, { static: true }) sort: MatSort = Object.create(null);
 
-  @ViewChild(ActivityLogComponent, { static: true }) table: ActivityLogComponent = Object.create(null);
-  constructor() {
-    this.rows = data;
-    this.temp = [...data];
-    setTimeout(() => {
-      this.loadingIndicator = false;
-    }, 1500);
+  constructor(breakpointObserver: BreakpointObserver) {
+    breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
+      this.displayedColumns = result.matches ?
+          ['activity', 'user-name', 'user-role', 'date']:
+          ['activity', 'user-name', 'user-role', 'date'];
+  });
+  const users: UserData[] = [];
+  for (let i = 1; i <= 100; i++) {
+      users.push(createNewUser(i));
+  }
+  this.dataSource = new MatTableDataSource(users);
   }
 
-  updateFilter(event: any) {
-    const val = event.target.value.toLowerCase();
-
-    // filter our data
-    const temp = this.temp.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    // update the rows
-    this.rows = temp;
-    // Whenever the filter changes, always go back to the first page
-    this.table = data;
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
-  updateValue(event: any, cell: string, rowIndex: number) {
-    console.log('inline editing rowIndex', rowIndex);
-   // // // this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = event.target.value;
-    this.rows = [...this.rows];
-    console.log('UPDATED!', this.rows[rowIndex][cell]);
+
+  applyFilter(filterValue: string) {
+      filterValue = filterValue.trim(); 
+      filterValue = filterValue.toLowerCase(); 
+      this.dataSource.filter = filterValue;
   }
 }
+
+function createNewUser(id: number): UserData {
+
+  return {
+    activity: "idididi",
+    userName: 'name',
+    userRole: "100%",
+    date: "corl"
+  };
+}
+
+export interface UserData {
+  activity: string;
+  userName: string;
+  userRole: string;
+  date: string;
+}
+
 
