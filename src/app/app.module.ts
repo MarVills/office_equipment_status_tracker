@@ -35,7 +35,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { EquipmentConditionComponent } from './views/equipment-condition/equipment-condition.component';
 import { ReportsComponent } from './views/reports/reports.component';
-import { ProfileComponent } from './views/manage-account/profile.component';
+import { ProfileComponent } from './views/profile/profile.component';
 import { RequestComponent, EmployeeDialogContent } from './views/request/request.component';
 import { ActivityLogComponent } from './views/activity-log/activity-log.component';
 import { SettingsComponent } from './views/settings/settings.component';

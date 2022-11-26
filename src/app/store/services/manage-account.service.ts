@@ -10,7 +10,7 @@ import { AccountDetails, ACCOUNT_DETAILS_DATA } from 'src/app/Models/manage-acco
 export class ManageAccountService implements OnDestroy{
 
   accountDetails$!: Subscription;
-  toEditAccount!:AccountDetails;
+  userAccountDetails!:AccountDetails;
   observable$ = this.getObservable(this.fireStore.collection('users')) as Observable<AccountDetails[]>;
 
   constructor(private fireStore: AngularFirestore) { }
@@ -28,6 +28,8 @@ export class ManageAccountService implements OnDestroy{
   }; 
   
  onFetchAccDetails(){
+   // Temporarily using this function while working on 
+   // fetch one data function in firebase with ngrx.
     this.observable$.subscribe((response) => {
       ACCOUNT_DETAILS_DATA.splice(0)
       for (var res of response) {
@@ -44,10 +46,11 @@ export class ManageAccountService implements OnDestroy{
             contactNumber: res.contactNumber,
             uid: localStorage.getItem('uid')!
           }
-          this.toEditAccount = accData;
+          this.userAccountDetails = accData;
         }
       }
     })
+
   } 
 
   fetchAccounts(){

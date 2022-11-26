@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of, } from 'rxjs';
-import { SharedService } from 'src/app/shared/shared.service';
-import * as equipmentActions from './equipments.actions';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { catchError, switchMap } from 'rxjs/operators';
+import { SharedService } from 'src/app/shared/shared.service';
+import * as equipmentActions from './equipments.actions';
 
 
 @Injectable()

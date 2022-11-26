@@ -4,7 +4,10 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Equipment, EquipmentDTO, EQUIPMENT_DATA } from 'src/app/Models/equipment.model';
 import * as equipmentActions from '../../../equipments/equipments.actions';
+import * as logActions from '../../../activity-log/activity-log.actions';
 import { selectEquipment } from '../../../equipments/equipments.selectors';
+import { ActivityLog } from 'src/app/Models/activity-log-model';
+import { User } from 'src/app/shared/user-details/user-details';
 
 
 @Injectable({
@@ -17,7 +20,9 @@ export class EquipmentsService implements OnDestroy{
   isEdit:boolean = false;
   toEditData!:EquipmentDTO;
 
-  constructor(private store: Store) { }
+  constructor(
+    private store: Store,
+    private user: User) { }
 
   ngOnDestroy(): void {
     this.fetchEquipments$.unsubscribe();
@@ -35,8 +40,16 @@ export class EquipmentsService implements OnDestroy{
   }
 
   onAddEquipment(data: Equipment){
+    const userDetails = this.user.signedInUserDetails;
+    const addEquipmentLog: ActivityLog = {
+      activity: "Added Equipment",
+      userName: userDetails.firstName + userDetails.lastName,
+      userRole: userDetails.userRole!,
+      date: new Date().toDateString()
+    };
     EQUIPMENT_DATA.push(data);
     this.store.dispatch(equipmentActions.requestAddEquipmentACTION({payload: data}))
+    this.store.dispatch(logActions.requestAddActivityLogACTION({payload: addEquipmentLog}))
   }
 
   onEditEquipment(currentData: Equipment, newData: Equipment){
