@@ -48,8 +48,9 @@ export class EquipmentsService implements OnDestroy{
       date: new Date().toDateString()
     };
     EQUIPMENT_DATA.push(data);
-    this.store.dispatch(equipmentActions.requestAddEquipmentACTION({payload: data}))
     this.store.dispatch(logActions.requestAddActivityLogACTION({payload: addEquipmentLog}))
+    this.store.dispatch(equipmentActions.requestAddEquipmentACTION({payload: data}))
+    
   }
 
   onEditEquipment(currentData: Equipment, newData: Equipment){

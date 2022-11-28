@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SharedService } from 'src/app/shared/shared.service';
 import { AccountDetails, AllData } from 'src/app/Models/manage-account.model';
 import { map } from 'rxjs/operators';
@@ -17,6 +17,7 @@ import { ManageAccountService } from '../manage-account.service';
 export class AuthService {
 
   userData: Observable<any>;
+  loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -75,6 +76,14 @@ export class AuthService {
 
   getAuth(){
     return this.angularFireAuth;
+  }
+
+  async isLoggedIn():Promise<boolean>{
+    let authState = false; 
+   await this.angularFireAuth.onAuthStateChanged((user) => {
+      authState = user?true:false
+    })
+    return authState
   }
 
   signOut(){

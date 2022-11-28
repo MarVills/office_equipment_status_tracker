@@ -10,6 +10,8 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { Category } from 'src/app/Models/category.model';
 import { Equipment,EquipmentDTO, EQUIPMENT_DATA} from 'src/app/Models/equipment.model';
 import { CATEGORY_DATA } from 'src/app/Models/category.model';
+import { PerfectScrollbarComponent, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { AuthService } from 'src/app/store/services/authentication/auth.service';
 
 
 
@@ -20,7 +22,9 @@ import { CATEGORY_DATA } from 'src/app/Models/category.model';
 })
 export class EquipmentsComponent implements OnInit {
   
-  @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent!: ElementRef<any> ;
+  @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent!: ElementRef<any>;
+  @ViewChild(PerfectScrollbarComponent) componentRef?: PerfectScrollbarComponent;
+  @ViewChild(PerfectScrollbarDirective) directiveRef?: PerfectScrollbarDirective;
   displayedColumns = [ 'serial-number', 'equipment', 'status', 'action'];
   equipmentDataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
   equipmentsByCategory: Map<string, Equipment[]> = new Map<string, Equipment[]>();
@@ -40,6 +44,7 @@ export class EquipmentsComponent implements OnInit {
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
+    private authService: AuthService,
     ) { 
     breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
@@ -53,6 +58,7 @@ export class EquipmentsComponent implements OnInit {
     this.equipmentService.onFetchEquipments();
     this.categoryForm();
     this.refresh();
+    console.log("islogged in", this.authService.isLoggedIn())
   }
 
   categoryForm(){

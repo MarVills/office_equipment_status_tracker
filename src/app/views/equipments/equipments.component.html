@@ -5,43 +5,46 @@
           [ngClass]="{ 'side-panel-opened': sidePanelOpened, 'side-panel-closed': !sidePanelOpened }">
           <mat-sidenav #noteslist [mode]="isOver() ? 'over' : 'side'" [opened]="!isOver()" (open)="sidePanelOpened = true"
             (close)="sidePanelOpened = false">
-            <mat-toolbar class="no-shadow">
-              <div fxLayout="row" fxFlex="100">
-                <mat-form-field>
-                  <mat-label>Search Category</mat-label>
-                  <input matInput [(ngModel)]="searchText">
-                </mat-form-field>
-              </div>
-            </mat-toolbar>
-            <mat-nav-list>
-              <ng-container>
-                <mat-list-item class="notes-item" (click)="allEquipments()">
-                  <div class="note d-flex">
-                    <div>
-                      <span class="note-color" [ngStyle]="{'background-color': '#1e88e5'}" ></span>
-                      <span class="note-title"><strong>{{totalEquipments()}}</strong></span>
-                      <small class="note-time">All</small>
+            <perfect-scrollbar class="scroll-container" fxFlex="auto"  [scrollIndicators]="true">
+              <mat-toolbar class="no-shadow">
+                <div fxLayout="row" fxFlex="100">
+                  <mat-form-field>
+                    <mat-label>Search Category</mat-label>
+                    <input matInput [(ngModel)]="searchText">
+                  </mat-form-field>
+                </div>
+              </mat-toolbar>
+              <mat-nav-list>
+                <ng-container>
+                  <mat-list-item class="notes-item" (click)="allEquipments()">
+                    <div class="note d-flex">
+                      <div>
+                        <span class="note-color" [ngStyle]="{'background-color': '#1e88e5'}" ></span>
+                        <span class="note-title"><strong>{{totalEquipments()}}</strong></span>
+                        <small class="note-time">All</small>
+                      </div>
                     </div>
-                  </div>
-                </mat-list-item>
-                <mat-list-item 
-                *ngFor="let category of this.categories | filter:searchText let i = index" 
-                class="notes-item" (click)="filterByCategory(category.category)">
-                  <div class="note d-flex">
-                    <div>
-                      <span class="note-color" [ngStyle]="{'background-color': this.backgroundColors[i]}" ></span>
-                      <span class="note-title">
-                        <strong>{{this.getTotalEquipmentsPerCategory(category.category)}}</strong>
-                      </span>
-                      <small class="note-time">{{category.category}}</small>
+                  </mat-list-item>
+                  <mat-list-item 
+                  *ngFor="let category of this.categories | filter:searchText let i = index" 
+                  class="notes-item" (click)="filterByCategory(category.category)">
+                    <div class="note d-flex">
+                      <div>
+                        <span class="note-color" [ngStyle]="{'background-color': this.backgroundColors[i]}" ></span>
+                        <span class="note-title">
+                          <strong>{{this.getTotalEquipmentsPerCategory(category.category)}}</strong>
+                        </span>
+                        <small class="note-time" style="word-break:break-all">{{category.category}}</small>
+                      </div>
                     </div>
-                  </div>
-                </mat-list-item>
-              </ng-container>
-              <div *ngIf="this.categories.length == 0">
-                <p class="m-b-0 text-center font-18 font-bold m-t-40">No Categories Found</p>
-              </div>
-            </mat-nav-list>
+                  </mat-list-item>
+                </ng-container>
+                <div *ngIf="this.categories.length == 0">
+                  <p class="m-b-0 text-center font-18 font-bold m-t-40">No Categories Found</p>
+                </div>
+              </mat-nav-list>
+            </perfect-scrollbar>
+            
           </mat-sidenav>
           <mat-toolbar class="no-shadow">
             <div fxLayout="row" fxFlex="100" class="display-flex">

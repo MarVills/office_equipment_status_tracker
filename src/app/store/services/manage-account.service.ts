@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { AccountDetails, ACCOUNT_DETAILS_DATA } from 'src/app/Models/manage-account.model';
+import { User } from '../../shared/user-details/user-details';
 
 
 @Injectable({
@@ -13,7 +14,9 @@ export class ManageAccountService implements OnDestroy{
   userAccountDetails!:AccountDetails;
   observable$ = this.getObservable(this.fireStore.collection('users')) as Observable<AccountDetails[]>;
 
-  constructor(private fireStore: AngularFirestore) { }
+  constructor(
+    private fireStore: AngularFirestore,
+    private user: User) { }
 
   ngOnDestroy(): void {
     this.accountDetails$.unsubscribe();
@@ -46,11 +49,11 @@ export class ManageAccountService implements OnDestroy{
             contactNumber: res.contactNumber,
             uid: localStorage.getItem('uid')!
           }
-          this.userAccountDetails = accData;
+         
         }
       }
     })
-
+    console.log("User details ==== ", this.user.signedInUserDetails)
   } 
 
   fetchAccounts(){
