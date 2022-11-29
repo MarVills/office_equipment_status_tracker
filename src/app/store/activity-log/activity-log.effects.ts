@@ -29,7 +29,7 @@ export class ActivityLogEffects {
       })
     ));
   
-    addCategoryEFFECT$: Observable<Action> = createEffect(() => { 
+    addActivityLogEFFECT$: Observable<Action> = createEffect(() => { 
       return this.actions$.pipe(
         ofType(activityLogActions.requestAddActivityLogACTION),
         switchMap((data)=>{
@@ -37,17 +37,17 @@ export class ActivityLogEffects {
             return activityLogActions.successAddActivityLogACTION()
           }).catch((error)=>{
             console.log("Add Error: ", error)
-            this.sharedService.openSnackBar("Failed adding activityLog", "Ok");
             return activityLogActions.onActivityLogFailure({ error: error })
           })
         })
+    
       )}
     );
   
-    updateCategoryEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    updateActivityLogEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
       ofType(activityLogActions.requestUpdateActivityLogACTION),
       switchMap((data)=>{
-        return this.fireStore.collection('categories').doc(data.id).update(data.payload).then(()=>{
+        return this.fireStore.collection('activity_logs').doc(data.id).update(data.payload).then(()=>{
           return activityLogActions.successUpdateActivityLogACTION()
         }).catch((error)=>{
           console.log("Update Error: ", error)
@@ -57,10 +57,10 @@ export class ActivityLogEffects {
       })
     ));
   
-    deleteCategoryEFFEET$: Observable<Action> = createEffect(() => this.actions$.pipe(
+    deleteActivityLogEFFEET$: Observable<Action> = createEffect(() => this.actions$.pipe(
       ofType(activityLogActions.requestDeleteActivityLogACTION),
       switchMap((docID)=>{
-        return this.fireStore.collection('categories').doc(docID.payload).delete().then(()=>{
+        return this.fireStore.collection('activity_logs').doc(docID.payload).delete().then(()=>{
           this.sharedService.openSnackBar("Category deleted successfuly", "Ok");
           return activityLogActions.successAddActivityLogACTION()
         }).catch((error)=>{
@@ -70,8 +70,6 @@ export class ActivityLogEffects {
         })
       })
     ));
-  
-
 }
 
 

@@ -11,7 +11,7 @@ export const initialState: ActivityLogsState = {
 };
 
 
-export const reducer = createReducer(
+export const activityLogReducer = createReducer(
   initialState,
   on(activityLogsAction.successFetchActivityLogsACTION, (state: ActivityLogsState, { payload }) =>{
     return { 

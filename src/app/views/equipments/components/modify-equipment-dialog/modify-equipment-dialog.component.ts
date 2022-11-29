@@ -124,17 +124,7 @@ export class ModifyEquipmentDialogComponent implements OnInit {
         break;
       case 'false,true':
         const value = this._equipmentForm.value;
-        this.serialNumbers.forEach((serialNumber)=>{
-          const equipment = {
-              equipment: value.equipment,
-              status: value.status,
-              category: value.category,
-              serialNumber: serialNumber,
-              description: value.description
-          }
-          
-          this.equipmentsService.onAddEquipment(equipment)
-        })
+        this.equipmentsService.onAddEquipment(value, this.serialNumbers)
         this.clearForm(formDirective);
         break;
       case 'false,false':

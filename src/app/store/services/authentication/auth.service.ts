@@ -18,6 +18,7 @@ export class AuthService {
 
   userData: Observable<any>;
   loggedIn = new BehaviorSubject<boolean>(false);
+  authState = false; 
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -79,11 +80,12 @@ export class AuthService {
   }
 
   async isLoggedIn():Promise<boolean>{
-    let authState = false; 
    await this.angularFireAuth.onAuthStateChanged((user) => {
-      authState = user?true:false
+      this.authState = user?true:false
+      console.log("Auth State: ", this.authState);
     })
-    return authState
+    return this.authState
+    
   }
 
   signOut(){

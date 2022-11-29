@@ -1,3 +1,4 @@
+@import '../../../assets/styles/variable.scss';
 
 .center-item{
 align-self: center;
@@ -154,4 +155,25 @@ display: flex;
       padding-top: 0 !important;
     }
   }
+
+  .table-padding{
+    padding-bottom: 20px !important;
+  }
+
+  .top-icons{
+    width: 100px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+  }
+
+  .top-icons mat-icon{
+    font-size: 30px;
+  }
+
+  .top-icons mat-icon:hover{
+    cursor: pointer;
+    color: $themecolor;
+  }
+  
   

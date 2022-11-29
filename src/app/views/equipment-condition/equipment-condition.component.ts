@@ -43,7 +43,6 @@ export class EquipmentConditionComponent implements  OnInit {
       filterValue = filterValue.trim(); 
       filterValue = filterValue.toLowerCase();
       this.equipmentsByCategory.forEach((item)=>{
-        console.log("item values", item);
         if(item.length != 0){
           let items = item.filter((equipmentDetails)=>{
             return equipmentDetails.equipment + equipmentDetails.status.includes(filterValue)
