@@ -15,11 +15,10 @@ import { ActivityLogService } from '../../store/services/activity-log.service';
 })
 export class ActivityLogComponent implements AfterViewInit, OnInit{
 
-  displayedColumns = ['activity', 'user-name', 'user-role', 'date'];
-  dataSource: MatTableDataSource<ActivityLog>;
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator = Object.create(null);
   @ViewChild(MatSort, { static: true }) sort: MatSort = Object.create(null);
+  displayedColumns = ['activity', 'user-name', 'user-role', 'date'];
+  dataSource: MatTableDataSource<ActivityLog>;
 
   constructor(breakpointObserver: BreakpointObserver,
              private logService: ActivityLogService) {
@@ -33,7 +32,7 @@ export class ActivityLogComponent implements AfterViewInit, OnInit{
  
   }
   ngOnInit(): void {
-    // this.refresh()
+    this.refresh()
     this.dataSource = new MatTableDataSource(ACTIVITY_LOG_DATA);
   }
 
@@ -43,10 +42,15 @@ export class ActivityLogComponent implements AfterViewInit, OnInit{
   }
 
   applyFilter(filterValue: string) {
-      filterValue = filterValue.trim(); 
-      filterValue = filterValue.toLowerCase(); 
-      this.dataSource.filter = filterValue;
+    filterValue = filterValue.trim(); 
+    filterValue = filterValue.toLowerCase(); 
+    this.dataSource.filter = filterValue;
   }
+
+  print(){
+    window.print();
+  }
+
   refresh(){
    setTimeout(() => {
     this.dataSource = new MatTableDataSource(ACTIVITY_LOG_DATA);

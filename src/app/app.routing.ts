@@ -6,8 +6,6 @@ import { AuthGuard } from './authentication/auth.guard';
 import { ErrorComponent } from './views/error/error.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { EquipmentsComponent } from './views/equipments/equipments.component';
-import { ReleaseEquipmentComponent } from './views/release-equipment/release-equipment.component';
-import { RecieveEquipmentComponent } from './views/recieve-equipment/recieve-equipment.component';
 import { EquipmentConditionComponent } from './views/equipment-condition/equipment-condition.component';
 import { ReportsComponent } from './views/reports/reports.component';
 import { ProfileComponent } from './views/profile/profile.component';
@@ -47,28 +45,6 @@ export const AppRoutes: Routes = [
                   urls: [
                     { title: 'Equipments', url: '/equipments' },
                     { title: 'Equipments' }
-                  ]
-                }
-              },
-              {
-                path: 'inventory/release-equipment',
-                component:  ReleaseEquipmentComponent,
-                data: {
-                  title: 'Release Equipments',
-                  urls: [
-                    { title: 'Release Equipments', url: '/equipments' },
-                    { title: 'Release Equipments' }
-                  ]
-                }
-              },
-              {
-                path: 'inventory/recieve-equipment',
-                component: RecieveEquipmentComponent,
-                data: {
-                  title: 'Recieve Equipments',
-                  urls: [
-                    { title: 'Recieve Equipments', url: '/equipments' },
-                    { title: 'Recieve Equipments' }
                   ]
                 }
               },

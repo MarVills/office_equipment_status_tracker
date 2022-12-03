@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/store/services/authentication/auth.service';
+import { AuthService } from 'src/app/store/services/auth/auth.service';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   FormControl
 } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -37,16 +38,9 @@ export class LoginComponent implements OnInit {
   }
 
   async onLogin(){
-    var value = this._loginForm.value;
-    if((value.email != "") 
-    && (value.password != "") 
-    && (await this.authService.signIn(value.email, value.password))
-    ){
-      console.log("logedin")
-      this.routes.navigate(['/dashboard']);
-    } else {  
-      console.log("not signed in")
-      this.msg = 'Invalid Username or Password';
+    const value = this._loginForm.value;
+    if(this._loginForm.valid){
+    this.authService.signIn(value.email, value.password)
     }
   }
 }

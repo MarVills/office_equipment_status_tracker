@@ -13,28 +13,28 @@ export const equipmentReducer = createReducer(
   initialState,
 
   on(equipmentsAction.successFetchEquipmentsACTION, (state: EquipmentsState, { payload }) =>{
+    console.log("=== reducer ===")
     return { 
       ...state, 
       equipments: payload }
   }),
 
   on(equipmentsAction.successAddEquipmentACTION, (state: EquipmentsState) =>{
-    console.log("executed reducer=========================")
-    return { ...state }
+    return { ...state, state }
   }),
 
   on(equipmentsAction.requestUpdateEquipmentACTION, (state: EquipmentsState, { payload }) =>{
-    const updateProduct = [state.equipments].map((product:any)=> {
-      return payload === product.id ? payload : product;
+    const updateItem = [state.equipments].map((equipment:any)=> {
+      return payload === equipment.id ? payload : equipment;
     })
-    const returnState = { ...state, products: updateProduct, selected_product: '' }
+    const returnState = { ...state, equipments: updateItem}
     return returnState;
   }),
 
   on(equipmentsAction.requestDeleteEquipmentACTION, (state: EquipmentsState, { payload }) =>{
     let newState = [state.equipments];
     newState.splice(newState.indexOf(payload), 1);
-    const returnState = { ...state, products: newState }
+    const returnState = { ...state, equipments: newState }
     return returnState;
   }),
 );

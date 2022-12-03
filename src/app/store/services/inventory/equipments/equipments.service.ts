@@ -7,8 +7,9 @@ import * as logActions from '../../../activity-log/activity-log.actions';
 import { selectEquipment } from '../../../equipments/equipments.selectors';
 import { ActivityLog } from 'src/app/Models/activity-log-model';
 import { User } from 'src/app/shared/user-details/user-details';
-import { AuthService } from '../../authentication/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { SharedService } from 'src/app/shared/shared.service';
+import { skip, switchAll, switchMap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -34,26 +35,34 @@ export class EquipmentsService implements OnDestroy{
 
   onFetchEquipments(){
     this.store.dispatch(equipmentActions.requestFetchEquipmentsACTION({payload: []}));
-    this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
+    // this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
+    //     EQUIPMENT_DATA.splice(0)
+    //     for (var res of response.equipments) {
+    //       EQUIPMENT_DATA.push(res);
+    //     }
+    // })
+    this.fetchEquipments$ = this.store.select( selectEquipment )
+    .pipe(
+      skip(1),
+      switchMap((response)=>{
+        switchAll()
+        console.log("===",response)
+        // console.log(response)
         EQUIPMENT_DATA.splice(0)
         for (var res of response.equipments) {
           EQUIPMENT_DATA.push(res);
         }
-    })
+        return [response]
+      })
+    )
+    .subscribe()
   }
 
   onAddEquipment(data: Equipment, serialNumbers: string[]){
     if(this.authService.authState){
       const userDetails = this.user.signedInUserDetails;
-      const addEquipmentLog: ActivityLog = {
-        activity: serialNumbers.length > 1?`Added ${serialNumbers.length} equipments`:`Added equipment`,
-        userName: userDetails.firstName + userDetails.lastName,
-        userRole: userDetails.userRole!,
-        date: new Date().toDateString() +" "+ new Date().toLocaleTimeString()
-      };
-      this.store.dispatch(logActions.requestAddActivityLogACTION({payload: addEquipmentLog}))
       serialNumbers.forEach((serialNumber)=>{
-          const equipment = {
+         const equipment = {
           equipment: data.equipment,
           status: data.status,
           category: data.category,
@@ -63,9 +72,13 @@ export class EquipmentsService implements OnDestroy{
          EQUIPMENT_DATA.push(equipment);
          this.store.dispatch(equipmentActions.requestAddEquipmentACTION({payload: equipment}))
       })
-    }
-    if(!this.authService.authState){
-      this.sharedService.openSnackBar("User is not logged in! \nUser data is needed in this operation")
+      const addEquipmentLog: ActivityLog = {
+        activity: serialNumbers.length > 1?`Added ${serialNumbers.length} equipments`:`Added equipment`,
+        userName: userDetails.firstName + userDetails.lastName,
+        userRole: userDetails.userRole!,
+        date: new Date().toDateString() +" "+ new Date().toLocaleTimeString()
+      };
+      this.store.dispatch(logActions.requestAddActivityLogACTION({payload: addEquipmentLog}))
     }
   }
 

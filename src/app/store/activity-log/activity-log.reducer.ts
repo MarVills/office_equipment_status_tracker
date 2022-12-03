@@ -19,24 +19,8 @@ export const activityLogReducer = createReducer(
       activityLogs: payload }
   }),
 
-  on(activityLogsAction.successAddActivityLogACTION, (state: ActivityLogsState) =>{
-    return { ...state }
+  on(activityLogsAction.successAddActivityLogACTION, (state: ActivityLogsState, {payload: any}) =>{
+    return { ...state, }
   }),
-
-  on(activityLogsAction.requestUpdateActivityLogACTION, (state: ActivityLogsState, { payload }) =>{
-    const updateProduct = [state.activityLogs].map((product:any)=> {
-      return payload === product.id ? payload : product;
-    })
-    const returnState = { ...state, products: updateProduct, selected_product: '' }
-    return returnState;
-  }),
-
-  on(activityLogsAction.requestDeleteActivityLogACTION, (state: ActivityLogsState, { payload }) =>{
-    let newState = [state.activityLogs];
-    newState.splice(newState.indexOf(payload), 1);
-    const returnState = { ...state, products: newState }
-    return returnState;
-  }),
-
 );
 

@@ -42,8 +42,6 @@ import { SettingsComponent } from './views/settings/settings.component';
 import { AboutAppComponent } from './views/about-app/about-app.component';
 import { NotesComponent } from './views/notes/notes.component';
 import { ModifyEquipmentDialogComponent } from './views/equipments/components/modify-equipment-dialog/modify-equipment-dialog.component';
-import { ReleaseEquipmentComponent } from './views/release-equipment/release-equipment.component';
-import { RecieveEquipmentComponent } from './views/recieve-equipment/recieve-equipment.component';
 import { EquipmentCategoriesComponent } from './views/dashboard/dashboard-components/equipment-categories/equipment-categories.component';
 import { DashboardEquipmentComponent } from './views/dashboard/dashboard-components/dashboard-equipment/dashboard-equipment.component';
 import { DashboardUserComponent } from './views/dashboard/dashboard-components/dashboard-user/dashboard-user.component';
@@ -61,13 +59,9 @@ import { ManageUsersComponent } from './views/manage-users/manage-users.componen
 import { AccountDialogComponent } from './views/manage-users/components/account-dialog/account-dialog.component';
 import { ModifyCategoriesDialogComponent } from './views/equipments/components/modify-categories-dialog/modify-categories-dialog.component';
 
-import * as equipment from './store/equipments/equipments.reducer'
-import * as category from './store/categories/categories.reducer'
-import * as activityLog from './store/activity-log/activity-log.reducer'
 import { EffectsModule } from '@ngrx/effects';
-import { EquipmentsEffects } from './store/equipments/equipments.effects';
-import { CategoriesEffects } from './store/categories/categories.effects';
-import { ActivityLogEffects } from './store/activity-log/activity-log.effects';
+import { appReducers } from './store/reducers/reducers';
+import { appEffects } from './store/effects/effects';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -99,8 +93,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AboutAppComponent,
     NotesComponent,
     ModifyEquipmentDialogComponent,
-    ReleaseEquipmentComponent,
-    RecieveEquipmentComponent,
     EquipmentCategoriesComponent,
     DashboardEquipmentComponent,
     DashboardUserComponent,
@@ -140,14 +132,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(AppRoutes),
-    StoreModule.forRoot({ 
-                equipments: equipment.equipmentReducer, 
-                categories: category.categoryReducer,
-                activityLogs: activityLog.activityLogReducer }),
-    EffectsModule.forRoot([
-                EquipmentsEffects, 
-                CategoriesEffects, 
-                ActivityLogEffects]),
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot(appEffects),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

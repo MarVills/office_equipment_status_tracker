@@ -21,22 +21,23 @@ export const categoryReducer = createReducer(
   }),
 
   on(categoriesAction.successAddCategoryACTION, (state: CategoriesState) =>{
-    return { ...state }
+    return { ...state, state }
   }),
 
   on(categoriesAction.requestUpdateCategoryACTION, (state: CategoriesState, { payload }) =>{
-    const updateProduct = [state.categories].map((product:any)=> {
-      return payload === product.id ? payload : product;
+    const updateCategory = [state.categories].map((category:any)=> {
+      return payload === category.id ? payload : category;
     })
-    const returnState = { ...state, products: updateProduct, selected_product: '' }
+    const returnState = { ...state, category: updateCategory, }
     return returnState;
   }),
 
   on(categoriesAction.requestDeleteCategoryACTION, (state: CategoriesState, { payload }) =>{
-    let newState = [state.categories];
-    newState.splice(newState.indexOf(payload), 1);
-    const returnState = { ...state, products: newState }
+    let newCategories = [state.categories];
+    newCategories.splice(newCategories.indexOf(payload), 1);
+    const returnState = { ...state, products: newCategories }
     return returnState;
   }),
+
 );
 

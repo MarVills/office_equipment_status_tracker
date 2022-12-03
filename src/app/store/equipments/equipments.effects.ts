@@ -21,6 +21,7 @@ export class EquipmentsEffects {
   fetchEquipmentsEFFECT$: Observable<Action> = createEffect(() => this.actions$.pipe(
     ofType(equipmentActions.requestFetchEquipmentsACTION),
     switchMap(()=>{
+      console.log("=== effect ===")
       return this.fireStore.collection('equipments').valueChanges({ idField: 'id' }).pipe(
         switchMap((response)=>{
           return [equipmentActions.successFetchEquipmentsACTION({ payload: response })]
@@ -51,8 +52,8 @@ export class EquipmentsEffects {
 
   updateEquipmentEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
     ofType(equipmentActions.requestUpdateEquipmentACTION),
-    switchMap((data)=>{
-      return this.fireStore.collection('equipments').doc(data.id).update(data.payload).then(()=>{
+    switchMap((equipment)=>{
+      return this.fireStore.collection('equipments').doc(equipment.id).update(equipment.payload).then(()=>{
         this.sharedService.openSnackBar("Equipment updated successfuly", "Ok");
         return equipmentActions.successUpdateEquipmentACTION()
       }).catch((error)=>{

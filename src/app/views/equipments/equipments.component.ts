@@ -11,9 +11,13 @@ import { Category } from 'src/app/Models/category.model';
 import { Equipment,EquipmentDTO, EQUIPMENT_DATA} from 'src/app/Models/equipment.model';
 import { CATEGORY_DATA } from 'src/app/Models/category.model';
 import { PerfectScrollbarComponent, PerfectScrollbarConfigInterface, PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
-import { AuthService } from 'src/app/store/services/authentication/auth.service';
+import { AuthService } from 'src/app/store/services/auth/auth.service';
 import { ManageAccountService } from 'src/app/store/services/manage-account.service';
 import { ModifyCategoriesDialogComponent } from './components/modify-categories-dialog/modify-categories-dialog.component';
+import { selectEquipment } from 'src/app/store/equipments/equipments.selectors';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { EquipmentsState } from 'src/app/store/state/equipments.state';
 
 
 
@@ -32,12 +36,15 @@ export class EquipmentsComponent implements OnInit {
   equipmentsByCategory: Map<string, Equipment[]> = new Map<string, Equipment[]>();
   _categoryForm!: FormGroup;
   toEditData!:EquipmentDTO;
-  panelOpenState = false;
-  sidePanelOpened = true;
-  searchText = '';
+  panelOpenState:boolean = false;
+  sidePanelOpened:boolean = true;
+  searchText:string = '';
   equipments!: Equipment[];
+  equipments$!: Observable<EquipmentsState>
   categories: Category[] = CATEGORY_DATA;
   backgroundColors: string[] = [];
+  toolbarBgColor:string = '#f5f5f5';
+  hasEquipments:boolean = true;
 
   constructor(
     breakpointObserver: BreakpointObserver,
@@ -47,7 +54,8 @@ export class EquipmentsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
     private authService: AuthService,
-    private manageAccountService: ManageAccountService
+    private manageAccountService: ManageAccountService,
+    private store: Store,
     ) { 
     breakpointObserver.observe(['(max-width: 600px)']).subscribe(result => {
       this.displayedColumns = result.matches ?
@@ -88,7 +96,9 @@ export class EquipmentsComponent implements OnInit {
     this.equipmentDataSource.filter = filterValue;
   }
 
-  filterByCategory(category:string){
+  filterByCategory(category:string, color: string, equipments: string){
+    this.hasEquipments = Number(equipments) > 0;
+    this.toolbarBgColor = color;
     this.equipmentDataSource.filter = category.trim().toLowerCase();
     return this.equipmentDataSource.filteredData.length;
   }
@@ -102,7 +112,7 @@ export class EquipmentsComponent implements OnInit {
 
   getTotalEquipmentsPerCategory(category:string){
     try{
-      return this.equipmentsByCategory.get(category)!.length
+      return (this.equipmentsByCategory.get(category)!.length).toString()
     }catch(e){
       return "0"
     }
@@ -178,7 +188,9 @@ export class EquipmentsComponent implements OnInit {
     })
   }
 
-  allEquipments(){
+  allEquipments(color: string){
+    this.hasEquipments = true;
+    this.toolbarBgColor = color;
     this.equipmentDataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
   }
 
@@ -188,7 +200,7 @@ export class EquipmentsComponent implements OnInit {
       this.categories = CATEGORY_DATA;
       this.setEquipmentsByCategory();
       this.getBackgroundColors();
-      this.allEquipments();
+      this.allEquipments('#f5f5f5');
     }, 1000);
   }
 }

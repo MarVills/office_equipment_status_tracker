@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { SharedService } from 'src/app/shared/shared.service';
 import * as activityLogActions from '../activity-log/activity-log.actions';
 import { catchError, switchMap } from 'rxjs/operators';
+import { ActivityLog } from 'src/app/Models/activity-log-model';
 
 
 @Injectable()
@@ -32,9 +33,9 @@ export class ActivityLogEffects {
     addActivityLogEFFECT$: Observable<Action> = createEffect(() => { 
       return this.actions$.pipe(
         ofType(activityLogActions.requestAddActivityLogACTION),
-        switchMap((data)=>{
-          return this.fireStore.collection('activity_logs').add(data.payload).then(()=>{
-            return activityLogActions.successAddActivityLogACTION()
+        switchMap((resposne)=>{
+          return this.fireStore.collection('activity_logs').add(resposne.payload).then(()=>{
+            return activityLogActions.successAddActivityLogACTION(resposne)
           }).catch((error)=>{
             console.log("Add Error: ", error)
             return activityLogActions.onActivityLogFailure({ error: error })
@@ -43,33 +44,6 @@ export class ActivityLogEffects {
     
       )}
     );
-  
-    updateActivityLogEffect$: Observable<Action> = createEffect(() => this.actions$.pipe(
-      ofType(activityLogActions.requestUpdateActivityLogACTION),
-      switchMap((data)=>{
-        return this.fireStore.collection('activity_logs').doc(data.id).update(data.payload).then(()=>{
-          return activityLogActions.successUpdateActivityLogACTION()
-        }).catch((error)=>{
-          console.log("Update Error: ", error)
-          this.sharedService.openSnackBar("Failed updating activity log", "Ok");
-          return activityLogActions.onActivityLogFailure({ error: error })
-        })
-      })
-    ));
-  
-    deleteActivityLogEFFEET$: Observable<Action> = createEffect(() => this.actions$.pipe(
-      ofType(activityLogActions.requestDeleteActivityLogACTION),
-      switchMap((docID)=>{
-        return this.fireStore.collection('activity_logs').doc(docID.payload).delete().then(()=>{
-          this.sharedService.openSnackBar("Category deleted successfuly", "Ok");
-          return activityLogActions.successAddActivityLogACTION()
-        }).catch((error)=>{
-          console.log("Delete Error: ", error)
-          this.sharedService.openSnackBar("Failed deleting category", "Ok");
-          return activityLogActions.onActivityLogFailure({ error: error })
-        })
-      })
-    ));
 }
 
 

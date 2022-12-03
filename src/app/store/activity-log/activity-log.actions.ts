@@ -24,20 +24,7 @@ export const requestAddActivityLogACTION = createAction(
 );
 export const successAddActivityLogACTION = createAction(
   '[ ActivityLogs ] Success Add ActivityLog',
-);
-export const requestDeleteActivityLogACTION = createAction(
-  '[ ActivityLogs ] Request Delete ActivityLog',
-  props<{payload: string}>()
-);
-export const successDeleteActivityLogACTION = createAction(
-  '[ ActivityLogs ] Success Delete ActivityLog',
-);
-export const requestUpdateActivityLogACTION = createAction(
-  '[ ActivityLogs ] Request Update ActivityLog',
-  props<{ id: string, payload: ActivityLog }>()
-);
-export const successUpdateActivityLogACTION = createAction(
-  '[ ActivityLogs ] Success Update ActivityLog',
+  props<{payload: ActivityLog}>()
 );
 export const onActivityLogFailure = createAction(
   '[ ActivityLogs ] ActivityLogs Failure',

@@ -5,7 +5,7 @@ import { AccountDetails } from 'src/app/Models/manage-account.model';
 import { ManageAccountService, accData } from 'src/app/store/services/manage-account.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { finalize } from 'rxjs/operators';
-import { AuthService } from 'src/app/store/services/authentication/auth.service';
+import { AuthService } from 'src/app/store/services/auth/auth.service';
 import { 
   AngularFireStorage,  
   AngularFireStorageReference, 

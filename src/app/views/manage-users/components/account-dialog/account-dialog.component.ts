@@ -3,7 +3,7 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AuthService } from 'src/app/store/services/authentication/auth.service';
+import { AuthService } from 'src/app/store/services/auth/auth.service';
 import { AccountDetails } from 'src/app/Models/manage-account.model';
 
 

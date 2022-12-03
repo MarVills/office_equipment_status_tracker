@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SharedService } from 'src/app/shared/shared.service';
-import { AccountDetails, AllData } from 'src/app/Models/manage-account.model';
-import { map } from 'rxjs/operators';
+import { AccountCredentials, AccountDetails, AllData } from 'src/app/Models/manage-account.model';
+import { map, take, takeWhile } from 'rxjs/operators';
 import { UserDetail } from 'src/app/Models/user-details.model';
 import { User } from 'src/app/shared/user-details/user-details';
 import { Store } from '@ngrx/store';
-import * as userDetailActions from '../../../store/user-details/user-details.actions';
+import * as userDetailActions from '../../user-details/user-details.actions';
 import { ManageAccountService } from '../manage-account.service';
+import * as authActions from '../../auth/auth.actions';
+import * as authState from '../../state/auth.state'
+import { isSignedIn } from '../../auth/auth.selectors';
+import { AuthState } from '../../state/auth.state';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +21,11 @@ import { ManageAccountService } from '../manage-account.service';
 export class AuthService {
 
   userData: Observable<any>;
-  loggedIn = new BehaviorSubject<boolean>(false);
-  authState = false; 
+  initialValue:AuthState = {uid:"", signedIn: false}
+  loggedIn = new BehaviorSubject<AuthState>(this.initialValue);
+  authState = false;
+  loginState$!: Subscription;
+  loggedIn$ = this.loggedIn.asObservable();;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -55,24 +62,12 @@ export class AuthService {
     });    
  }
 
-  async signIn(email: string, password: string) {
-    let isSignedIn = false; 
-    await this.angularFireAuth
-      .signInWithEmailAndPassword(email, password)
-      .then(res => {
-        console.log('Successfully signed in!', res);
-        isSignedIn = true;
-        // To remove saving user id to local storage, pending task
-        localStorage.setItem("uid", (res.user!.uid).toString()); 
-        // This.store.dispatch(userDetailActions.requestFetchUserDetailsACTION({payload: []}))
-        this.user.signedInUserId = {userID: res.user!.uid}
-        this.manageAccount.onFetchAccDetails();
-      })
-      .catch(err => {
-        console.log('Something is wrong:',err.message);
-        this.sharedService.openSnackBar(err.message);
-      });
-    return isSignedIn;
+  signIn(email: string, password: string) {
+    const credentials: AccountCredentials = {
+      email: email,
+      password: password
+    }
+    this.store.dispatch(authActions.requestAuthLogin({payload: credentials}))
   }
 
   getAuth(){
@@ -82,16 +77,16 @@ export class AuthService {
   async isLoggedIn():Promise<boolean>{
    await this.angularFireAuth.onAuthStateChanged((user) => {
       this.authState = user?true:false
-      console.log("Auth State: ", this.authState);
     })
     return this.authState
-    
   }
 
   signOut(){
-    this.angularFireAuth
-    .signOut();
-    localStorage.removeItem("uid");
-    location.reload();
+    // this.angularFireAuth
+    // .signOut();
+    // localStorage.removeItem("uid");
+    // location.reload();
+    this.store.dispatch(authActions.requestAuthLogout())
   }
 }
+
