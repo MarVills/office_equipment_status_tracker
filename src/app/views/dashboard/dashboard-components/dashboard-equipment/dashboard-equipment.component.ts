@@ -127,7 +127,6 @@ export class DashboardEquipmentComponent implements OnInit {
     setTimeout(() => {
       this.equipments = EQUIPMENT_DATA.length;
       this.setEquipmentsByCategories();
-      console.log(this.equipmentsByCategory)
     }, 1000);
   }
 }

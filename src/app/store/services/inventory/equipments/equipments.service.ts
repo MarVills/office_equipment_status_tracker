@@ -33,14 +33,22 @@ export class EquipmentsService implements OnDestroy{
     this.fetchCategory$.unsubscribe();
   }
 
-  onFetchEquipments(){
+  async onFetchEquipments(){
     this.store.dispatch(equipmentActions.requestFetchEquipmentsACTION({payload: []}));
+    // this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
+    //     EQUIPMENT_DATA.splice(0)
+    //     for (var res of response.equipments) {
+    //       EQUIPMENT_DATA.push(res);
+    //     }
+    // })
+
     this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
-        EQUIPMENT_DATA.splice(0)
-        for (var res of response.equipments) {
-          EQUIPMENT_DATA.push(res);
-        }
-    })
+      EQUIPMENT_DATA.splice(0)
+      for (var res of response.equipments) {
+        EQUIPMENT_DATA.push(res);
+      }
+  })
+
     // this.fetchEquipments$ = this.store.select( selectEquipment )
     // .pipe(
     //   skip(1),

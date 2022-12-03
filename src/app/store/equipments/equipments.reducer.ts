@@ -13,7 +13,6 @@ export const equipmentReducer = createReducer(
   initialState,
 
   on(equipmentsAction.successFetchEquipmentsACTION, (state: EquipmentsState, { payload }) =>{
-    console.log("=== reducer ===")
     return { 
       ...state, 
       equipments: payload }

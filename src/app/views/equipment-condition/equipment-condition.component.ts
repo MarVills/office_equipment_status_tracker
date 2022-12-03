@@ -74,11 +74,11 @@ export class EquipmentConditionComponent implements  OnInit {
   setEquipmentsByCategories(){
     this.categories.forEach((category)=>{
       const filteredEquipment = this.equipments.filter((equipment)=>equipment.category === category.category);
-      const values = {
+      const isSlectedCategory:EquipmentsWithSelectedStatus = {
         isSelected: false,
         items: filteredEquipment,
       }
-      filteredEquipment?this.equipmentsByCategory.set(category.category, values):null
+      filteredEquipment?this.equipmentsByCategory.set(category.category, isSlectedCategory):null
     })
   }
 
@@ -101,7 +101,7 @@ export class EquipmentConditionComponent implements  OnInit {
   refresh(){
     setTimeout(() => {
       this.setEquipmentsByCategories()
-    }, 2000);
+    }, 1000);
   }
 
 }
