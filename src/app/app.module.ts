@@ -58,6 +58,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ManageUsersComponent } from './views/manage-users/manage-users.component';
 import { AccountDialogComponent } from './views/manage-users/components/account-dialog/account-dialog.component';
 import { ModifyCategoriesDialogComponent } from './views/equipments/components/modify-categories-dialog/modify-categories-dialog.component';
+// import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 import { EffectsModule } from '@ngrx/effects';
 import { appReducers } from './store/reducers/reducers';
@@ -130,6 +131,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgxDatatableModule,
     Ng2SearchPipeModule,
     AngularFireStorageModule,
+    // NgxSkeletonLoaderModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     RouterModule.forRoot(AppRoutes),
     StoreModule.forRoot(appReducers),

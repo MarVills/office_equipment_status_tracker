@@ -70,6 +70,13 @@ export class EquipmentsComponent implements OnInit {
     this.manageAccountService.onFetchAccDetails();
     this.categoryForm();
     this.refresh();
+    
+    // this.intervalId = window.setInterval(() => {
+    //   this.animation = this.animation === 'pulse' ? 'progress-dark' : 'pulse';
+    //   this.count = this.count === 2 ? 5 : 2;
+    //   this.widthHeightSizeInPixels =
+    //     this.widthHeightSizeInPixels === 50 ? 100 : 50;
+    // }, 5000);
   }
 
   categoryForm(){

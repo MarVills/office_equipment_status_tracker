@@ -35,27 +35,27 @@ export class EquipmentsService implements OnDestroy{
 
   onFetchEquipments(){
     this.store.dispatch(equipmentActions.requestFetchEquipmentsACTION({payload: []}));
-    // this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
-    //     EQUIPMENT_DATA.splice(0)
-    //     for (var res of response.equipments) {
-    //       EQUIPMENT_DATA.push(res);
-    //     }
-    // })
-    this.fetchEquipments$ = this.store.select( selectEquipment )
-    .pipe(
-      skip(1),
-      switchMap((response)=>{
-        switchAll()
-        console.log("===",response)
-        // console.log(response)
+    this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
         EQUIPMENT_DATA.splice(0)
         for (var res of response.equipments) {
           EQUIPMENT_DATA.push(res);
         }
-        return [response]
-      })
-    )
-    .subscribe()
+    })
+    // this.fetchEquipments$ = this.store.select( selectEquipment )
+    // .pipe(
+    //   skip(1),
+    //   switchMap((response)=>{
+    //     switchAll()
+    //     console.log("===",response)
+    //     // console.log(response)
+    //     EQUIPMENT_DATA.splice(0)
+    //     for (var res of response.equipments) {
+    //       EQUIPMENT_DATA.push(res);
+    //     }
+    //     return [response]
+    //   })
+    // )
+    // .subscribe()
   }
 
   onAddEquipment(data: Equipment, serialNumbers: string[]){
