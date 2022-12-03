@@ -42,12 +42,12 @@ export class EquipmentsService implements OnDestroy{
     //     }
     // })
 
-    this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
-      EQUIPMENT_DATA.splice(0)
-      for (var res of response.equipments) {
-        EQUIPMENT_DATA.push(res);
-      }
-  })
+    // this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
+    //   EQUIPMENT_DATA.splice(0)
+    //   for (var res of response) {
+    //     EQUIPMENT_DATA.push(res);
+    //   }
+    // })
 
     // this.fetchEquipments$ = this.store.select( selectEquipment )
     // .pipe(

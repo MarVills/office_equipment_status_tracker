@@ -27,6 +27,7 @@ export const requestAddEquipmentACTION = createAction(
 );
 export const successAddEquipmentACTION = createAction(
   '[ Equipments ] Success Add Equipment',
+  props<{payload: Equipment}>()
 );
 
 export const requestDeleteEquipmentACTION = createAction(

@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { Equipment } from 'src/app/Models/equipment.model';
 import { EquipmentsState } from '../state/equipments.state';
 import * as equipmentsAction from './equipments.actions';
 
@@ -18,8 +19,9 @@ export const equipmentReducer = createReducer(
       equipments: payload }
   }),
 
-  on(equipmentsAction.successAddEquipmentACTION, (state: EquipmentsState) =>{
-    return { ...state, state }
+  on(equipmentsAction.successAddEquipmentACTION, (state: EquipmentsState, { payload }) =>{
+    
+    return { ...state, equipments: [state, payload]}
   }),
 
   on(equipmentsAction.requestUpdateEquipmentACTION, (state: EquipmentsState, { payload }) =>{

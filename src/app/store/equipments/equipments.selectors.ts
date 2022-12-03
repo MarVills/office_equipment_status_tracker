@@ -5,5 +5,5 @@ import { Equipments, EquipmentsState } from '../state/equipments.state';
 export const selectEquipmentsFeatureState = createFeatureSelector<any>('equipments');
 export const selectEquipment = createSelector(
     selectEquipmentsFeatureState,
-    (state:  EquipmentsState) => state
+    (state:  EquipmentsState) => state.equipments
 )

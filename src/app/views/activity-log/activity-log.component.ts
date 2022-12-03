@@ -33,7 +33,6 @@ export class ActivityLogComponent implements AfterViewInit, OnInit{
   }
   ngOnInit(): void {
     this.refresh()
-    this.dataSource = new MatTableDataSource(ACTIVITY_LOG_DATA);
   }
 
   ngAfterViewInit() {

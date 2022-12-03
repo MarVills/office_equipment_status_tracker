@@ -16,7 +16,7 @@ import { ManageAccountService } from 'src/app/store/services/manage-account.serv
 import { ModifyCategoriesDialogComponent } from './components/modify-categories-dialog/modify-categories-dialog.component';
 import { selectEquipment } from 'src/app/store/equipments/equipments.selectors';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { EquipmentsState } from 'src/app/store/state/equipments.state';
 
 
@@ -32,7 +32,7 @@ export class EquipmentsComponent implements OnInit {
   @ViewChild(PerfectScrollbarComponent) componentRef?: PerfectScrollbarComponent;
   @ViewChild(PerfectScrollbarDirective) directiveRef?: PerfectScrollbarDirective;
   displayedColumns = [ 'serial-number', 'equipment', 'status', 'action'];
-  equipmentDataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
+  equipmentDataSource = new MatTableDataSource<Equipment>([]);
   equipmentsByCategory: Map<string, Equipment[]> = new Map<string, Equipment[]>();
   _categoryForm!: FormGroup;
   toEditData!:EquipmentDTO;
@@ -40,7 +40,7 @@ export class EquipmentsComponent implements OnInit {
   sidePanelOpened:boolean = true;
   searchText:string = '';
   equipments!: Equipment[];
-  equipments$!: Observable<EquipmentsState>
+  equipments$!: Observable<Equipment[]>//Subscription;
   categories: Category[] = CATEGORY_DATA;
   backgroundColors: string[] = [];
   toolbarBgColor:string = '#f5f5f5';
@@ -69,14 +69,23 @@ export class EquipmentsComponent implements OnInit {
     this.equipmentService.onFetchEquipments();
     this.manageAccountService.onFetchAccDetails();
     this.categoryForm();
-    this.refresh();
+    this.equipments$ = this.store.select(selectEquipment)
+    this.store.select(selectEquipment).subscribe((response)=>{
+      if(response.length != 0){
+        console.log("9999999999999999", response)
+        this.equipmentDataSource = new MatTableDataSource<Equipment>(response);
+        this.equipments = response;
+        this.categories = CATEGORY_DATA;
+        this.setEquipmentsByCategory();
+        this.getBackgroundColors();
+        this.allEquipments('#f5f5f5');
+      }
+      // setTimeout(() => {
+      //   this.equipmentDataSource = new MatTableDataSource<Equipment>(response);
+      // }, 1000);
+    })
     
-    // this.intervalId = window.setInterval(() => {
-    //   this.animation = this.animation === 'pulse' ? 'progress-dark' : 'pulse';
-    //   this.count = this.count === 2 ? 5 : 2;
-    //   this.widthHeightSizeInPixels =
-    //     this.widthHeightSizeInPixels === 50 ? 100 : 50;
-    // }, 5000);
+ 
   }
 
   categoryForm(){
@@ -145,7 +154,9 @@ export class EquipmentsComponent implements OnInit {
       data: {},
     });
     addDialogRef.afterClosed().subscribe(() => {
-      this.refresh()
+      // this.refresh()
+      // 
+    
     });
   }
 
@@ -164,7 +175,7 @@ export class EquipmentsComponent implements OnInit {
     });
     editDialogRef.afterClosed().subscribe(result => {
       this.equipmentService.isEdit = false;
-      this.refresh()
+      // this.refresh()
     });
   }
 
@@ -175,7 +186,7 @@ export class EquipmentsComponent implements OnInit {
       data: {},
     });
     addDialogRef.afterClosed().subscribe(() => {
-      this.refresh()
+      // this.refresh()
     });
   }
 
@@ -185,7 +196,7 @@ export class EquipmentsComponent implements OnInit {
       switch (response){
         case "confirm":
           this.equipmentService.onDeleteEquipment(data)
-          this.refresh();
+          // this.refresh();
           break;
         case "cancel": 
           this.sharedService.openSnackBar("Deleting equipment canceld !");
@@ -202,13 +213,9 @@ export class EquipmentsComponent implements OnInit {
   }
 
   refresh(){
-    setTimeout(() => {
-      this.equipments = EQUIPMENT_DATA;
-      this.categories = CATEGORY_DATA;
-      this.setEquipmentsByCategory();
-      this.getBackgroundColors();
-      this.allEquipments('#f5f5f5');
-    }, 1000);
+  //  setTimeout(() => {
+  //   this.equipmentDataSource = new MatTableDataSource<Equipment>(this.equipments);
+  //  }, 1000);
   }
 }
 

@@ -84,8 +84,8 @@
                 </form>
               </div>
               <div class="responsive-table m-l-10 m-r-10">
-                  <mat-table #table [dataSource]="equipmentDataSource">
-                    <!-- <mat-table #table [dataSource]="equipments$ | async "> -->
+                  <mat-table [dataSource]="equipments$ | async">
+                    <!-- <mat-table #table [dataSource]="equipmentDataSource"> -->
 
                       <ng-container matColumnDef="serial-number">
                           <mat-header-cell *matHeaderCellDef> Serial Number </mat-header-cell>

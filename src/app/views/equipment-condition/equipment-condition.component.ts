@@ -74,23 +74,25 @@ export class EquipmentConditionComponent implements  OnInit {
   setEquipmentsByCategories(){
     this.categories.forEach((category)=>{
       const filteredEquipment = this.equipments.filter((equipment)=>equipment.category === category.category);
-      const isSlectedCategory:EquipmentsWithSelectedStatus = {
+      const isSlectedCategory: EquipmentsWithSelectedStatus = {
         isSelected: false,
         items: filteredEquipment,
       }
-      filteredEquipment?this.equipmentsByCategory.set(category.category, isSlectedCategory):null
+      filteredEquipment ? this.equipmentsByCategory.set(category.category, isSlectedCategory) : null
     })
   }
 
   onConditionChange(data: string){
     const previousData = this.equipmentsService.toEditData;
-    const latestData:Equipment = {
+
+    const latestData: Equipment = {
       equipment: previousData.equipment,
       category: previousData.category,
       status: data,
       description: previousData.description,
       serialNumber: previousData.serialNumber
     }
+    
     this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, latestData)
   }
 

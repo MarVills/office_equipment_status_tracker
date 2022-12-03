@@ -17,7 +17,6 @@ export class EquipmentsEffects {
     private fireStore: AngularFirestore,
     private sharedService: SharedService) {}
 
-
   fetchEquipmentsEFFECT$: Observable<Action> = createEffect(() => this.actions$.pipe(
     ofType(equipmentActions.requestFetchEquipmentsACTION),
     switchMap(()=>{
@@ -39,7 +38,7 @@ export class EquipmentsEffects {
       switchMap((data)=>{
         return this.fireStore.collection('equipments').add(data.payload).then(()=>{
           this.sharedService.openSnackBar("Equipment added successfuly", "Ok");
-          return equipmentActions.successAddEquipmentACTION()
+          return equipmentActions.successAddEquipmentACTION(data)
         }).catch((error)=>{
           console.log("Add Error: ", error)
           this.sharedService.openSnackBar("Failed adding equipment", "Ok");
@@ -68,7 +67,7 @@ export class EquipmentsEffects {
     switchMap((docID)=>{
       return this.fireStore.collection('equipments').doc(docID.payload).delete().then(()=>{
         this.sharedService.openSnackBar("Equipment deleted successfuly", "Ok");
-        return equipmentActions.successAddEquipmentACTION()
+        return equipmentActions.successDeleteEquipmentACTION()
       }).catch((error)=>{
         console.log("Delete Error: ", error)
         this.sharedService.openSnackBar("Failed deleting equipment", "Ok");
