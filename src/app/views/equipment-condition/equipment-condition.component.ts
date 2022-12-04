@@ -40,7 +40,7 @@ export class EquipmentConditionComponent implements  OnInit {
   
   ngOnInit(): void {
     this.refresh();
-    this.equipmentsService.onFetchEquipments();
+    // this.equipmentsService.onFetchEquipments();
     this.categoriesService.onFetchCategories();
     this.manageAccountService.onFetchAccDetails();
     this.searchEquipmentForm();

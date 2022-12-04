@@ -13,15 +13,16 @@ export const initialState: EquipmentsState = {
 export const equipmentReducer = createReducer(
   initialState,
 
-  on(equipmentsAction.successFetchEquipmentsACTION, (state: EquipmentsState, { payload }) =>{
+  on(equipmentsAction.successFetchEquipmentACTION, (state: EquipmentsState, { payload }) =>{
     return { 
       ...state, 
       equipments: payload }
   }),
 
   on(equipmentsAction.successAddEquipmentACTION, (state: EquipmentsState, { payload }) =>{
-    
-    return { ...state, equipments: [state, payload]}
+    // console.log("state", state)
+    // return { ...state, equipments: [state, payload]}
+    return { ...state}
   }),
 
   on(equipmentsAction.requestUpdateEquipmentACTION, (state: EquipmentsState, { payload }) =>{

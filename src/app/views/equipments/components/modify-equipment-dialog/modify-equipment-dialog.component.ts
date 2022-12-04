@@ -12,6 +12,10 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { ModifyCategoriesDialogComponent } from '../modify-categories-dialog/modify-categories-dialog.component';
 import { CategoriesService } from 'src/app/store/services/inventory/equipments/categories.service';
 import { EQUIPMENT_CONDITIONS } from 'src/app/shared/equipment-conditions/equipment-conditions';
+import { Store } from '@ngrx/store';
+import * as equipmentActions from '../../../../store/equipments/equipments.actions';
+import { ActivityLog } from 'src/app/Models/activity-log-model';
+import { User } from 'src/app/shared/user-details/user-details'; 
 
 
 @Component({
@@ -35,10 +39,12 @@ export class ModifyEquipmentDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public equipmentData:Equipment,
     public equipmentsService: EquipmentsService,
+    private store: Store,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private sharedService: SharedService,
-    private categoriesService: CategoriesService) { 
+    private categoriesService: CategoriesService,
+    private user: User) { 
   }
 
   ngOnInit(): void {
@@ -123,8 +129,25 @@ export class ModifyEquipmentDialogComponent implements OnInit {
         this.equipmentsService.onEditEquipment(this.equipmentsService.toEditData, this._equipmentForm.value)
         break;
       case 'false,true':
-        const value = this._equipmentForm.value;
-        this.equipmentsService.onAddEquipment(value, this.serialNumbers)
+        const formValues= this._equipmentForm.value;
+        // let equipmentDetails: Equipment;
+        const userDetails = this.user.signedInUserDetails;
+        this.serialNumbers.forEach((serialNumber)=>{
+          const equipmentDetails: Equipment = {
+            equipment: formValues.equipment,
+            status: formValues.status,
+            category: formValues.category,
+            serialNumber: serialNumber,
+            description: formValues.description
+          }
+          const addEquipmentLog: ActivityLog = {
+            activity: this.serialNumbers.length > 1?`Added ${this.serialNumbers.length} equipments`:`Added equipment`,
+            userName: userDetails.firstName + formValues.lastName,
+            userRole: userDetails.userRole!,
+            date: new Date().toDateString() +" "+ new Date().toLocaleTimeString()
+          };
+          this.store.dispatch(equipmentActions.requestAddEquipmentACTION({payload: equipmentDetails, addItemLog: addEquipmentLog}))
+        })
         this.clearForm(formDirective);
         break;
       case 'false,false':

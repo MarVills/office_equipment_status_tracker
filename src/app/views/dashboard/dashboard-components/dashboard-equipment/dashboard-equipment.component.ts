@@ -108,7 +108,7 @@ export class DashboardEquipmentComponent implements OnInit {
     };
   }
   ngOnInit(): void{
-    this.equipmentsService.onFetchEquipments();
+    // this.equipmentsService.onFetchEquipments();
     this.categoriesService.onFetchCategories();
     this.refresh();
   }

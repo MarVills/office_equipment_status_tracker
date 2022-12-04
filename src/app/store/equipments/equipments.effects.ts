@@ -1,12 +1,14 @@
 
 import { Injectable, OnDestroy } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Observable, of, } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { catchError, switchMap } from 'rxjs/operators';
 import { SharedService } from 'src/app/shared/shared.service';
 import * as equipmentActions from './equipments.actions';
+import * as logActions from '../activity-log/activity-log.actions'
+import { ActivityLog } from 'src/app/Models/activity-log-model';
 
 
 @Injectable()
@@ -15,14 +17,15 @@ export class EquipmentsEffects {
   constructor(
     private actions$: Actions,
     private fireStore: AngularFirestore,
-    private sharedService: SharedService) {}
+    private sharedService: SharedService,
+    private store: Store) {}
 
   fetchEquipmentsEFFECT$: Observable<Action> = createEffect(() => this.actions$.pipe(
-    ofType(equipmentActions.requestFetchEquipmentsACTION),
+    ofType(equipmentActions.requestFetchEquipmentACTION),
     switchMap(()=>{
       return this.fireStore.collection('equipments').valueChanges({ idField: 'id' }).pipe(
         switchMap((response)=>{
-          return [equipmentActions.successFetchEquipmentsACTION({ payload: response })]
+          return [equipmentActions.successFetchEquipmentACTION({ payload: response })]
         }),
         catchError((error: Error) => {
          console.log("Fetch Error: ", error)

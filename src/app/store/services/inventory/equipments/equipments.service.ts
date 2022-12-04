@@ -33,62 +33,38 @@ export class EquipmentsService implements OnDestroy{
     this.fetchCategory$.unsubscribe();
   }
 
-  async onFetchEquipments(){
-    this.store.dispatch(equipmentActions.requestFetchEquipmentsACTION({payload: []}));
-    // this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
-    //     EQUIPMENT_DATA.splice(0)
-    //     for (var res of response.equipments) {
-    //       EQUIPMENT_DATA.push(res);
-    //     }
-    // })
+  // async onFetchEquipments(){
+  //   this.store.dispatch(equipmentActions.requestFetchEquipmentsACTION({payload: []}));
+  //   // this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
+  //   //     EQUIPMENT_DATA.splice(0)
+  //   //     for (var res of response.equipments) {
+  //   //       EQUIPMENT_DATA.push(res);
+  //   //     }
+  //   // })
 
-    // this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
-    //   EQUIPMENT_DATA.splice(0)
-    //   for (var res of response) {
-    //     EQUIPMENT_DATA.push(res);
-    //   }
-    // })
+  //   // this.fetchEquipments$ = this.store.select( selectEquipment ).subscribe((response) => {
+  //   //   EQUIPMENT_DATA.splice(0)
+  //   //   for (var res of response) {
+  //   //     EQUIPMENT_DATA.push(res);
+  //   //   }
+  //   // })
 
-    // this.fetchEquipments$ = this.store.select( selectEquipment )
-    // .pipe(
-    //   skip(1),
-    //   switchMap((response)=>{
-    //     switchAll()
-    //     console.log("===",response)
-    //     // console.log(response)
-    //     EQUIPMENT_DATA.splice(0)
-    //     for (var res of response.equipments) {
-    //       EQUIPMENT_DATA.push(res);
-    //     }
-    //     return [response]
-    //   })
-    // )
-    // .subscribe()
-  }
-
-  onAddEquipment(data: Equipment, serialNumbers: string[]){
-    if(this.authService.authState){
-      const userDetails = this.user.signedInUserDetails;
-      serialNumbers.forEach((serialNumber)=>{
-         const equipment = {
-          equipment: data.equipment,
-          status: data.status,
-          category: data.category,
-          serialNumber: serialNumber,
-          description: data.description
-         }
-         EQUIPMENT_DATA.push(equipment);
-         this.store.dispatch(equipmentActions.requestAddEquipmentACTION({payload: equipment}))
-      })
-      const addEquipmentLog: ActivityLog = {
-        activity: serialNumbers.length > 1?`Added ${serialNumbers.length} equipments`:`Added equipment`,
-        userName: userDetails.firstName + userDetails.lastName,
-        userRole: userDetails.userRole!,
-        date: new Date().toDateString() +" "+ new Date().toLocaleTimeString()
-      };
-      this.store.dispatch(logActions.requestAddActivityLogACTION({payload: addEquipmentLog}))
-    }
-  }
+  //   // this.fetchEquipments$ = this.store.select( selectEquipment )
+  //   // .pipe(
+  //   //   skip(1),
+  //   //   switchMap((response)=>{
+  //   //     switchAll()
+  //   //     console.log("===",response)
+  //   //     // console.log(response)
+  //   //     EQUIPMENT_DATA.splice(0)
+  //   //     for (var res of response.equipments) {
+  //   //       EQUIPMENT_DATA.push(res);
+  //   //     }
+  //   //     return [response]
+  //   //   })
+  //   // )
+  //   // .subscribe()
+  // }
 
   onEditEquipment(currentData: Equipment, newData: Equipment){
     const userDetails = this.user.signedInUserDetails;

@@ -13,6 +13,7 @@ import { RequestComponent } from './views/request/request.component';
 import { ActivityLogComponent } from './views/activity-log/activity-log.component';
 import { AboutAppComponent } from './views/about-app/about-app.component';
 import { ManageUsersComponent } from './views/manage-users/manage-users.component';
+import { EquipmentResolverService } from './resolvers/equipment-resolver.service';
 
 
 export const AppRoutes: Routes = [
@@ -40,6 +41,7 @@ export const AppRoutes: Routes = [
               {
                 path: 'inventory/equipments',
                 component: EquipmentsComponent,
+                resolve: [EquipmentResolverService],
                 data: {
                   title: 'Equipments',
                   urls: [

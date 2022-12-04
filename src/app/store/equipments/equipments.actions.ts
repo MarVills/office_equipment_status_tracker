@@ -1,29 +1,30 @@
 import { createAction, props } from '@ngrx/store';
+import { ActivityLog } from 'src/app/Models/activity-log-model';
 import { Equipment,
          EquipmentDTO} from '../../Models/equipment.model';
 
 
-export const requestFetchEquipmentsACTION = createAction(
+export const requestFetchEquipmentACTION = createAction(
   '[Equipments] Request Fetch Equipments',
-   props<{payload: Equipment[] }>(),
+  //  props<{payload: Equipment[] }>(),
 );
-export const successFetchEquipmentsACTION = createAction(
+export const successFetchEquipmentACTION = createAction(
  '[Equipments] Success Fetch Equipments',
   props<{payload: any }>(),
 );
 
-export const requestFetchEquipmentACTION = createAction(
-  '[ Equipments ] Request Fetch Equipment',
-  props<{payload: number }>()
-);
-export const successFetchEquipmentACTION = createAction(
-  '[ Equipments ] Success Fetch Equipment',
-  props<{payload: EquipmentDTO }>()
-);
+// export const requestFetchEquipmentACTION = createAction(
+//   '[ Equipments ] Request Fetch Equipment',
+//   props<{payload: number }>()
+// );
+// export const successFetchEquipmentACTION = createAction(
+//   '[ Equipments ] Success Fetch Equipment',
+//   props<{payload: EquipmentDTO }>()
+// );
 
 export const requestAddEquipmentACTION = createAction(
   '[ Equipments ] Request Add Equipment',
-  props<{payload: Equipment}>()
+  props<{payload: Equipment, addItemLog: ActivityLog}>()
 );
 export const successAddEquipmentACTION = createAction(
   '[ Equipments ] Success Add Equipment',

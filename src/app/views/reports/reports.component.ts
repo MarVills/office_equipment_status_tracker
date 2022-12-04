@@ -19,7 +19,7 @@ export class ReportsComponent implements OnInit{
   constructor(private equipmentsService: EquipmentsService) {}
   
   ngOnInit(): void {
-    this.equipmentsService.onFetchEquipments();
+    // this.equipmentsService.onFetchEquipments();
     this.refresh();
     this.dataSource.paginator = this.paginator;
   }

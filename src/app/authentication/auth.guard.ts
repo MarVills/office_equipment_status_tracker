@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate, OnInit {
     private angularFireAuth: AngularFireAuth) { }
   ngOnInit(): void {
     this.authService.isLoggedIn()
-    this.equipmentsService.onFetchEquipments();
+    // this.equipmentsService.onFetchEquipments();
   }
 
  canActivate(

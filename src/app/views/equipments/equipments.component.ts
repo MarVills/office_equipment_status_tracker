@@ -17,8 +17,8 @@ import { ModifyCategoriesDialogComponent } from './components/modify-categories-
 import { selectEquipment } from 'src/app/store/equipments/equipments.selectors';
 import { Store } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
-import { EquipmentsState } from 'src/app/store/state/equipments.state';
-
+// import { EquipmentsState } from 'src/app/store/state/equipments.state';
+import * as equipmentActions from '.././../store/equipments/equipments.actions'
 
 
 @Component({
@@ -66,13 +66,13 @@ export class EquipmentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoriesService.onFetchCategories();
-    this.equipmentService.onFetchEquipments();
+    // this.equipmentService.onFetchEquipments();
     this.manageAccountService.onFetchAccDetails();
     this.categoryForm();
+    // this.store.dispatch(equipmentActions.requestFetchEquipmentACTION());
     this.equipments$ = this.store.select(selectEquipment)
     this.store.select(selectEquipment).subscribe((response)=>{
       if(response.length != 0){
-        console.log("9999999999999999", response)
         this.equipmentDataSource = new MatTableDataSource<Equipment>(response);
         this.equipments = response;
         this.categories = CATEGORY_DATA;
@@ -80,12 +80,7 @@ export class EquipmentsComponent implements OnInit {
         this.getBackgroundColors();
         this.allEquipments('#f5f5f5');
       }
-      // setTimeout(() => {
-      //   this.equipmentDataSource = new MatTableDataSource<Equipment>(response);
-      // }, 1000);
     })
-    
- 
   }
 
   categoryForm(){
@@ -153,11 +148,11 @@ export class EquipmentsComponent implements OnInit {
       width: '500px',
       data: {},
     });
-    addDialogRef.afterClosed().subscribe(() => {
-      // this.refresh()
-      // 
+    // addDialogRef.afterClosed().subscribe(() => {
+    //   // this.refresh()
+    //   // 
     
-    });
+    // });
   }
 
   openEditDialog(data: any): void {
