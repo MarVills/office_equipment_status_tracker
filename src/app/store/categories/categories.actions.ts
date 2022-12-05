@@ -4,7 +4,6 @@ import { Category, CategoryDTO } from 'src/app/Models/category.model';
 
 export const requestFetchCategoriesACTION = createAction(
   '[Categories] Request Fetch Categories',
-   props<{payload: any[] }>(),
 );
 export const successFetchCategoriesACTION = createAction(
  '[Categories] Success Fetch Categories',

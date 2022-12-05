@@ -14,6 +14,7 @@ import { ActivityLogComponent } from './views/activity-log/activity-log.componen
 import { AboutAppComponent } from './views/about-app/about-app.component';
 import { ManageUsersComponent } from './views/manage-users/manage-users.component';
 import { EquipmentResolverService } from './resolvers/equipment-resolver.service';
+import { CategoriesResolverService } from './resolvers/categories-resolver.service';
 
 
 export const AppRoutes: Routes = [
@@ -30,6 +31,7 @@ export const AppRoutes: Routes = [
             {
                 path: 'dashboard',
                 component: DashboardComponent,
+                resolve: [ EquipmentResolverService, CategoriesResolverService ],
                 data: {
                   title: 'Dashboard',
                   urls: [
@@ -41,7 +43,7 @@ export const AppRoutes: Routes = [
               {
                 path: 'inventory/equipments',
                 component: EquipmentsComponent,
-                resolve: [EquipmentResolverService],
+                resolve: [ EquipmentResolverService ],
                 data: {
                   title: 'Equipments',
                   urls: [
@@ -53,6 +55,7 @@ export const AppRoutes: Routes = [
               {
                 path: 'equipment-condition',
                 component: EquipmentConditionComponent,
+                resolve: [ EquipmentResolverService ],
                 data: {
                   title: 'Equipment Condition',
                   urls: [

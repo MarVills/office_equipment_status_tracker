@@ -19,7 +19,7 @@ export class ActivityLogService implements OnDestroy{
   }
 
   onFetchActivityLogs(){
-    this.store.dispatch(logActions.requestFetchActivityLogsACTION({payload: []}));
+    this.store.dispatch(logActions.requestFetchActivityLogsACTION());
     this.fetchActivityLogs$ = this.store.select( selectActivityLog ).subscribe((response) => {
         ACTIVITY_LOG_DATA.splice(0)
         for (var res of response.activityLogs) {

@@ -29,25 +29,6 @@ export class UserDetailsEffects {
       )
     })
   ));
-
-  // ======================================= workign on fetch one with firebase ngrx =======================
-  // fetchSingleUserDetailEFFECT$: Observable<Action> = createEffect(() => this.actions$.pipe(
-  //   ofType(userDetailActions.requestFetchUserDetailACTION),
-  //   switchMap(()=>{
-  //     return this.fireStore.collection('users').valueChanges({ idField: 'id' }).pipe(
-  //       switchMap((response)=>{
-  //         response.filter((response)=> response)
-  //         return [userDetailActions.successFetchUserDetailACTION({ uid: {userId:""} })]
-  //       }),
-  //       catchError((error: Error) => {
-  //        console.log("Fetch Error: ", error)
-  //        return of(userDetailActions.onUserDetailFailure({ error: error }))
-  //       })
-  //     )
-  //   })
-  // ));
-  
-  // ==============================================================
   
   addUserDetailEFFECT$: Observable<Action> = createEffect(() => { 
     return this.actions$.pipe(

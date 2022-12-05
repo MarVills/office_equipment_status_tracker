@@ -1,6 +1,6 @@
 
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { TEXTS } from '../../dashboardTexts';
 import { EquipmentsWithSelectedStatus, EQUIPMENT_DATA } from 'src/app/Models/equipment.model';
 import { CATEGORY_DATA } from 'src/app/Models/category.model';
@@ -32,14 +32,15 @@ import { Equipments } from 'src/app/store/state/equipments.state';
 export class DashboardEquipmentComponent implements OnInit {
 
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
+  @Input() totalEquipment: number = 0;
   public inexpuchartOptions: Partial<inexpuchartOptions>;
   equipmentsByCategory: Map<string, Equipments[]> = new Map<string, Equipments[]>();
-  equipments:number = EQUIPMENT_DATA.length;
+  equipments:number = 0;
   texts = TEXTS;
 
   constructor(
     private equipmentsService: EquipmentsService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
   ){
     
     this.inexpuchartOptions = {
@@ -111,6 +112,7 @@ export class DashboardEquipmentComponent implements OnInit {
     // this.equipmentsService.onFetchEquipments();
     this.categoriesService.onFetchCategories();
     this.refresh();
+    console.log("total equipment",this.totalEquipment)
   }
 
   setEquipmentsByCategories(){
@@ -124,10 +126,10 @@ export class DashboardEquipmentComponent implements OnInit {
   }
 
   refresh(){
-    setTimeout(() => {
-      this.equipments = EQUIPMENT_DATA.length;
-      this.setEquipmentsByCategories();
-    }, 1000);
+    // setTimeout(() => {
+    //   this.equipments = EQUIPMENT_DATA.length;
+    //   this.setEquipmentsByCategories();
+    // }, 1000);
   }
 }
 

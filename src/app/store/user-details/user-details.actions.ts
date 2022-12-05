@@ -3,7 +3,6 @@ import { UserDetail, UserDetailDTO } from 'src/app/Models/user-details.model';
 
 export const requestFetchUserDetailsACTION = createAction(
   '[ UserDetails ] Request Fetch UserDetails',
-   props<{payload: any[] }>(),
 );
 export const successFetchUserDetailsACTION = createAction(
  '[ UserDetails ] Success Fetch UserDetails',

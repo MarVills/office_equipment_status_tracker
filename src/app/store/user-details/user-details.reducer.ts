@@ -15,7 +15,7 @@ export const reducer = createReducer(
   on(userDetailActions.successFetchUserDetailsACTION, (state: UserDetailState, { payload }) =>{
     return { 
       ...state, 
-      equipments: payload }
+      detials: payload }
   }),
 
   on(userDetailActions.successAddUserDetailACTION, (state: UserDetailState) =>{

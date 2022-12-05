@@ -4,7 +4,6 @@ import { ActivityLog, ActivityLogDTO } from 'src/app/Models/activity-log-model';
 
 export const requestFetchActivityLogsACTION = createAction(
   '[ ActivityLogs ] Request Fetch ActivityLogs',
-   props<{payload: any[] }>(),
 );
 export const successFetchActivityLogsACTION = createAction(
  '[ ActivityLogs ] Success Fetch ActivityLogs',

@@ -15,20 +15,17 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class EquipmentResolverService implements Resolve<Equipment[]>{
 
   constructor(
-    private store: Store,
-    private fireStore: AngularFirestore,) { }
+    private store: Store,) { }
+
   resolve(
     route: ActivatedRouteSnapshot, 
     state: RouterStateSnapshot
     ): Observable<Equipment[]> {
 
     return this.store.select(selectEquipment).pipe(
-      // take(1),
-      // last(),
       first(),
       switchMap((response)=>{
         if(response.length == 0){
-          console.log("dispatched")
           this.store.dispatch(equipmentActions.requestFetchEquipmentACTION())
         }
         return of(response)
