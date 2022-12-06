@@ -5,10 +5,9 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl
+  FormControl,
 } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
-
 
 @Component({
   selector: 'app-login',
@@ -16,31 +15,34 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
- 
   msg = '';
   _loginForm!: FormGroup;
 
   constructor(
     private routes: Router,
     private authService: AuthService,
-    private formBuilder: FormBuilder,) {
-      this.loginForm();
-    }
+    private formBuilder: FormBuilder
+  ) {
+    this.loginForm();
+  }
 
   ngOnInit() {}
 
-  loginForm(){
+  loginForm() {
     this._loginForm = this.formBuilder.group({
-      email: new FormControl("", [Validators.required, Validators.email]),
-      password: new FormControl("", [Validators.required, Validators.minLength(6)]),
-      rememberMe: new FormControl(""),
-     });
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      rememberMe: new FormControl(''),
+    });
   }
 
-  async onLogin(){
+  async onLogin() {
     const value = this._loginForm.value;
-    if(this._loginForm.valid){
-    this.authService.signIn(value.email, value.password)
+    if (this._loginForm.valid) {
+      this.authService.signIn(value.email, value.password);
     }
   }
 }

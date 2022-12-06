@@ -7,6 +7,8 @@ import * as authActions from './auth.actions';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AccountCredentials } from 'src/app/Models/manage-account.model';
 
 @Injectable()
 export class AuthEffects {
@@ -14,31 +16,48 @@ export class AuthEffects {
     private actions$: Actions,
     private routes: Router,
     private angularFireAuth: AngularFireAuth,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private http: HttpClient
   ) {}
 
   loginEFFECT$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.requestAuthLogin),
+      // switchMap((response: any) => {
+      //   return this.angularFireAuth
+      //     .signInWithEmailAndPassword(
+      //       response.payload.email,
+      //       response.payload.password
+      //     )
+      //     .then((res) => {
+      //       localStorage.setItem('uid', res.user!.uid);
+      //       const signInDetails = {
+      //         signedIn: true,
+      //         uid: res.user?.uid,
+      //       };
+      //       this.routes.navigate(['/dashboard']);
+      //       return authActions.successAuthLogin({ payload: signInDetails });
+      //     });
+      // }),
+
       switchMap((response: any) => {
-        return this.angularFireAuth
-          .signInWithEmailAndPassword(
-            response.payload.email,
-            response.payload.password
+        return this.http
+          .post(
+            'http://cyber-assets.janreygroup.site/api/auth/login',
+            response.payload
           )
-          .then((res) => {
-            localStorage.setItem('uid', res.user!.uid);
-            const signInDetails = {
-              signedIn: true,
-              uid: res.user?.uid,
-            };
-            this.routes.navigate(['/dashboard']);
-            return authActions.successAuthLogin({ payload: signInDetails });
-          });
-      }),
-      catchError((error) => {
-        this.sharedService.openSnackBar(error.message);
-        return of(authActions.authFailure(error));
+          .pipe(
+            switchMap((response) => {
+              console.log('login resposne', response);
+              console.log('login resposne', response);
+              //  localStorage.setItem('access_tolen', response.access_token);
+              return [authActions.successAuthLogin({ payload: response })];
+            }),
+            catchError((error) => {
+              this.sharedService.openSnackBar(error.message);
+              return of(authActions.authFailure(error));
+            })
+          );
       })
     )
   );
@@ -53,6 +72,12 @@ export class AuthEffects {
           return authActions.successAuthLogout();
         });
       }),
+
+      // switchMap((payload: any) => {
+      //   return this.http.post(
+      //     'http://cyber-assets.janreygroup.site/api/auth/logout',
+      //   );
+      // }),
       catchError((error) => {
         return of(authActions.authFailure(error));
       })

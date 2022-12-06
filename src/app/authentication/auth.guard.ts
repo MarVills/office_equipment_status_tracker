@@ -5,37 +5,32 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  Router
+  Router,
 } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map, switchMap } from 'rxjs/operators';
 
-
-
-
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class AuthGuard implements CanActivate, OnInit {
-
   constructor(
-    private routes: Router, 
+    private routes: Router,
     private authService: AuthService,
     private equipmentsService: EquipmentsService,
-    private angularFireAuth: AngularFireAuth) { }
+    private angularFireAuth: AngularFireAuth
+  ) {}
   ngOnInit(): void {
-    this.authService.isLoggedIn()
+    this.authService.isLoggedIn();
     // this.equipmentsService.onFetchEquipments();
   }
 
- canActivate(
+  canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
+    state: RouterStateSnapshot
+  ): boolean {
     // Still working on this, temporary functiontions for the meantime
-    if (localStorage.getItem("uid") != null) {
+    if (localStorage.getItem('access_token') != null) {
       return true;
     } else {
       this.routes.navigate(['/authentication/login']);
