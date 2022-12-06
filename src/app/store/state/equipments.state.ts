@@ -7,5 +7,5 @@ export interface EquipmentsDTO {
   equipments: EquipmentDTO[];
 }
 export interface EquipmentsState {
-  equipments: any;
+  equipment: any;
 }

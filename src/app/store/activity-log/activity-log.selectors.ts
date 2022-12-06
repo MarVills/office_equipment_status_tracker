@@ -5,5 +5,5 @@ export const selectActivityLogsFeatureState =
   createFeatureSelector<any>('activityLogs');
 export const selectActivityLog = createSelector(
   selectActivityLogsFeatureState,
-  (state: ActivityLogsState) => state.activityLogs
+  (state: ActivityLogsState) => state
 );

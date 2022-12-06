@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Equipment, EQUIPMENT_DATA } from 'src/app/Models/equipment.model';
-import { EquipmentsService } from '../../store/services/inventory/equipments/equipments.service';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { Equipment } from 'src/app/Models/equipment.model';
+import { selectEquipment } from 'src/app/store/equipments/equipments.selectors';
 
 @Component({
   selector: 'app-reports',
@@ -13,14 +15,19 @@ export class ReportsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator =
     Object.create(null);
   displayedColumns = ['serialNumber', 'equipment', 'category', 'status'];
-  dataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
+  equipmentSubscription$!: Subscription;
+  dataSource = new MatTableDataSource<Equipment>([]);
 
-  constructor(private equipmentsService: EquipmentsService) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-    // this.equipmentsService.onFetchEquipments();
     this.refresh();
     this.dataSource.paginator = this.paginator;
+    this.equipmentSubscription$ = this.store
+      .select(selectEquipment)
+      .subscribe((response) => {
+        this.dataSource = new MatTableDataSource<Equipment>(response);
+      });
   }
 
   print() {

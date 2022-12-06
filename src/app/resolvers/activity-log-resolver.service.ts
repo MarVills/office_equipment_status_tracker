@@ -24,12 +24,12 @@ export class ActivityLogResolverService implements Resolve<ActivityLog[]> {
     return this.store.select(selectActivityLog).pipe(
       first(),
       switchMap((response) => {
-        if (response.length == 0) {
+        if (response.activityLogs.length == 0) {
           this.store.dispatch(
             activityLogActions.requestFetchActivityLogsACTION()
           );
         }
-        return of(response);
+        return of(response.activityLogs);
       })
     );
   }

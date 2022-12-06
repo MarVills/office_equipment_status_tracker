@@ -22,10 +22,8 @@ export class CategoriesResolverService implements Resolve<Categories[]> {
     state: RouterStateSnapshot
   ): Observable<Categories[]> {
     return this.store.select(selectCategory).pipe(
-      // first(),
-      take(1),
+      first(),
       switchMap((response) => {
-        console.log('categories resolver: ', response);
         if (response.categories.length == 0) {
           this.store.dispatch(categoryActions.requestFetchCategoriesACTION());
         }

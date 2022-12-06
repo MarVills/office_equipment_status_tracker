@@ -5,17 +5,17 @@ import * as userDetailActions from './user-details.actions';
 export const userDetailsFeatureKey = 'userDetails';
 
 export const initialState: UserDetailState = {
-  details: [],
+  users: [],
 };
 
-export const reducer = createReducer(
+export const usersReducer = createReducer(
   initialState,
   on(
     userDetailActions.successFetchUserDetailsACTION,
     (state: UserDetailState, { payload }) => {
       return {
         ...state,
-        detials: payload,
+        users: payload,
       };
     }
   ),
@@ -27,13 +27,12 @@ export const reducer = createReducer(
   on(
     userDetailActions.requestUpdateUserDetailACTION,
     (state: UserDetailState, { payload }) => {
-      const updateProduct = [state.details].map((product: any) => {
-        return payload === product.id ? payload : product;
+      const updateProduct = [state.users].map((users: any) => {
+        return payload === users.id ? payload : users;
       });
       const returnState = {
         ...state,
-        products: updateProduct,
-        selected_product: '',
+        detials: updateProduct,
       };
       return returnState;
     }
@@ -42,9 +41,9 @@ export const reducer = createReducer(
   on(
     userDetailActions.requestDeleteUserDetailACTION,
     (state: UserDetailState, { payload }) => {
-      let newState = [state.details];
+      let newState = [state.users];
       newState.splice(newState.indexOf(payload), 1);
-      const returnState = { ...state, products: newState };
+      const returnState = { ...state, detials: newState };
       return returnState;
     }
   )

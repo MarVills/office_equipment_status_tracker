@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 import { first, switchMap } from 'rxjs/operators';
 import { User } from '../shared/user-details/user-details';
 import { selectUserDetail } from '../store/user-details/user-details.selectors';
-import * as UserDetailActions from '../store/user-details/user-details.actions';
+import * as userDetailActions from '../store/user-details/user-details.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -23,12 +23,12 @@ export class UsersResolverService implements Resolve<User[]> {
     return this.store.select(selectUserDetail).pipe(
       first(),
       switchMap((response) => {
-        if (response.length == 0) {
+        if (response.users.length == 0) {
           this.store.dispatch(
-            UserDetailActions.requestFetchUserDetailsACTION()
+            userDetailActions.requestFetchUserDetailsACTION()
           );
         }
-        return of(response);
+        return of(response.users);
       })
     );
   }

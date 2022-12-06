@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { EQUIPMENT_CONDITIONS } from 'src/app/shared/equipment-conditions/equipment-conditions';
 import { EquipmentsService } from 'src/app/store/services/inventory/equipments/equipments.service';
@@ -9,20 +9,24 @@ import {
   EquipmentsWithSelectedStatus,
   EquipmentDTO,
 } from 'src/app/Models/equipment.model';
-import { CATEGORY_DATA } from 'src/app/Models/category.model';
+import { Category, CATEGORY_DATA } from 'src/app/Models/category.model';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ManageAccountService } from 'src/app/store/services/manage-account.service';
+import { Store } from '@ngrx/store';
+import { selectEquipment } from 'src/app/store/equipments/equipments.selectors';
+import { Subscription } from 'rxjs';
+import { selectCategory } from 'src/app/store/categories/categories.selectors';
 
 @Component({
   selector: 'app-equipment-condition',
   templateUrl: './equipment-condition.component.html',
   styleUrls: ['./equipment-condition.component.scss'],
 })
-export class EquipmentConditionComponent implements OnInit {
+export class EquipmentConditionComponent implements OnInit, OnDestroy {
   panelOpenState = false;
   equipmentConditions = Object.values(EQUIPMENT_CONDITIONS);
-  categories = CATEGORY_DATA;
-  equipments = EQUIPMENT_DATA;
+  categories: Category[] = [];
+  equipment: Equipment[] = [];
   equipmentsByCategory: Map<string, EquipmentsWithSelectedStatus> = new Map<
     string,
     EquipmentsWithSelectedStatus
@@ -30,13 +34,14 @@ export class EquipmentConditionComponent implements OnInit {
   displayedColumns = ['serialNumber', 'equipmentName', 'status'];
   selectedEquipments: any;
   _searchEquipmentForm!: FormGroup;
+  equipmentSubscription$!: Subscription;
+  categoriesSubscription$!: Subscription;
 
   constructor(
     breakpointObserver: BreakpointObserver,
     private equipmentsService: EquipmentsService,
-    private categoriesService: CategoriesService,
     private formBuilder: FormBuilder,
-    private manageAccountService: ManageAccountService
+    private store: Store
   ) {
     breakpointObserver.observe(['(max-width: 600px)']).subscribe((result) => {
       this.displayedColumns = result.matches
@@ -44,12 +49,24 @@ export class EquipmentConditionComponent implements OnInit {
         : ['serialNumber', 'equipmentName', 'status'];
     });
   }
+  ngOnDestroy(): void {
+    this.equipmentSubscription$.unsubscribe();
+    this.categoriesSubscription$.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.refresh();
-    // this.equipmentsService.onFetchEquipments();
-    this.categoriesService.onFetchCategories();
-    this.manageAccountService.onFetchAccDetails();
+    this.equipmentSubscription$ = this.store
+      .select(selectEquipment)
+      .subscribe((response) => {
+        this.equipment = response;
+      });
+    this.categoriesSubscription$ = this.store
+      .select(selectCategory)
+      .subscribe((response) => {
+        this.categories = response.categories;
+        this.setEquipmentsByCategories();
+      });
+
     this.searchEquipmentForm();
   }
 
@@ -86,8 +103,8 @@ export class EquipmentConditionComponent implements OnInit {
 
   setEquipmentsByCategories() {
     this.categories.forEach((category) => {
-      const filteredEquipment = this.equipments.filter(
-        (equipment) => equipment.category === category.category
+      const filteredEquipment = this.equipment.filter(
+        (item) => item.category === category.category
       );
       const isSlectedCategory: EquipmentsWithSelectedStatus = {
         isSelected: false,
@@ -118,11 +135,5 @@ export class EquipmentConditionComponent implements OnInit {
 
   onSelectionClicked(data: EquipmentDTO) {
     this.equipmentsService.toEditData = data;
-  }
-
-  refresh() {
-    setTimeout(() => {
-      this.setEquipmentsByCategories();
-    }, 1000);
   }
 }

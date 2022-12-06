@@ -1,11 +1,11 @@
 import { UserDetail, UserDetailDTO } from 'src/app/Models/user-details.model';
 
 export interface UserDetails {
-  details: UserDetail[];
+  users: UserDetail[];
 }
 export interface UserDetailsDTO {
-  details: UserDetailDTO[];
+  users: UserDetailDTO[];
 }
 export interface UserDetailState {
-  details: any;
+  users: any;
 }

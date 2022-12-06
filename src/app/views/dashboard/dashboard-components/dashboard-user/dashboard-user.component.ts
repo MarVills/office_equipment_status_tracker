@@ -1,8 +1,5 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, ViewChild, OnInit, ɵɵqueryRefresh } from '@angular/core';
 import { TEXTS } from '../../dashboardTexts';
-import { ManageAccountService } from 'src/app/store/services/manage-account.service';
-import { ACCOUNT_DETAILS_DATA } from 'src/app/Models/manage-account.model';
+import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -16,8 +13,6 @@ import {
   ApexFill,
   ApexTooltip,
   ApexGrid,
-  ApexNonAxisChartSeries,
-  ApexResponsive,
 } from 'ng-apexcharts';
 
 @Component({
@@ -27,11 +22,12 @@ import {
 })
 export class DashboardUserComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
+  @Input() totalUsers: number = 0;
   public inexpuchartOptions: Partial<inexpuchartOptions>;
   accounts: number = 0;
   texts = TEXTS;
 
-  constructor(private manageAccountService: ManageAccountService) {
+  constructor() {
     this.inexpuchartOptions = {
       series: [
         {
@@ -55,7 +51,6 @@ export class DashboardUserComponent implements OnInit {
         bar: {
           horizontal: false,
           columnWidth: '60%',
-          // endingShape: 'flat'
         },
       },
       dataLabels: {
@@ -90,15 +85,7 @@ export class DashboardUserComponent implements OnInit {
       },
     };
   }
-  ngOnInit(): void {
-    this.manageAccountService.fetchAccounts();
-    this.refresh();
-  }
-  refresh() {
-    setTimeout(() => {
-      this.accounts = ACCOUNT_DETAILS_DATA.length;
-    }, 1000);
-  }
+  ngOnInit(): void {}
 }
 
 export interface inexpuchartOptions {

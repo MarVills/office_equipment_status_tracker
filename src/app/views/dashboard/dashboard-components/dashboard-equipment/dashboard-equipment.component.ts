@@ -39,7 +39,6 @@ export class DashboardEquipmentComponent implements OnInit {
     string,
     Equipments[]
   >();
-  equipments: number = 0;
   texts = TEXTS;
 
   constructor(
@@ -105,10 +104,7 @@ export class DashboardEquipmentComponent implements OnInit {
     };
   }
   ngOnInit(): void {
-    // this.equipmentsService.onFetchEquipments();
     this.categoriesService.onFetchCategories();
-    this.refresh();
-    console.log('total equipment', this.totalEquipment);
   }
 
   setEquipmentsByCategories() {
@@ -121,13 +117,6 @@ export class DashboardEquipmentComponent implements OnInit {
         items: filteredEquipment,
       };
     });
-  }
-
-  refresh() {
-    // setTimeout(() => {
-    //   this.equipments = EQUIPMENT_DATA.length;
-    //   this.setEquipmentsByCategories();
-    // }, 1000);
   }
 }
 

@@ -15,25 +15,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
   equipmentSubscription$!: Subscription;
   userDetailsSubscription$!: Subscription;
 
-  constructor(private store: Store) {
-    this.equipmentSubscription$ = this.store
-      .select(selectEquipment)
-      .subscribe((response) => {
-        // console.log("equipment response",response)
-        // this.totalEquipment = response.length;
-      });
-    this.userDetailsSubscription$ = this.store
-      .select(selectUserDetail)
-      .subscribe((response) => {
-        console.log('users response', response);
-        this.totalUsers = response.length;
-      });
-  }
+  constructor(private store: Store) {}
 
   ngOnDestroy(): void {
     this.equipmentSubscription$.unsubscribe();
     this.userDetailsSubscription$.unsubscribe();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.equipmentSubscription$ = this.store
+      .select(selectEquipment)
+      .subscribe((response) => {
+        this.totalEquipment = response.length;
+      });
+    this.userDetailsSubscription$ = this.store
+      .select(selectUserDetail)
+      .subscribe((response) => {
+        this.totalUsers = response.users.length;
+      });
+  }
 }

@@ -1,14 +1,16 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { User } from '../../shared/user-details/user-details';
+import { selectUserDetail } from '../user-details/user-details.selectors';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import {
   AccountDetails,
   ACCOUNT_DETAILS_DATA,
 } from 'src/app/Models/manage-account.model';
-import { User } from '../../shared/user-details/user-details';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +22,11 @@ export class ManageAccountService implements OnDestroy {
     this.fireStore.collection('users')
   ) as Observable<AccountDetails[]>;
 
-  constructor(private fireStore: AngularFirestore, private user: User) {}
+  constructor(
+    private fireStore: AngularFirestore,
+    private user: User,
+    private store: Store
+  ) {}
 
   ngOnDestroy(): void {
     this.accountDetails$.unsubscribe();
@@ -37,27 +43,31 @@ export class ManageAccountService implements OnDestroy {
   }
 
   onFetchAccDetails() {
-    // Temporarily using this function while working on
-    // fetch one data function in firebase with ngrx.
-    this.observable$.subscribe((response) => {
-      ACCOUNT_DETAILS_DATA.splice(0);
-      for (var res of response) {
-        if (res.uid == localStorage.getItem('uid')) {
-          localStorage.setItem('userDocID', res.id!);
-          accData = {
-            firstName: res.firstName,
-            lastName: res.lastName,
-            middleName: res.middleName,
-            userRole: res.userRole,
-            emailAddress: res.emailAddress,
-            description: res.description,
-            profileImageID: res.profileImageID,
-            contactNumber: res.contactNumber,
-            uid: localStorage.getItem('uid')!,
-          };
-          this.user.signedInUserDetails = accData;
-        }
-      }
+    // this.accountDetails$ = this.fireStore
+    //   .collection('users')
+    //   .valueChanges({ idField: 'id' })
+    //   .subscribe((response) => {
+    //     // ACCOUNT_DETAILS_DATA.splice(0);
+    //     // for (var res of response) {
+    //     //   if (res.uid == localStorage.getItem('uid')) {
+    //     //     localStorage.setItem('userDocID', res.id!);
+    //     //     accData = {
+    //     //       firstName: res.firstName,
+    //     //       lastName: res.lastName,
+    //     //       middleName: res.middleName,
+    //     //       userRole: res.userRole,
+    //     //       emailAddress: res.emailAddress,
+    //     //       description: res.description,
+    //     //       profileImageID: res.profileImageID,
+    //     //       contactNumber: res.contactNumber,
+    //     //       uid: localStorage.getItem('uid')!,
+    //     //     };
+    //     //     this.user.signedInUserDetails = accData;
+    //     //   }
+    //     // }
+    //   });
+    this.store.select(selectUserDetail).subscribe((response) => {
+      console.log('user response', response);
     });
   }
 

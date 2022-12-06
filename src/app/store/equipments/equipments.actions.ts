@@ -4,21 +4,11 @@ import { Equipment, EquipmentDTO } from '../../Models/equipment.model';
 
 export const requestFetchEquipmentACTION = createAction(
   '[Equipments] Request Fetch Equipments'
-  //  props<{payload: Equipment[] }>(),
 );
 export const successFetchEquipmentACTION = createAction(
   '[Equipments] Success Fetch Equipments',
   props<{ payload: any }>()
 );
-
-// export const requestFetchEquipmentACTION = createAction(
-//   '[ Equipments ] Request Fetch Equipment',
-//   props<{payload: number }>()
-// );
-// export const successFetchEquipmentACTION = createAction(
-//   '[ Equipments ] Success Fetch Equipment',
-//   props<{payload: EquipmentDTO }>()
-// );
 
 export const requestAddEquipmentACTION = createAction(
   '[ Equipments ] Request Add Equipment',

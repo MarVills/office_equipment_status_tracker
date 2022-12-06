@@ -8,14 +8,14 @@ export const successFetchUserDetailsACTION = createAction(
   '[ UserDetails ] Success Fetch UserDetails',
   props<{ payload: any[] }>()
 );
-export const requestFetchUserDetailACTION = createAction(
-  '[ UserDetails ] Request Fetch UserDetail',
-  props<{ uid: string }>()
-);
-export const successFetchUserDetailACTION = createAction(
-  '[ UserDetails ] Success Fetch UserDetail',
-  props<{ payload: UserDetailDTO }>()
-);
+// export const requestFetchUserDetailACTION = createAction(
+//   '[ UserDetails ] Request Fetch UserDetail',
+//   props<{ uid: string }>()
+// );
+// export const successFetchUserDetailACTION = createAction(
+//   '[ UserDetails ] Success Fetch UserDetail',
+//   props<{ payload: UserDetailDTO }>()
+// );
 export const requestAddUserDetailACTION = createAction(
   '[ UserDetails ] Request Add UserDetail',
   props<{ payload: UserDetail }>()
@@ -38,6 +38,6 @@ export const successUpdateUserDetailACTION = createAction(
   '[ UserDetails ] Success Update UserDetail'
 );
 export const onUserDetailFailure = createAction(
-  '[ Equipments ] UserDetails Failure',
+  '[ UserDetails ] UserDetails Failure',
   props<{ error: any }>()
 );

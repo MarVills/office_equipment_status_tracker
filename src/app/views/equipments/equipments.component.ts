@@ -104,7 +104,6 @@ export class EquipmentsComponent implements OnInit, OnDestroy {
     this.categoriesSubscription$ = this.store
       .select(selectCategory)
       .subscribe((response) => {
-        console.log('categories', response);
         if (response.categories.length != 0) {
           this.categories = response.categories;
           this.equipmentSubscription$ = this.store

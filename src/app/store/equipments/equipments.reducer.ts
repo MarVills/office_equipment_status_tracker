@@ -6,7 +6,7 @@ import * as equipmentsAction from './equipments.actions';
 export const equipmentsFeatureKey = 'equipments';
 
 export const initialState: EquipmentsState = {
-  equipments: [],
+  equipment: [],
 };
 
 export const equipmentReducer = createReducer(
@@ -17,7 +17,7 @@ export const equipmentReducer = createReducer(
     (state: EquipmentsState, { payload }) => {
       return {
         ...state,
-        equipments: payload,
+        equipment: payload,
       };
     }
   ),
@@ -34,10 +34,10 @@ export const equipmentReducer = createReducer(
   on(
     equipmentsAction.requestUpdateEquipmentACTION,
     (state: EquipmentsState, { payload }) => {
-      const updateItem = [state.equipments].map((equipment: any) => {
+      const updateItem = [state.equipment].map((equipment: any) => {
         return payload === equipment.id ? payload : equipment;
       });
-      const returnState = { ...state, equipments: updateItem };
+      const returnState = { ...state, equipment: updateItem };
       return returnState;
     }
   ),
@@ -45,9 +45,9 @@ export const equipmentReducer = createReducer(
   on(
     equipmentsAction.requestDeleteEquipmentACTION,
     (state: EquipmentsState, { payload }) => {
-      let newState = [state.equipments];
+      let newState = [state.equipment];
       newState.splice(newState.indexOf(payload), 1);
-      const returnState = { ...state, equipments: newState };
+      const returnState = { ...state, equipment: newState };
       return returnState;
     }
   )
