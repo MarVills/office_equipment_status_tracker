@@ -47,10 +47,12 @@ export class AuthEffects {
             response.payload
           )
           .pipe(
-            switchMap((response) => {
-              console.log('login resposne', response);
-              console.log('login resposne', response);
-              //  localStorage.setItem('access_tolen', response.access_token);
+            switchMap((response:any) => {
+              // console.log('login resposne', response.access_token);
+              const res = response as Map<string ,string>
+              // console.log('see values', typeof(response) );
+               localStorage.setItem('access_token', response.access_token);
+               this.routes.navigate(['/dashboard']);
               return [authActions.successAuthLogin({ payload: response })];
             }),
             catchError((error) => {
@@ -65,22 +67,27 @@ export class AuthEffects {
   logoutEFFECT$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.requestAuthLogout),
-      switchMap((payload: any) => {
-        return this.angularFireAuth.signOut().then((res) => {
-          localStorage.removeItem('uid');
-          location.reload();
-          return authActions.successAuthLogout();
-        });
-      }),
-
       // switchMap((payload: any) => {
-      //   return this.http.post(
-      //     'http://cyber-assets.janreygroup.site/api/auth/logout',
-      //   );
+      //   return this.angularFireAuth.signOut().then((res) => {
+      //     localStorage.removeItem('uid');
+      //     location.reload();
+      //     return authActions.successAuthLogout();
+      //   });
       // }),
-      catchError((error) => {
-        return of(authActions.authFailure(error));
-      })
+
+      switchMap((payload: any) => {
+        return this.http.post(
+          'http://cyber-assets.janreygroup.site/api/auth/logout',{}
+        ).pipe(
+          switchMap((response)=>{
+            console.log("logout response", response)
+            return [authActions.successAuthLogout()];
+          }),
+          catchError((error) => {
+            return of(authActions.authFailure(error));
+          })
+        );
+      }),
     )
   );
 }
