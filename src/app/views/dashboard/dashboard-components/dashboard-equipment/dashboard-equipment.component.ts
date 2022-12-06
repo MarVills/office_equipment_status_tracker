@@ -1,8 +1,10 @@
-
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { TEXTS } from '../../dashboardTexts';
-import { EquipmentsWithSelectedStatus, EQUIPMENT_DATA } from 'src/app/Models/equipment.model';
+import {
+  EquipmentsWithSelectedStatus,
+  EQUIPMENT_DATA,
+} from 'src/app/Models/equipment.model';
 import { CATEGORY_DATA } from 'src/app/Models/category.model';
 import { EquipmentsService } from 'src/app/store/services/inventory/equipments/equipments.service';
 import { CategoriesService } from 'src/app/store/services/inventory/equipments/categories.service';
@@ -20,43 +22,44 @@ import {
   ApexTooltip,
   ApexGrid,
   ApexNonAxisChartSeries,
-  ApexResponsive
+  ApexResponsive,
 } from 'ng-apexcharts';
 import { Equipments } from 'src/app/store/state/equipments.state';
 
 @Component({
   selector: 'app-dashboard-equipment',
   templateUrl: './dashboard-equipment.component.html',
-  styleUrls: ['./dashboard-equipment.component.scss']
+  styleUrls: ['./dashboard-equipment.component.scss'],
 })
 export class DashboardEquipmentComponent implements OnInit {
-
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   @Input() totalEquipment: number = 0;
   public inexpuchartOptions: Partial<inexpuchartOptions>;
-  equipmentsByCategory: Map<string, Equipments[]> = new Map<string, Equipments[]>();
-  equipments:number = 0;
+  equipmentsByCategory: Map<string, Equipments[]> = new Map<
+    string,
+    Equipments[]
+  >();
+  equipments: number = 0;
   texts = TEXTS;
 
   constructor(
     private equipmentsService: EquipmentsService,
-    private categoriesService: CategoriesService,
-  ){
-    
+    private categoriesService: CategoriesService
+  ) {
     this.inexpuchartOptions = {
       series: [
         {
           name: '',
-          data: [1.1, 1.4, 1.1, 0.9, 1.0, 1, 0.3, 1.1], 
-        }
+          data: [1.1, 1.4, 1.1, 0.9, 1.0, 1, 0.3, 1.1],
+        },
       ],
       chart: {
         type: 'bar',
         height: 90,
         fontFamily: 'Poppins,sans-serif',
         sparkline: {
-          enabled: true
-        }
+          enabled: true,
+        },
       },
       grid: {
         borderColor: 'rgba(0,0,0,.2)',
@@ -70,22 +73,15 @@ export class DashboardEquipmentComponent implements OnInit {
         },
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
         show: true,
         width: 2,
-        colors: ['transparent']
+        colors: ['transparent'],
       },
       xaxis: {
-        categories: [
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul'
-        ]
+        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
       },
 
       legend: {
@@ -93,39 +89,41 @@ export class DashboardEquipmentComponent implements OnInit {
       },
       fill: {
         colors: ['rgba(255, 255, 255, 0.5)'],
-        opacity: 1
+        opacity: 1,
       },
       tooltip: {
-        theme: "light",
+        theme: 'light',
         fillSeriesColor: false,
         marker: {
           show: true,
-          fillColors: ['#fff']
+          fillColors: ['#fff'],
         },
         x: {
-          show: false
-        }
-      }
+          show: false,
+        },
+      },
     };
   }
-  ngOnInit(): void{
+  ngOnInit(): void {
     // this.equipmentsService.onFetchEquipments();
     this.categoriesService.onFetchCategories();
     this.refresh();
-    console.log("total equipment",this.totalEquipment)
+    console.log('total equipment', this.totalEquipment);
   }
 
-  setEquipmentsByCategories(){
-    CATEGORY_DATA.forEach((category)=>{
-      let filteredEquipment =  EQUIPMENT_DATA.filter((equipment)=>equipment.category === category.category);
+  setEquipmentsByCategories() {
+    CATEGORY_DATA.forEach((category) => {
+      let filteredEquipment = EQUIPMENT_DATA.filter(
+        (equipment) => equipment.category === category.category
+      );
       const values = {
         isSelected: false,
         items: filteredEquipment,
-      }
-    })
+      };
+    });
   }
 
-  refresh(){
+  refresh() {
     // setTimeout(() => {
     //   this.equipments = EQUIPMENT_DATA.length;
     //   this.setEquipmentsByCategories();
@@ -146,8 +144,3 @@ export interface inexpuchartOptions {
   legend: ApexLegend;
   grid: ApexGrid;
 }
-
-
-
-
-

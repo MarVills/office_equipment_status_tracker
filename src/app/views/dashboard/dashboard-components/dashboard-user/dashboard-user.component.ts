@@ -1,4 +1,3 @@
-
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ViewChild, OnInit, ɵɵqueryRefresh } from '@angular/core';
 import { TEXTS } from '../../dashboardTexts';
@@ -18,37 +17,35 @@ import {
   ApexTooltip,
   ApexGrid,
   ApexNonAxisChartSeries,
-  ApexResponsive
+  ApexResponsive,
 } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-dashboard-user',
   templateUrl: './dashboard-user.component.html',
-  styleUrls: ['./dashboard-user.component.scss']
+  styleUrls: ['./dashboard-user.component.scss'],
 })
 export class DashboardUserComponent implements OnInit {
-
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
   public inexpuchartOptions: Partial<inexpuchartOptions>;
-  accounts:number = 0;
-  texts = TEXTS; 
+  accounts: number = 0;
+  texts = TEXTS;
 
-  constructor(private manageAccountService: ManageAccountService){
-    
+  constructor(private manageAccountService: ManageAccountService) {
     this.inexpuchartOptions = {
       series: [
         {
           name: '',
-          data: [1.1, 1.4, 1.1, 0.9, 1.9, 1, 0.3, 1.1]
-        }
+          data: [1.1, 1.4, 1.1, 0.9, 1.9, 1, 0.3, 1.1],
+        },
       ],
       chart: {
         type: 'bar',
         height: 90,
         fontFamily: 'Poppins,sans-serif',
         sparkline: {
-          enabled: true
-        }
+          enabled: true,
+        },
       },
       grid: {
         borderColor: 'rgba(0,0,0,.2)',
@@ -62,22 +59,15 @@ export class DashboardUserComponent implements OnInit {
         },
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
         show: true,
         width: 2,
-        colors: ['transparent']
+        colors: ['transparent'],
       },
       xaxis: {
-        categories: [
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul'
-        ]
+        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
       },
 
       legend: {
@@ -85,26 +75,26 @@ export class DashboardUserComponent implements OnInit {
       },
       fill: {
         colors: ['rgba(255, 255, 255, 0.5)'],
-        opacity: 1
+        opacity: 1,
       },
       tooltip: {
-        theme: "light",
+        theme: 'light',
         fillSeriesColor: false,
         marker: {
           show: true,
-          fillColors: ['#fff']
+          fillColors: ['#fff'],
         },
         x: {
-          show: false
-        }
-      }
+          show: false,
+        },
+      },
     };
   }
-  ngOnInit(): void{
-    this.manageAccountService.fetchAccounts()
+  ngOnInit(): void {
+    this.manageAccountService.fetchAccounts();
     this.refresh();
   }
-  refresh(){
+  refresh() {
     setTimeout(() => {
       this.accounts = ACCOUNT_DETAILS_DATA.length;
     }, 1000);
@@ -124,6 +114,3 @@ export interface inexpuchartOptions {
   legend: ApexLegend;
   grid: ApexGrid;
 }
-
-
-

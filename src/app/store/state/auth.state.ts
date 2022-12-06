@@ -1,6 +1,6 @@
-import { AccountCredentials } from '../../Models/manage-account.model'
+import { AccountCredentials } from '../../Models/manage-account.model';
 
 export interface AuthState {
-    signedIn: boolean;
-    uid: string;
+  signedIn: boolean;
+  uid: string;
 }

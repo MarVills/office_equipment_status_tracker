@@ -1,32 +1,36 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { first, switchMap, take } from 'rxjs/operators';
 import { selectCategory } from '../store/categories/categories.selectors';
 import { Categories } from '../store/state/categories.state';
 import * as categoryActions from '../store/categories/categories.actions';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class CategoriesResolverService implements Resolve<Categories[]>{
+export class CategoriesResolverService implements Resolve<Categories[]> {
+  constructor(private store: Store) {}
 
-  constructor(private store: Store) { }
   resolve(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot)
-    : Observable<Categories[]>  {
-    
-      return this.store.select( selectCategory ).pipe(
-        first(),
-        switchMap((response)=>{
-          if(response.length == 0){
-
-            this.store.dispatch(categoryActions.requestFetchCategoriesACTION())
-          }
-          return of(response)
-        })
-      )
+    state: RouterStateSnapshot
+  ): Observable<Categories[]> {
+    return this.store.select(selectCategory).pipe(
+      // first(),
+      take(1),
+      switchMap((response) => {
+        console.log('categories resolver: ', response);
+        if (response.categories.length == 0) {
+          this.store.dispatch(categoryActions.requestFetchCategoriesACTION());
+        }
+        return of(response.categories);
+      })
+    );
   }
 }

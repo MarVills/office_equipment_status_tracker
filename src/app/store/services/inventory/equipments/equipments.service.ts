@@ -1,7 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { Equipment, EquipmentDTO, EQUIPMENT_DATA } from 'src/app/Models/equipment.model';
+import {
+  Equipment,
+  EquipmentDTO,
+  EQUIPMENT_DATA,
+} from 'src/app/Models/equipment.model';
 import * as equipmentActions from '../../../equipments/equipments.actions';
 import * as logActions from '../../../activity-log/activity-log.actions';
 import { selectEquipment } from '../../../equipments/equipments.selectors';
@@ -11,22 +15,21 @@ import { AuthService } from '../../auth/auth.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { skip, switchAll, switchMap } from 'rxjs/operators';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class EquipmentsService implements OnDestroy{
-
+export class EquipmentsService implements OnDestroy {
   fetchEquipments$!: Subscription;
   fetchCategory$!: Subscription;
-  isEdit:boolean = false;
-  toEditData!:EquipmentDTO;
+  isEdit: boolean = false;
+  toEditData!: EquipmentDTO;
 
   constructor(
     private store: Store,
     private user: User,
     private authService: AuthService,
-    private sharedService: SharedService) { }
+    private sharedService: SharedService
+  ) {}
 
   ngOnDestroy(): void {
     this.fetchEquipments$.unsubscribe();
@@ -66,29 +69,40 @@ export class EquipmentsService implements OnDestroy{
   //   // .subscribe()
   // }
 
-  onEditEquipment(currentData: Equipment, newData: Equipment){
+  onEditEquipment(currentData: Equipment, newData: Equipment) {
     const userDetails = this.user.signedInUserDetails;
     const editEquipmentLog: ActivityLog = {
       activity: `Updated equipment`,
       userName: userDetails.firstName + userDetails.lastName,
       userRole: userDetails.userRole!,
-      date: new Date().toDateString() +" "+ new Date().toLocaleTimeString()
+      date: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
     };
     EQUIPMENT_DATA[EQUIPMENT_DATA.indexOf(currentData)] = newData;
-    this.store.dispatch(equipmentActions.requestUpdateEquipmentACTION({id: currentData.id!, payload: newData}))
-    this.store.dispatch(logActions.requestAddActivityLogACTION({payload: editEquipmentLog}))
+    this.store.dispatch(
+      equipmentActions.requestUpdateEquipmentACTION({
+        id: currentData.id!,
+        payload: newData,
+      })
+    );
+    this.store.dispatch(
+      logActions.requestAddActivityLogACTION({ payload: editEquipmentLog })
+    );
   }
 
-  onDeleteEquipment(data: EquipmentDTO){
+  onDeleteEquipment(data: EquipmentDTO) {
     const userDetails = this.user.signedInUserDetails;
     const deletedEquipmentLog: ActivityLog = {
       activity: `Deleted equipment`,
       userName: userDetails.firstName + userDetails.lastName,
       userRole: userDetails.userRole!,
-      date: new Date().toDateString() +" "+ new Date().toLocaleTimeString()
+      date: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
     };
-    EQUIPMENT_DATA.splice(EQUIPMENT_DATA.indexOf(data), 1)
-    this.store.dispatch(equipmentActions.requestDeleteEquipmentACTION({payload: data.id!}))
-    this.store.dispatch(logActions.requestAddActivityLogACTION({payload: deletedEquipmentLog}))
+    EQUIPMENT_DATA.splice(EQUIPMENT_DATA.indexOf(data), 1);
+    this.store.dispatch(
+      equipmentActions.requestDeleteEquipmentACTION({ payload: data.id! })
+    );
+    this.store.dispatch(
+      logActions.requestAddActivityLogACTION({ payload: deletedEquipmentLog })
+    );
   }
 }

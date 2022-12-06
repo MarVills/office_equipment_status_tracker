@@ -16,145 +16,140 @@ import { ManageUsersComponent } from './views/manage-users/manage-users.componen
 import { EquipmentResolverService } from './resolvers/equipment-resolver.service';
 import { CategoriesResolverService } from './resolvers/categories-resolver.service';
 
-
 export const AppRoutes: Routes = [
-    {
+  {
+    path: '',
+    component: FullComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
         path: '',
-        component: FullComponent,
-        canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                redirectTo: '/dashboard',
-                pathMatch: 'full'
-            },
-            {
-                path: 'dashboard',
-                component: DashboardComponent,
-                resolve: [ EquipmentResolverService, CategoriesResolverService ],
-                data: {
-                  title: 'Dashboard',
-                  urls: [
-                    { title: 'Dashboard', url: '/dashboard' },
-                    { title: 'Dashboard' }
-                  ]
-                }
-              },
-              {
-                path: 'inventory/equipments',
-                component: EquipmentsComponent,
-                resolve: [ EquipmentResolverService ],
-                data: {
-                  title: 'Equipments',
-                  urls: [
-                    { title: 'Equipments', url: '/equipments' },
-                    { title: 'Equipments' }
-                  ]
-                }
-              },
-              {
-                path: 'equipment-condition',
-                component: EquipmentConditionComponent,
-                resolve: [ EquipmentResolverService ],
-                data: {
-                  title: 'Equipment Condition',
-                  urls: [
-                    { title: 'Equipment Condition', url: '/equipment-condition' },
-                    { title: 'Equipment Condition' }
-                  ]
-                }
-              },
-              {
-                path: 'reports',
-                component: ReportsComponent,
-                data: {
-                  title: 'Reports',
-                  urls: [
-                    { title: 'Reports', url: '/reports' },
-                    { title: 'Reports' }
-                  ]
-                }
-              },
-              {
-                path: 'manage-account',
-                component: ProfileComponent,
-                data: {
-                  title: 'Manage Account',
-                  urls: [
-                    { title: 'Manage Account', url: '/manage-account' },
-                    { title: 'Manage Account' }
-                  ]
-                }
-              },
-              {
-                path: 'request',
-                component: RequestComponent,
-                data: {
-                  title: 'Request',
-                  urls: [
-                    { title: 'Request', url: '/request' },
-                    { title: 'Request' }
-                  ]
-                }
-              },
-              {
-                path: 'activity-log',
-                component: ActivityLogComponent,
-                data: {
-                  title: 'Activity Log',
-                  urls: [
-                    { title: 'Activity Log', url: '/activity-log' },
-                    { title: 'Activity Log' }
-                  ]
-                }
-              },
-              {
-                path: 'about-app',
-                component: AboutAppComponent,
-                data: {
-                  title: 'About App',
-                  urls: [
-                    { title: 'About App', url: '/about-app' },
-                    { title: 'About App' }
-                  ]
-                }
-              },
-              {
-                path: 'manage-account',
-                component: ProfileComponent,
-                data: {
-                  title: 'Manage Account',
-                  urls: [
-                    { title: 'Manage Account', url: '/manage-account' },
-                    { title: 'Manage Account' }
-                  ]
-                }
-              },
-              {
-                path: 'manage-users',
-                component: ManageUsersComponent,
-                data: {
-                  title: 'Manage Users',
-                  urls: [
-                    { title: 'Manage Users', url: '/manage-users' },
-                    { title: 'Manage Users' }
-                  ]
-                }
-              },
-        ]
-    },
-    // {
-    //     path: 'login',
-    //     component: LoginComponent,
-    // },
-    {
-      path: 'authentication',
-      loadChildren:
-          () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
-    },
+        redirectTo: '/dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        resolve: [EquipmentResolverService, CategoriesResolverService],
+        data: {
+          title: 'Dashboard',
+          urls: [
+            { title: 'Dashboard', url: '/dashboard' },
+            { title: 'Dashboard' },
+          ],
+        },
+      },
+      {
+        path: 'inventory/equipments',
+        component: EquipmentsComponent,
+        resolve: [EquipmentResolverService, CategoriesResolverService],
+        data: {
+          title: 'Equipments',
+          urls: [
+            { title: 'Equipments', url: '/equipments' },
+            { title: 'Equipments' },
+          ],
+        },
+      },
+      {
+        path: 'equipment-condition',
+        component: EquipmentConditionComponent,
+        resolve: [EquipmentResolverService],
+        data: {
+          title: 'Equipment Condition',
+          urls: [
+            { title: 'Equipment Condition', url: '/equipment-condition' },
+            { title: 'Equipment Condition' },
+          ],
+        },
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
+        data: {
+          title: 'Reports',
+          urls: [{ title: 'Reports', url: '/reports' }, { title: 'Reports' }],
+        },
+      },
+      {
+        path: 'manage-account',
+        component: ProfileComponent,
+        data: {
+          title: 'Manage Account',
+          urls: [
+            { title: 'Manage Account', url: '/manage-account' },
+            { title: 'Manage Account' },
+          ],
+        },
+      },
+      {
+        path: 'request',
+        component: RequestComponent,
+        data: {
+          title: 'Request',
+          urls: [{ title: 'Request', url: '/request' }, { title: 'Request' }],
+        },
+      },
+      {
+        path: 'activity-log',
+        component: ActivityLogComponent,
+        data: {
+          title: 'Activity Log',
+          urls: [
+            { title: 'Activity Log', url: '/activity-log' },
+            { title: 'Activity Log' },
+          ],
+        },
+      },
+      {
+        path: 'about-app',
+        component: AboutAppComponent,
+        data: {
+          title: 'About App',
+          urls: [
+            { title: 'About App', url: '/about-app' },
+            { title: 'About App' },
+          ],
+        },
+      },
+      {
+        path: 'manage-account',
+        component: ProfileComponent,
+        data: {
+          title: 'Manage Account',
+          urls: [
+            { title: 'Manage Account', url: '/manage-account' },
+            { title: 'Manage Account' },
+          ],
+        },
+      },
+      {
+        path: 'manage-users',
+        component: ManageUsersComponent,
+        data: {
+          title: 'Manage Users',
+          urls: [
+            { title: 'Manage Users', url: '/manage-users' },
+            { title: 'Manage Users' },
+          ],
+        },
+      },
+    ],
+  },
+  // {
+  //     path: 'login',
+  //     component: LoginComponent,
+  // },
+  {
+    path: 'authentication',
+    loadChildren: () =>
+      import('./authentication/authentication.module').then(
+        (m) => m.AuthenticationModule
+      ),
+  },
 
-    {
-        path: '**',
-        component: ErrorComponent,
-    }
+  {
+    path: '**',
+    component: ErrorComponent,
+  },
 ];

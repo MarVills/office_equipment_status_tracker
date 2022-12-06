@@ -4,8 +4,8 @@ import { ActivityLogEffects } from '../activity-log/activity-log.effects';
 import { AuthEffects } from '../auth/auth.effects';
 
 export const appEffects = [
-    EquipmentsEffects, 
-    CategoriesEffects, 
-    ActivityLogEffects,
-    AuthEffects
-]
+  EquipmentsEffects,
+  CategoriesEffects,
+  ActivityLogEffects,
+  AuthEffects,
+];
