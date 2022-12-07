@@ -8,6 +8,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 import * as equipmentActions from './equipments.actions';
 import * as logActions from '../activity-log/activity-log.actions';
 import { ActivityLog } from 'src/app/Models/activity-log-model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class EquipmentsEffects {
@@ -15,18 +16,38 @@ export class EquipmentsEffects {
     private actions$: Actions,
     private fireStore: AngularFirestore,
     private sharedService: SharedService,
-    private store: Store
+    private store: Store,
+    private http: HttpClient
   ) {}
 
   fetchEquipmentsEFFECT$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(equipmentActions.requestFetchEquipmentACTION),
+      // switchMap(() => {
+      //   return this.fireStore
+      //     .collection('equipments')
+      //     .valueChanges({ idField: 'id' })
+      //     .pipe(
+      //       switchMap((response) => {
+      //         return [
+      //           equipmentActions.successFetchEquipmentACTION({
+      //             payload: response,
+      //           }),
+      //         ];
+      //       }),
+      //       catchError((error: Error) => {
+      //         console.log('Fetch Error: ', error);
+      //         return of(equipmentActions.onEquipmentFailure({ error: error }));
+      //       })
+      //     );
+      // })
+
       switchMap(() => {
-        return this.fireStore
-          .collection('equipments')
-          .valueChanges({ idField: 'id' })
+        return this.http
+          .get('http://cyber-assets.janreygroup.site/api/resources/equipment')
           .pipe(
             switchMap((response) => {
+              console.log('api response', response);
               return [
                 equipmentActions.successFetchEquipmentACTION({
                   payload: response,

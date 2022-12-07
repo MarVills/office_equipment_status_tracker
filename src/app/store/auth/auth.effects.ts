@@ -38,7 +38,7 @@ export class AuthEffects {
   loginEFFECT$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.requestAuthLogin),
-      switchMap((response: any) => {
+      switchMap((response) => {
         return this.http
           .post(
             'http://cyber-assets.janreygroup.site/api/auth/login',
