@@ -102,6 +102,7 @@ export class EquipmentsEffects {
               'Equipment deleted successfuly',
               'Ok'
             );
+
             return equipmentActions.successDeleteEquipmentACTION();
           })
           .catch((error) => {

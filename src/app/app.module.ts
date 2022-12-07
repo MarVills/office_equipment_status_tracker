@@ -1,4 +1,3 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -28,7 +27,7 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { EquipmentsComponent } from './views/equipments/equipments.component';
 import { ErrorComponent } from './views/error/error.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { RxReactiveFormsModule } from "@rxweb/reactive-form-validators"
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 import { MatButtonModule } from '@angular/material/button';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -36,7 +35,10 @@ import { environment } from 'src/environments/environment';
 import { EquipmentConditionComponent } from './views/equipment-condition/equipment-condition.component';
 import { ReportsComponent } from './views/reports/reports.component';
 import { ProfileComponent } from './views/profile/profile.component';
-import { RequestComponent, EmployeeDialogContent } from './views/request/request.component';
+import {
+  RequestComponent,
+  EmployeeDialogContent,
+} from './views/request/request.component';
 import { ActivityLogComponent } from './views/activity-log/activity-log.component';
 import { SettingsComponent } from './views/settings/settings.component';
 import { AboutAppComponent } from './views/about-app/about-app.component';
@@ -63,6 +65,8 @@ import { ModifyCategoriesDialogComponent } from './views/equipments/components/m
 import { EffectsModule } from '@ngrx/effects';
 import { appReducers } from './store/reducers/reducers';
 import { appEffects } from './store/effects/effects';
+import { TokenInterceptorService } from './authentication/token-interceptor.service';
+import { CoreModule } from './core.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -71,7 +75,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
   wheelSpeed: 2,
-  wheelPropagation: true
+  wheelPropagation: true,
 };
 
 @NgModule({
@@ -82,9 +86,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SpinnerComponent,
     AppSidebarComponent,
     AppBreadcrumbComponent,
-    DashboardComponent, 
-    EquipmentsComponent, 
-    ErrorComponent, 
+    DashboardComponent,
+    EquipmentsComponent,
+    ErrorComponent,
     EquipmentConditionComponent,
     ReportsComponent,
     ProfileComponent,
@@ -105,10 +109,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ManageUsersComponent,
     AccountDialogComponent,
     ModifyCategoriesDialogComponent,
-
- 
   ],
   imports: [
+    CoreModule,
     BrowserModule,
     BrowserAnimationsModule,
     DemoMaterialModule,
@@ -140,8 +143,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
+        deps: [HttpClient],
+      },
     }),
   ],
   providers: [
@@ -149,9 +152,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AuthGuard,
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
