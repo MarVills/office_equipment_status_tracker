@@ -67,7 +67,7 @@ export class ModifyEquipmentDialogComponent implements OnInit {
     let isEdit = this.equipmentsService.isEdit;
     this._equipmentForm = this.formBuilder.group({
       equipment: new FormControl(
-        isEdit ? this.equipmentData.equipment : '',
+        isEdit ? this.equipmentData.item_name : '',
         Validators.required
       ),
       items: new FormControl(1, Validators.pattern('[0-9]*')),
@@ -81,7 +81,7 @@ export class ModifyEquipmentDialogComponent implements OnInit {
       ),
       serialNumber: new FormControl(
         {
-          value: isEdit ? this.equipmentData.serialNumber : '',
+          value: isEdit ? this.equipmentData.serial_no : '',
           disabled: true,
         },
         Validators.required
@@ -161,10 +161,10 @@ export class ModifyEquipmentDialogComponent implements OnInit {
         const userDetails = this.user.signedInUserDetails;
         this.serialNumbers.forEach((serialNumber) => {
           const equipmentDetails: Equipment = {
-            equipment: formValues.equipment,
+            item_name: formValues.equipment,
             status: formValues.status,
             category: formValues.category,
-            serialNumber: serialNumber,
+            serial_no: serialNumber,
             description: formValues.description,
           };
           const addEquipmentLog: ActivityLog = {

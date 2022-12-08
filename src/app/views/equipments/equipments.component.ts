@@ -240,7 +240,7 @@ export class EquipmentsComponent implements OnInit, OnDestroy {
     addDialogRef.afterClosed().subscribe(() => {});
   }
 
-  onDelete(data: EquipmentDTO) {
+  onDelete(data: Equipment) {
     let isDelete = this.sharedService.openAlertDialog(
       'Delete Equipment',
       'Are you sure you want to delete this equipment?',

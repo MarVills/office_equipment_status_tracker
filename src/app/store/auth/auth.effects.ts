@@ -4,6 +4,7 @@ import { Action, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, take } from 'rxjs/operators';
 import * as authActions from './auth.actions';
+import { AuthService } from './auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Router } from '@angular/router';
@@ -32,30 +33,26 @@ export class AuthEffects {
     private angularFireAuth: AngularFireAuth,
     private sharedService: SharedService,
     private http: HttpClient,
-    private store: Store
+    private store: Store,
+    private authService: AuthService
   ) {}
 
   loginEFFECT$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.requestAuthLogin),
       switchMap((response) => {
-        return this.http
-          .post(
-            'http://cyber-assets.janreygroup.site/api/auth/login',
-            response.payload
-          )
-          .pipe(
-            switchMap((response: any) => {
-              const res = response as Map<string, string>;
-              localStorage.setItem('access_token', response.access_token);
-              this.routes.navigate(['/dashboard']);
-              return [authActions.successAuthLogin({ payload: response })];
-            }),
-            catchError((error) => {
-              this.sharedService.openSnackBar(error.message);
-              return of(authActions.authFailure(error));
-            })
-          );
+        return this.authService.loginAuth(response.payload).pipe(
+          switchMap((response: any) => {
+            const res = response as Map<string, string>;
+            localStorage.setItem('access_token', response.access_token);
+            this.routes.navigate(['/dashboard']);
+            return [authActions.successAuthLogin({ payload: response })];
+          }),
+          catchError((error) => {
+            this.sharedService.openSnackBar(error.message);
+            return of(authActions.authFailure(error));
+          })
+        );
       })
     )
   );
@@ -65,19 +62,17 @@ export class AuthEffects {
       ofType(authActions.requestAuthLogout),
       switchMap(() => {
         console.log('loggingOut');
-        return this.http
-          .post('http://cyber-assets.janreygroup.site/api/auth/logout', {})
-          .pipe(
-            switchMap((response: any) => {
-              localStorage.removeItem('access_token');
-              location.reload();
-              this.sharedService.openSnackBar(response.message);
-              return [authActions.successAuthLogout()];
-            }),
-            catchError((error) => {
-              return of(authActions.authFailure(error));
-            })
-          );
+        return this.authService.logoutAuth().pipe(
+          switchMap((response: any) => {
+            localStorage.removeItem('access_token');
+            location.reload();
+            this.sharedService.openSnackBar(response.message);
+            return [authActions.successAuthLogout()];
+          }),
+          catchError((error) => {
+            return of(authActions.authFailure(error));
+          })
+        );
       })
     )
   );

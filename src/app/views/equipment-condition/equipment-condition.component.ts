@@ -88,7 +88,7 @@ export class EquipmentConditionComponent implements OnInit, OnDestroy {
     if (equipments.items.length != 0) {
       let filteredValue = equipments.items.filter((equipmentDetails) => {
         return (
-          equipmentDetails.equipment +
+          equipmentDetails.item_name +
           equipmentDetails.status.includes(filterValue)
         );
       });
@@ -120,11 +120,11 @@ export class EquipmentConditionComponent implements OnInit, OnDestroy {
     const previousData = this.equipmentsService.toEditData;
 
     const latestData: Equipment = {
-      equipment: previousData.equipment,
+      item_name: previousData.item_name,
       category: previousData.category,
       status: data,
       description: previousData.description,
-      serialNumber: previousData.serialNumber,
+      serial_no: previousData.serial_no,
     };
 
     this.equipmentsService.onEditEquipment(
@@ -133,7 +133,7 @@ export class EquipmentConditionComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSelectionClicked(data: EquipmentDTO) {
+  onSelectionClicked(data: Equipment) {
     this.equipmentsService.toEditData = data;
   }
 }

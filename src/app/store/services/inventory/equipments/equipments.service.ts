@@ -22,7 +22,7 @@ export class EquipmentsService implements OnDestroy {
   fetchEquipments$!: Subscription;
   fetchCategory$!: Subscription;
   isEdit: boolean = false;
-  toEditData!: EquipmentDTO;
+  toEditData!: Equipment;
 
   constructor(
     private store: Store,
@@ -89,7 +89,7 @@ export class EquipmentsService implements OnDestroy {
     );
   }
 
-  onDeleteEquipment(data: EquipmentDTO) {
+  onDeleteEquipment(data: Equipment) {
     const userDetails = this.user.signedInUserDetails;
     const deletedEquipmentLog: ActivityLog = {
       activity: `Deleted equipment`,
