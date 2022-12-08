@@ -18,7 +18,7 @@
     >
       <mat-label>Equipment Name *</mat-label>
       <mat-form-field class="example-full-width" appearance="outline">
-        <input matInput required formControlName="equipment" />
+        <input matInput required formControlName="item_name" />
       </mat-form-field>
 
       <div *ngIf="!this.equipmentsService.isEdit">
@@ -28,7 +28,7 @@
             matInput
             required
             (input)="onCategoryOrItemsChange()"
-            formControlName="items"
+            formControlName="item_count"
           />
         </mat-form-field>
       </div>
@@ -96,7 +96,7 @@
             matInput
             required
             rows="{{ serialFieldRow }}"
-            formControlName="serialNumber"
+            formControlName="serial_no"
           ></textarea>
         </mat-form-field>
       </div>

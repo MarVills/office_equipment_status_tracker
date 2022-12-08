@@ -25,7 +25,6 @@ export class TokenInterceptorService {
       take(1),
       exhaustMap(() => {
         const token = localStorage.getItem('access_token');
-        console.log('token', token);
         if (!token) {
           return next.handle(req);
         }

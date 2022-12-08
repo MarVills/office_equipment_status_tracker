@@ -66,11 +66,11 @@ export class ModifyEquipmentDialogComponent implements OnInit {
   equipmentForm() {
     let isEdit = this.equipmentsService.isEdit;
     this._equipmentForm = this.formBuilder.group({
-      equipment: new FormControl(
+      item_name: new FormControl(
         isEdit ? this.equipmentData.item_name : '',
         Validators.required
       ),
-      items: new FormControl(1, Validators.pattern('[0-9]*')),
+      item_count: new FormControl(1, Validators.pattern('[0-9]*')),
       status: new FormControl(
         isEdit ? this.equipmentData.status : '',
         Validators.required
@@ -79,7 +79,7 @@ export class ModifyEquipmentDialogComponent implements OnInit {
         isEdit ? this.equipmentData.category : '',
         Validators.required
       ),
-      serialNumber: new FormControl(
+      serial_no: new FormControl(
         {
           value: isEdit ? this.equipmentData.serial_no : '',
           disabled: true,
@@ -133,13 +133,13 @@ export class ModifyEquipmentDialogComponent implements OnInit {
     if (value.category != '') {
       const value = this._equipmentForm.value;
       this.serialNumbers.splice(0);
-      for (let i = 0; i < Number(value.items); i++) {
+      for (let i = 0; i < Number(value.item_count); i++) {
         this.serialNumbers.push(this.generateSerialNumber());
       }
       this._equipmentForm.patchValue({
-        serialNumber: this.serialNumbers.toString().replace(/,/g, '\n'),
+        serial_no: this.serialNumbers.toString().replace(/,/g, '\n'),
       });
-      this.serialFieldRow = Number(value.items);
+      this.serialFieldRow = Number(value.item_count);
     }
   }
 
@@ -158,10 +158,11 @@ export class ModifyEquipmentDialogComponent implements OnInit {
       case 'false,true':
         const formValues = this._equipmentForm.value;
         // let equipmentDetails: Equipment;
+        console.log("serial numbers", this.serialNumbers)
         const userDetails = this.user.signedInUserDetails;
         this.serialNumbers.forEach((serialNumber) => {
           const equipmentDetails: Equipment = {
-            item_name: formValues.equipment,
+            item_name: formValues.item_name,
             status: formValues.status,
             category: formValues.category,
             serial_no: serialNumber,
@@ -172,8 +173,8 @@ export class ModifyEquipmentDialogComponent implements OnInit {
               this.serialNumbers.length > 1
                 ? `Added ${this.serialNumbers.length} equipments`
                 : `Added equipment`,
-            userName: userDetails.firstName + formValues.lastName,
-            userRole: userDetails.userRole!,
+            userName: "dummy name", //userDetails.firstName + formValues.lastName,
+            userRole: "dummy role", //userDetails.userRole!,
             date:
               new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
           };

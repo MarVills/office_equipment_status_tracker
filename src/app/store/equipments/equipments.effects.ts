@@ -9,6 +9,7 @@ import * as equipmentActions from './equipments.actions';
 import * as logActions from '../activity-log/activity-log.actions';
 import { ActivityLog } from 'src/app/Models/activity-log-model';
 import { HttpClient } from '@angular/common/http';
+import { EquipmentService } from './equipment.service';
 
 @Injectable()
 export class EquipmentsEffects {
@@ -17,37 +18,17 @@ export class EquipmentsEffects {
     private fireStore: AngularFirestore,
     private sharedService: SharedService,
     private store: Store,
-    private http: HttpClient
+    private http: HttpClient,
+    private equipmentService: EquipmentService
   ) {}
 
   fetchEquipmentsEFFECT$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(
       ofType(equipmentActions.requestFetchEquipmentACTION),
-      // switchMap(() => {
-      //   return this.fireStore
-      //     .collection('equipments')
-      //     .valueChanges({ idField: 'id' })
-      //     .pipe(
-      //       switchMap((response) => {
-      //         return [
-      //           equipmentActions.successFetchEquipmentACTION({
-      //             payload: response,
-      //           }),
-      //         ];
-      //       }),
-      //       catchError((error: Error) => {
-      //         console.log('Fetch Error: ', error);
-      //         return of(equipmentActions.onEquipmentFailure({ error: error }));
-      //       })
-      //     );
-      // })
-
       switchMap(() => {
-        return this.http
-          .get('http://cyber-assets.janreygroup.site/api/resources/equipment')
+        return this.equipmentService.fetchEquipment()
           .pipe(
             switchMap((response) => {
-              console.log('api response', response);
               return [
                 equipmentActions.successFetchEquipmentACTION({
                   payload: response,
@@ -63,28 +44,24 @@ export class EquipmentsEffects {
     )
   );
 
-  addEquipmentEFFECT$: Observable<Action> = createEffect(() => {
-    return this.actions$.pipe(
+  addEquipmentEFFECT$: Observable<Action> = createEffect(() => 
+      this.actions$.pipe(
       ofType(equipmentActions.requestAddEquipmentACTION),
       switchMap((data) => {
-        return this.fireStore
-          .collection('equipments')
-          .add(data.payload)
-          .then(() => {
-            this.sharedService.openSnackBar(
-              'Equipment added successfuly',
-              'Ok'
-            );
-            return equipmentActions.successAddEquipmentACTION(data);
-          })
-          .catch((error) => {
+        return this.equipmentService.addEquipment(data.payload)
+        .pipe(
+          switchMap((response: any)=>{
+            return [equipmentActions.successAddEquipmentACTION(data)];
+          }),
+          catchError((error:any) => {
             console.log('Add Error: ', error);
             this.sharedService.openSnackBar('Failed adding equipment', 'Ok');
-            return equipmentActions.onEquipmentFailure({ error: error });
-          });
+            return [equipmentActions.onEquipmentFailure({ error: error })];
+         }),
+        )
       })
-    );
-  });
+    )
+  );
 
   updateEquipmentEffect$: Observable<Action> = createEffect(() =>
     this.actions$.pipe(

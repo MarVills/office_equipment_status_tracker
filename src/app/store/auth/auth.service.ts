@@ -9,8 +9,7 @@ import { AccountCredentials } from 'src/app/Models/manage-account.model';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  loginAuth(payload: any): Observable<any> {
-    console.log('payload', payload);
+  loginAuth(payload: AccountCredentials): Observable<any> {
     const url: string = '/api/auth/login';
     return this.http.post(url, payload);
   }
