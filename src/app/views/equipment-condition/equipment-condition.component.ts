@@ -104,14 +104,14 @@ export class EquipmentConditionComponent implements OnInit, OnDestroy {
   setEquipmentsByCategories() {
     this.categories.forEach((category) => {
       const filteredEquipment = this.equipment.filter(
-        (item) => item.category === category.category
+        (item) => item.category === category.category_name
       );
       const isSlectedCategory: EquipmentsWithSelectedStatus = {
         isSelected: false,
         items: filteredEquipment,
       };
       filteredEquipment
-        ? this.equipmentsByCategory.set(category.category, isSlectedCategory)
+        ? this.equipmentsByCategory.set(category.category_name, isSlectedCategory)
         : null;
     });
   }

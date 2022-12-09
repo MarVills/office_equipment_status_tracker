@@ -72,8 +72,8 @@
             </div>
             <br />
             <mat-option
-              *ngFor="let category of this.categories"
-              [value]="category.category"
+              *ngFor="let category of categories"
+              [value]="category.category_name"
             >
               {{ category.category }}
             </mat-option>

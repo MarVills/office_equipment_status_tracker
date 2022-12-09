@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -6,9 +6,12 @@ import {
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 import { Category, CATEGORY_DATA } from 'src/app/Models/category.model';
 import { EQUIPMENT_DATA } from 'src/app/Models/equipment.model';
 import { SharedService } from 'src/app/shared/shared.service';
+import { selectCategory } from 'src/app/store/categories/categories.selectors';
 import { CategoriesService } from 'src/app/store/services/inventory/equipments/categories.service';
 
 @Component({
@@ -23,15 +26,18 @@ export class ModifyCategoriesDialogComponent implements OnInit {
   _searchCategoryForm!: FormGroup;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public categoryData: any,
     private formBuilder: FormBuilder,
     private sharedService: SharedService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private store: Store,
   ) {}
 
   ngOnInit(): void {
     this.addCategoryForm();
     this.searchCategoryForm();
-    this.categories = CATEGORY_DATA;
+    console.log("get categpries", this.categoryData.categories)
+    this.categories = this.categoryData.categories ;
   }
 
   searchCategoryForm() {
@@ -56,7 +62,7 @@ export class ModifyCategoriesDialogComponent implements OnInit {
     const value = this._addCategoryForm.value;
     const prefix: string = value.addCategory.substring(0, 2).toUpperCase();
     const isPrefixExist = this.categories.filter(
-      (category) => category.category === prefix
+      (category) => category.category_name === prefix
     );
     if (isPrefixExist.length != 0) {
     }
@@ -66,7 +72,7 @@ export class ModifyCategoriesDialogComponent implements OnInit {
   addCategory(formDirective: FormGroupDirective) {
     const value = this._addCategoryForm.value;
     const category: Category = {
-      category: value.addCategory,
+      category_name: value.addCategory,
       prefix: this.generatePrefix(),
       edit: false,
     };
@@ -79,22 +85,22 @@ export class ModifyCategoriesDialogComponent implements OnInit {
     if (this.categories) {
       switch (action) {
         case 'edit':
-          this.editCategoryForm(this.categories[index].category);
+          this.editCategoryForm(this.categories[index].category_name);
           const editCategory: Category = {
             id: CATEGORY_DATA[index].id,
-            category: this._editCategoryForm.value.category,
+            category_name: this._editCategoryForm.value.category_name,
             edit: true,
           };
           CATEGORY_DATA[index] = editCategory;
           break;
         case 'save':
-          const category = this._editCategoryForm.value.editCategory;
+          const categoryName = this._editCategoryForm.value.editCategory;
           const saveCategory: Category = {
             id: CATEGORY_DATA[index].id,
-            category: category,
+            category_name: categoryName,
             edit: false,
           };
-          if (category !== CATEGORY_DATA[index].category) {
+          if (categoryName !== CATEGORY_DATA[index].category_name) {
             this.categoriesService.onEditCategory(index, saveCategory);
           }
           CATEGORY_DATA[index] = saveCategory;

@@ -42,9 +42,9 @@ export class CategoriesService implements OnDestroy {
   onAddCategory(category: Category) {
     const userDetails = this.user.signedInUserDetails;
     const addCategoryLog: ActivityLog = {
-      activity: `Added "${category.category}" category`,
-      userName: userDetails.firstName + userDetails.lastName,
-      userRole: userDetails.userRole!,
+      activity: `Added "${category.category_name}" category`,
+      userName: 'dummy name', // userDetails.firstName + userDetails.lastName,
+      userRole: 'dummy role', //userDetails.userRole!,
       date: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
     };
     this.store.dispatch(
@@ -59,9 +59,9 @@ export class CategoriesService implements OnDestroy {
     CATEGORY_DATA[index] = newData;
     const userDetails = this.user.signedInUserDetails;
     const editCategoryLog: ActivityLog = {
-      activity: `Edited category from "${CATEGORY_DATA[index].category}" to "${newData.category}" category`,
-      userName: userDetails.firstName + userDetails.lastName,
-      userRole: userDetails.userRole!,
+      activity: `Edited category from "${CATEGORY_DATA[index].category_name}" to "${newData.category_name}" category`,
+      userName: 'dummay name',//userDetails.firstName + userDetails.lastName,
+      userRole: 'dummy role', //userDetails.userRole!,
       date: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
     };
     this.store.dispatch(
@@ -79,13 +79,13 @@ export class CategoriesService implements OnDestroy {
     CATEGORY_DATA.splice(CATEGORY_DATA.indexOf(category), 1);
     const userDetails = this.user.signedInUserDetails;
     const deleteCategoryLog: ActivityLog = {
-      activity: `Deleted "${category.category}" category`,
-      userName: userDetails.firstName + userDetails.lastName,
-      userRole: userDetails.userRole!,
+      activity: `Deleted "${category.category_name}" category`,
+      userName: 'dummy name', //userDetails.firstName + userDetails.lastName,
+      userRole: 'dummy role', //userDetails.userRole!,
       date: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
     };
     this.store.dispatch(
-      categoryActions.requestDeleteCategoryACTION({ payload: category.id! })
+      categoryActions.requestDeleteCategoryACTION({ id: category.id! })
     );
     this.store.dispatch(
       logActions.requestAddActivityLogACTION({ payload: deleteCategoryLog })

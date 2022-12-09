@@ -25,14 +25,14 @@ export const successAddCategoryACTION = createAction(
 );
 export const requestDeleteCategoryACTION = createAction(
   '[ Categories ] Request Delete Category',
-  props<{ payload: string }>()
+  props<{ id: number }>()
 );
 export const successDeleteCategoryACTION = createAction(
   '[ Categories ] Success Delete Category'
 );
 export const requestUpdateCategoryACTION = createAction(
   '[Categories] Request Update Category',
-  props<{ id: string; payload: Category }>()
+  props<{ id: number; payload: Category }>()
 );
 export const successUpdateCategoryACTION = createAction(
   '[ Categories ] Success Update Category'

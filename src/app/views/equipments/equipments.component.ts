@@ -109,10 +109,9 @@ export class EquipmentsComponent implements OnInit, OnDestroy {
           this.equipmentSubscription$ = this.store
             .select(selectEquipment)
             .subscribe((response) => {
+              console.log('response', response)
               if (response.length != 0) {
-                this.equipmentDataSource = new MatTableDataSource<Equipment>(
-                  response
-                );
+                this.equipmentDataSource = new MatTableDataSource<Equipment>(response);
                 this.equipments = response;
                 this.setEquipmentsByCategory();
                 this.getBackgroundColors();
@@ -171,10 +170,10 @@ export class EquipmentsComponent implements OnInit, OnDestroy {
   setEquipmentsByCategory() {
     this.categories.forEach((category) => {
       let filteredEquipment = this.equipments.filter(
-        (equipment) => equipment.category === category.category
+        (equipment) => equipment.category === category.category_name
       );
       filteredEquipment
-        ? this.equipmentsByCategory.set(category.category, filteredEquipment)
+        ? this.equipmentsByCategory.set(category.category_name, filteredEquipment)
         : null;
     });
   }
@@ -235,7 +234,9 @@ export class EquipmentsComponent implements OnInit, OnDestroy {
     const addDialogRef = this.dialog.open(ModifyCategoriesDialogComponent, {
       maxHeight: '90vh',
       width: '500px',
-      data: {},
+      data: {
+        categories: this.categories
+      },
     });
     addDialogRef.afterClosed().subscribe(() => {});
   }
@@ -263,7 +264,6 @@ export class EquipmentsComponent implements OnInit, OnDestroy {
   allEquipments(color: string) {
     this.hasEquipments = true;
     this.toolbarBgColor = color;
-    // this.equipmentDataSource = new MatTableDataSource<Equipment>(EQUIPMENT_DATA);
     this.equipment$ = this.store.select(selectEquipment);
   }
 }

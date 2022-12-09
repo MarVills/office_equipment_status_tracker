@@ -96,7 +96,7 @@ export class ModifyEquipmentDialogComponent implements OnInit {
   searchCategory(filterValue: string) {
     filterValue = filterValue.toLowerCase();
     this.categories = CATEGORY_DATA.filter((value) => {
-      return value.category.toString().toLowerCase().indexOf(filterValue) > -1;
+      return value.category_name.toString().toLowerCase().indexOf(filterValue) > -1;
     }).map((val) => {
       return val;
     });
@@ -115,7 +115,7 @@ export class ModifyEquipmentDialogComponent implements OnInit {
   generateSerialNumber(): string {
     const value = this._equipmentForm.value;
     const category: Category[] = this.categories.filter(
-      (category: Category) => category.category === value.category
+      (category: Category) => category.category_name === value.category
     );
     const year = new Date().getFullYear();
     const month = new Date().getMonth() + 1;

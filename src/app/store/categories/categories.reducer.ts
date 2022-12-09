@@ -38,9 +38,9 @@ export const categoryReducer = createReducer(
 
   on(
     categoriesAction.requestDeleteCategoryACTION,
-    (state: CategoriesState, { payload }) => {
+    (state: CategoriesState, { id }) => {
       let newCategories = [state.categories];
-      newCategories.splice(newCategories.indexOf(payload), 1);
+      newCategories.splice(newCategories.indexOf(id), 1);
       const returnState = { ...state, products: newCategories };
       return returnState;
     }
